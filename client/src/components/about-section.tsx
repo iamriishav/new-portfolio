@@ -63,13 +63,13 @@ export default function AboutSection() {
 
           <motion.div {...fadeInUp} className="space-y-6">
             <p className="text-gray-700 dark:text-gray-300 text-lg leading-relaxed">
-              As a dedicated Senior Quality Engineer at Persistent Systems, I bring a unique blend of technical expertise and quality assurance experience to every project I work on.
+              As a dedicated Senior Quality Engineer at Persistent Systems, I bring 1.5+ years of experience specializing in UI automation, build validation, and test environments. I excel in Python and DevOps practices, always seeking to contribute to fast-paced, quality-focused engineering teams.
             </p>
             <p className="text-gray-700 dark:text-gray-300 text-lg leading-relaxed">
-              My journey began at Birsa Institute of Technology, where I completed my B.Tech in 2023. This solid foundation led me to a trainee position at Cisco Systems, where I spent a year honing my technical skills and understanding enterprise-level software development.
+              My journey began at Birsa Institute of Technology, where I completed my B.Tech in Information Technology in 2023 with a GPA of 8.06/10. This solid foundation led me to a trainee position at Cisco Systems, where I spent a year developing automation skills and understanding enterprise-level software development.
             </p>
             <p className="text-gray-700 dark:text-gray-300 text-lg leading-relaxed">
-              Currently, I focus on ensuring software quality through comprehensive testing strategies, automation frameworks, and continuous improvement processes. My experience spans across multiple technologies and methodologies, always with a keen eye for detail and commitment to excellence.
+              Currently, I focus on GUI test automation, regression testing, and have developed over 200 automation scripts that reduced manual testing time by 40% and increased test coverage by 60%. My experience spans across Python, Selenium, Jenkins, and comprehensive testing methodologies.
             </p>
             <div className="flex space-x-4 mt-8">
               <a href="#" className="text-sky-600 hover:text-sky-700 dark:text-sky-400 dark:hover:text-sky-300 transition-colors">

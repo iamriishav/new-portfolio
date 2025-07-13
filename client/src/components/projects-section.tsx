@@ -39,12 +39,12 @@ export default function ProjectsSection() {
       live: "#"
     },
     {
-      name: "Weather App",
-      description: "A modern weather application that provides real-time weather information including temperature, humidity, wind speed, and forecasts for any location.",
-      technologies: ["HTML", "CSS", "JavaScript", "Weather API"],
+      name: "Skyline Weather App",
+      description: "Real-time weather web app with city-specific search functionality using OpenWeatherMap API, built with React.js and styled with CSS.",
+      technologies: ["React.js", "CSS", "OpenWeatherMap API", "Responsive Design"],
       image: weatherImage,
-      github: "#",
-      live: "#"
+      github: "https://github.com/iamriishav/skyline-weather",
+      live: "https://skyline-weather-demo.vercel.app"
     }
   ];
 

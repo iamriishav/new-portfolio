@@ -46,7 +46,7 @@ export default function HeroSection() {
             transition={{ duration: 0.8, delay: 0.2 }}
             className="text-5xl md:text-7xl font-bold text-white mb-6 tracking-tight"
           >
-            Senior Quality Engineer
+            Rishav Kumar Rajak
           </motion.h1>
           
           <motion.p
@@ -55,7 +55,7 @@ export default function HeroSection() {
             transition={{ duration: 0.8, delay: 0.4 }}
             className="text-xl md:text-2xl text-white/80 mb-12 max-w-4xl mx-auto leading-relaxed"
           >
-            Passionate about software quality and engineering excellence at Persistent Systems
+            Senior Quality Engineer at Persistent Systems | Automation Engineer with 1.5+ years of experience
           </motion.p>
           
           <motion.div

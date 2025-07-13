@@ -12,27 +12,27 @@ export default function ExperienceSection() {
   const experiences = [
     {
       title: "Senior Quality Engineer",
-      company: "Persistent Systems",
-      period: "Current",
+      company: "Persistent Systems – (Client – Cisco)",
+      period: "Nov 2024 - Present",
       status: "current",
-      description: "Leading quality assurance initiatives and implementing comprehensive testing strategies for enterprise-level software applications. Responsible for automation framework development and continuous improvement processes.",
-      skills: ["Test Automation", "Quality Assurance", "Team Leadership", "Process Improvement"]
+      description: "Automated GUI test cases for Configuration Template and Configuration Backup & Restore features. Performed regression testing on daily builds, identified 40+ defects including critical bugs. Developed 200+ automation scripts reducing manual testing time by 40% and increasing coverage by 60%.",
+      skills: ["GUI Automation", "Regression Testing", "Python", "Test Coverage", "Defect Management"]
     },
     {
-      title: "Trainee",
-      company: "Cisco Systems",
-      period: "1 Year",
+      title: "Software Engineer Trainee",
+      company: "Cisco",
+      period: "Nov 2023 - Nov 2024",
       status: "previous",
-      description: "Gained hands-on experience in software development and quality assurance processes. Worked on various projects to understand enterprise-level software architecture and testing methodologies.",
-      skills: ["Software Testing", "Bug Tracking", "Documentation", "Agile Methodology"]
+      description: "Worked on Performance Monitoring, Faults, Grouping, and Inventory features. Developed 150+ automation scripts, setup and maintained CelVM regression environment. Managed backups of golden configurations and upgraded device build images.",
+      skills: ["Performance Monitoring", "Automation Scripts", "Environment Setup", "Configuration Management"]
     },
     {
       title: "B.Tech Graduate",
       company: "Birsa Institute of Technology, Sindri",
-      period: "2023",
+      period: "Aug 2019 - May 2023",
       status: "education",
-      description: "Completed Bachelor of Technology with a strong foundation in computer science and engineering principles. Developed core technical skills and problem-solving capabilities.",
-      skills: ["Computer Science", "Software Engineering", "Data Structures", "Algorithms"]
+      description: "Completed Bachelor of Technology in Information Technology with GPA 8.06/10. Developed strong foundation in computer science principles and programming concepts.",
+      skills: ["Information Technology", "Software Engineering", "Data Structures", "Algorithms"]
     }
   ];
 

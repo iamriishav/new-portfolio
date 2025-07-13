@@ -115,12 +115,24 @@
     border-radius: inherit;
     opacity: 0;
     transition: opacity 0.3s ease;
-    z-index: -1;
+    z-index: -2;
     animation: rotate 3s linear infinite;
   }
   
   .rotating-border:hover::before {
     opacity: 1;
+  }
+  
+  .rotating-border::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: inherit;
+    border-radius: inherit;
+    z-index: -1;
   }
   
   .project-card {
@@ -132,15 +144,19 @@
   
   .project-overlay {
     position: absolute;
-    bottom: 0;
+    top: 0;
     left: 0;
     right: 0;
+    bottom: 0;
     background: linear-gradient(to top, rgba(15, 23, 42, 0.95), rgba(15, 23, 42, 0.8));
     backdrop-filter: blur(10px);
     transform: translateY(100%);
     transition: transform 0.3s ease;
     padding: 1.5rem;
     color: #F8FAFC;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
   }
   
   .project-card:hover .project-overlay {

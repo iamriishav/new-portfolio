@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { CheckCircle, Bot, Code, Wrench, GitBranch, Users } from "lucide-react";
+import { CheckCircle, Bot, Code, Wrench, GitBranch, Users, Award } from "lucide-react";
 
 export default function SkillsSection() {
   const fadeInUp = {
@@ -11,40 +11,40 @@ export default function SkillsSection() {
 
   const skillCategories = [
     {
-      icon: CheckCircle,
-      title: "Quality Engineering",
-      color: "text-blue-600",
-      skills: ["Test Planning & Strategy", "Test Case Design", "Defect Management", "Risk Assessment"]
+      icon: Code,
+      title: "Programming Languages",
+      color: "text-sky-600",
+      skills: ["Python", "JavaScript", "HTML", "CSS", "PHP", "SQL"]
     },
     {
       icon: Bot,
-      title: "Test Automation",
-      color: "text-green-600",
-      skills: ["Selenium WebDriver", "API Testing", "CI/CD Integration", "Framework Development"]
-    },
-    {
-      icon: Code,
-      title: "Programming",
-      color: "text-purple-600",
-      skills: ["Java", "Python", "JavaScript", "SQL"]
+      title: "Testing & Automation",
+      color: "text-cyan-600",
+      skills: ["Selenium", "pyATS", "GUI Automation", "Regression Testing", "Test Coverage"]
     },
     {
       icon: Wrench,
-      title: "Tools & Technologies",
-      color: "text-orange-600",
-      skills: ["JIRA", "TestRail", "Jenkins", "Git"]
+      title: "Tools & Frameworks",
+      color: "text-blue-600",
+      skills: ["Jenkins", "Git", "GitHub", "Postman", "Jupyter Notebook", "Visual Studio Code"]
     },
     {
       icon: GitBranch,
-      title: "Methodologies",
-      color: "text-red-600",
-      skills: ["Agile/Scrum", "DevOps", "BDD/TDD", "Continuous Testing"]
+      title: "DevOps & Environment",
+      color: "text-teal-600",
+      skills: ["Jenkins", "Git", "GitHub", "Linux", "Windows", "MacOS"]
     },
     {
       icon: Users,
-      title: "Soft Skills",
-      color: "text-indigo-600",
-      skills: ["Team Leadership", "Problem Solving", "Communication", "Analytical Thinking"]
+      title: "AI & Productivity",
+      color: "text-purple-600",
+      skills: ["ChatGPT", "Github Copilot", "Google Gemini", "Object-Oriented Programming"]
+    },
+    {
+      icon: Award,
+      title: "Certifications",
+      color: "text-green-600",
+      skills: ["CCNA (Cisco)", "Python (Simplilearn)", "Automation Testing", "GenAI Foundation"]
     }
   ];
 

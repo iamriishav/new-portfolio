@@ -46,8 +46,8 @@ export async function sendContactNotification(
   `;
 
   return await sendEmail({
-    to: 'your-email@example.com', // Replace with your actual email
-    from: 'noreply@your-portfolio.com', // Replace with your verified sender email
+    to: 'rajakrishav395@gmail.com',
+    from: 'noreply@your-portfolio.com',
     subject: `Portfolio Contact: ${subject}`,
     html: emailContent,
     text: `New contact form submission from ${name} (${email}): ${message}`
