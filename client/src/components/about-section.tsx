@@ -21,41 +21,47 @@ export default function AboutSection() {
 
         <div className="grid md:grid-cols-2 gap-12 items-center">
           <motion.div {...fadeInUp} className="space-y-6">
-            <div className="modern-card rotating-border p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300">
-              <h3 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-4">Education</h3>
-              <div className="flex items-start space-x-4">
-                <div className="p-3 bg-gradient-to-br from-sky-500 to-cyan-500 rounded-xl">
-                  <GraduationCap className="w-6 h-6 text-white" />
-                </div>
-                <div>
-                  <p className="font-semibold text-gray-900 dark:text-gray-100 text-lg">B.Tech Graduate (2023)</p>
-                  <p className="text-gray-600 dark:text-gray-300">Birsa Institute of Technology, Sindri</p>
-                </div>
-              </div>
-            </div>
-
-            <div className="modern-card rotating-border p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300">
-              <h3 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-4">Current Role</h3>
-              <div className="flex items-start space-x-4">
-                <div className="p-3 bg-gradient-to-br from-sky-500 to-cyan-500 rounded-xl">
-                  <Briefcase className="w-6 h-6 text-white" />
-                </div>
-                <div>
-                  <p className="font-semibold text-gray-900 dark:text-gray-100 text-lg">Senior Quality Engineer</p>
-                  <p className="text-gray-600 dark:text-gray-300">Persistent Systems</p>
+            <div className="rotating-border rounded-2xl">
+              <div className="modern-card p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300">
+                <h3 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-4">Education</h3>
+                <div className="flex items-start space-x-4">
+                  <div className="p-3 bg-gradient-to-br from-sky-500 to-cyan-500 rounded-xl">
+                    <GraduationCap className="w-6 h-6 text-white" />
+                  </div>
+                  <div>
+                    <p className="font-semibold text-gray-900 dark:text-gray-100 text-lg">B.Tech Graduate (2023)</p>
+                    <p className="text-gray-600 dark:text-gray-300">Birsa Institute of Technology, Sindri</p>
+                  </div>
                 </div>
               </div>
             </div>
 
-            <div className="modern-card rotating-border p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300">
-              <h3 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-4">Previous Experience</h3>
-              <div className="flex items-start space-x-4">
-                <div className="p-3 bg-gradient-to-br from-sky-500 to-cyan-500 rounded-xl">
-                  <Building className="w-6 h-6 text-white" />
+            <div className="rotating-border rounded-2xl">
+              <div className="modern-card p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300">
+                <h3 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-4">Current Role</h3>
+                <div className="flex items-start space-x-4">
+                  <div className="p-3 bg-gradient-to-br from-sky-500 to-cyan-500 rounded-xl">
+                    <Briefcase className="w-6 h-6 text-white" />
+                  </div>
+                  <div>
+                    <p className="font-semibold text-gray-900 dark:text-gray-100 text-lg">Senior Quality Engineer</p>
+                    <p className="text-gray-600 dark:text-gray-300">Persistent Systems</p>
+                  </div>
                 </div>
-                <div>
-                  <p className="font-semibold text-gray-900 dark:text-gray-100 text-lg">Trainee (1 Year)</p>
-                  <p className="text-gray-600 dark:text-gray-300">Cisco Systems</p>
+              </div>
+            </div>
+
+            <div className="rotating-border rounded-2xl">
+              <div className="modern-card p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300">
+                <h3 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-4">Previous Experience</h3>
+                <div className="flex items-start space-x-4">
+                  <div className="p-3 bg-gradient-to-br from-sky-500 to-cyan-500 rounded-xl">
+                    <Building className="w-6 h-6 text-white" />
+                  </div>
+                  <div>
+                    <p className="font-semibold text-gray-900 dark:text-gray-100 text-lg">Trainee (1 Year)</p>
+                    <p className="text-gray-600 dark:text-gray-300">Cisco Systems</p>
+                  </div>
                 </div>
               </div>
             </div>
