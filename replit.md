@@ -131,6 +131,7 @@ Preferred communication style: Simple, everyday language.
   - Mobile: Shows only title using 70-80% screen width, nav items in hamburger menu
   - Scrolled state: Navigation centers and becomes rounded on larger screens
 - **Updated with authentic user data**: Replaced placeholder content with real information from Rishav Kumar Rajak's resume
-- **Updated contact form**: Now sends emails to rajakrishav395@gmail.com
+- **Updated contact form**: Now stores submissions in database (email functionality removed)
 - **Enhanced project information**: Updated with actual project details and GitHub links
 - **Updated skills section**: Reflects real technical skills including Python, Selenium, pyATS, and certifications
+- **Removed SendGrid integration**: Eliminated email functionality to simplify local deployment

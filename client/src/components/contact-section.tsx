@@ -42,15 +42,15 @@ export default function ContactSection() {
     },
     onSuccess: () => {
       toast({
-        title: "Message sent successfully!",
-        description: "Thank you for your message. I will get back to you soon.",
+        title: "Message submitted successfully!",
+        description: "Thank you for your message. Your submission has been recorded.",
       });
       form.reset();
       setIsSubmitting(false);
     },
     onError: (error) => {
       toast({
-        title: "Error sending message",
+        title: "Error submitting message",
         description: "Please try again later or contact me directly.",
         variant: "destructive",
       });
