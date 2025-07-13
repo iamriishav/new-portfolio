@@ -1,5 +1,6 @@
 import type { Express } from "express";
 import { createServer, type Server } from "http";
+import path from "path";
 import { storage } from "./storage";
 import { insertContactSubmissionSchema } from "@shared/schema";
 import { sendContactNotification } from "./email";
@@ -43,10 +44,15 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   // Resume download endpoint
   app.get("/api/resume", (req, res) => {
-    // In a real application, this would serve the actual resume file
+    /const resumePath = path.resolve(import.meta.dirname, "..", "public", "resume.pdf");
     res.setHeader('Content-Type', 'application/pdf');
     res.setHeader('Content-Disposition', 'attachment; filename="resume.pdf"');
-    res.status(200).send("Resume download functionality - replace with actual PDF file");
+    res.sendFile(resumePath, (err) => {
+      if (err) {
+        console.error("Error serving resume:", err);
+        res.status(404).json({ error: "Resume not found" });
+      }
+    });
   });
 
   const httpServer = createServer(app);
