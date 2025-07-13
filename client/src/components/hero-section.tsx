@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import { Mail, Download } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import profileImage from "@assets/profile_1752401362177.webp";
+import profileResume from "@assets/resume_1752404153091.pdf";
 
 export default function HeroSection() {
   const scrollToContact = () => {
@@ -12,7 +13,12 @@ export default function HeroSection() {
   };
 
   const handleDownloadResume = () => {
-    window.open("/api/resume", "_blank");
+    const link = document.createElement('a');
+    link.href = profileResume;
+    link.download = 'Resume.pdf'; // or your preferred filename
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
   };
 
   return (

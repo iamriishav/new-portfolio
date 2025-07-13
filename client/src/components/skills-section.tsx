@@ -14,13 +14,13 @@ export default function SkillsSection() {
       icon: Code,
       title: "Programming Languages",
       color: "text-sky-600",
-      skills: ["Python", "JavaScript", "HTML", "CSS", "PHP", "SQL"]
+      skills: ["Python", "HTML", "CSS", "PHP", "SQL"]
     },
     {
       icon: Bot,
       title: "Testing & Automation",
       color: "text-cyan-600",
-      skills: ["Selenium", "pyATS", "GUI Automation", "Regression Testing", "Test Coverage"]
+      skills: ["Selenium", "pyATS", "GUI Automation", "Regression Testing", "Sanity Testing", "API Automation"]
     },
     {
       icon: Wrench,
@@ -38,13 +38,13 @@ export default function SkillsSection() {
       icon: Users,
       title: "AI & Productivity",
       color: "text-purple-600",
-      skills: ["ChatGPT", "Github Copilot", "Google Gemini", "Object-Oriented Programming"]
+      skills: ["ChatGPT", "Github Copilot", "Google Gemini"]
     },
     {
       icon: Award,
       title: "Certifications",
       color: "text-green-600",
-      skills: ["CCNA (Cisco)", "Python (Simplilearn)", "Automation Testing", "GenAI Foundation"]
+      skills: ["CCNA (Cisco)", "AWS Certified Cloud Practitioner (AWS)", "Python Developer (Persistent University)", "Automation Testing (Simplilearn)"]
     }
   ];
 
@@ -66,7 +66,7 @@ export default function SkillsSection() {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
               viewport={{ once: true }}
-              className="modern-card rotating-border p-8 rounded-2xl hover:shadow-2xl transition-all duration-300 transform hover:scale-105"
+              className="modern-card p-8 rounded-2xl hover:shadow-2xl transition-all duration-300 transform hover:scale-105"
             >
               <div className="flex items-center mb-6">
                 <div className={`p-4 rounded-xl mr-4 bg-gradient-to-br from-sky-500 to-cyan-500`}>

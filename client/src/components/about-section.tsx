@@ -21,7 +21,7 @@ export default function AboutSection() {
 
         <div className="grid md:grid-cols-2 gap-12 items-center">
           <motion.div {...fadeInUp} className="space-y-6">
-            <div className="rotating-border rounded-2xl">
+            <div className="rounded-2xl">
               <div className="modern-card p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300">
                 <h3 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-4">Education</h3>
                 <div className="flex items-start space-x-4">
@@ -36,7 +36,7 @@ export default function AboutSection() {
               </div>
             </div>
 
-            <div className="rotating-border rounded-2xl">
+            <div className="rounded-2xl">
               <div className="modern-card p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300">
                 <h3 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-4">Current Role</h3>
                 <div className="flex items-start space-x-4">
@@ -51,7 +51,7 @@ export default function AboutSection() {
               </div>
             </div>
 
-            <div className="rotating-border rounded-2xl">
+            <div className="rounded-2xl">
               <div className="modern-card p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300">
                 <h3 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-4">Previous Experience</h3>
                 <div className="flex items-start space-x-4">
@@ -59,7 +59,7 @@ export default function AboutSection() {
                     <Building className="w-6 h-6 text-white" />
                   </div>
                   <div>
-                    <p className="font-semibold text-gray-900 dark:text-gray-100 text-lg">Trainee (1 Year)</p>
+                    <p className="font-semibold text-gray-900 dark:text-gray-100 text-lg">Software Engineer Trainee</p>
                     <p className="text-gray-600 dark:text-gray-300">Cisco Systems</p>
                   </div>
                 </div>
@@ -78,13 +78,13 @@ export default function AboutSection() {
               Currently, I focus on GUI test automation, regression testing, and have developed over 200 automation scripts that reduced manual testing time by 40% and increased test coverage by 60%. My experience spans across Python, Selenium, Jenkins, and comprehensive testing methodologies.
             </p>
             <div className="flex space-x-4 mt-8">
-              <a href="#" className="text-sky-600 hover:text-sky-700 dark:text-sky-400 dark:hover:text-sky-300 transition-colors">
+              <a href="https://linkedin.com/in/iamriishav" className="text-sky-600 hover:text-sky-700 dark:text-sky-400 dark:hover:text-sky-300 transition-colors">
                 <Linkedin className="w-8 h-8" />
               </a>
-              <a href="#" className="text-sky-600 hover:text-sky-700 dark:text-sky-400 dark:hover:text-sky-300 transition-colors">
+              <a href="https://github.com/iamriishav" className="text-sky-600 hover:text-sky-700 dark:text-sky-400 dark:hover:text-sky-300 transition-colors">
                 <Github className="w-8 h-8" />
               </a>
-              <a href="#" className="text-sky-600 hover:text-sky-700 dark:text-sky-400 dark:hover:text-sky-300 transition-colors">
+              <a href="https://x.com/iamriishav" className="text-sky-600 hover:text-sky-700 dark:text-sky-400 dark:hover:text-sky-300 transition-colors">
                 <Twitter className="w-8 h-8" />
               </a>
             </div>

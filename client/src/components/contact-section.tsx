@@ -74,13 +74,13 @@ export default function ContactSection() {
     {
       icon: Mail,
       title: "Email",
-      content: "professional.email@example.com",
+      content: "rajakrishav395@gmail.com",
       color: "bg-blue-600"
     },
     {
       icon: Phone,
       title: "Phone",
-      content: "+91 XXXXX XXXXX",
+      content: "+91 94727 42873",
       color: "bg-blue-600"
     },
     {
@@ -92,7 +92,7 @@ export default function ContactSection() {
     {
       icon: Linkedin,
       title: "LinkedIn",
-      content: "linkedin.com/in/yourprofile",
+      content: "linkedin.com/in/iamriishav",
       color: "bg-blue-600"
     }
   ];
@@ -124,7 +124,7 @@ export default function ContactSection() {
           </motion.div>
 
           {/* Contact Form */}
-          <motion.div {...fadeInUp} className="modern-card rotating-border p-8 rounded-2xl shadow-lg">
+          <motion.div {...fadeInUp} className="modern-card p-8 rounded-2xl shadow-lg">
             <Form {...form}>
               <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
                 <FormField

@@ -19,7 +19,7 @@ export default function ProjectsSection() {
       description: "A car rental website is an online platform that allows users to rent cars for personal or business use. The website provides an interface for searching, comparing, and reserving cars.",
       technologies: ["HTML", "CSS", "JavaScript", "PHP", "MySQL", "Tailwind"],
       image: cabImage,
-      github: "https://github.com/iamriishav/Ride-With-Me---Cab-Service",
+      github: "https://github.com/iamriishav/RideWithMe-CabService",
       live: "https://ridewithmecabservice.000webhostapp.com/"
     },
     {
@@ -35,16 +35,16 @@ export default function ProjectsSection() {
       description: "A daily inspiration app that delivers motivational quotes from famous personalities and thinkers to brighten your day.",
       technologies: ["HTML", "CSS", "JavaScript", "Quote API"],
       image: quoteImage,
-      github: "#",
-      live: "#"
+      github: "https://github.com/iamriishav/yourdailyquotes",
+      live: "https://yourdailyquotes.netlify.app/"
     },
     {
       name: "Skyline Weather App",
       description: "Real-time weather web app with city-specific search functionality using OpenWeatherMap API, built with React.js and styled with CSS.",
       technologies: ["React.js", "CSS", "OpenWeatherMap API", "Responsive Design"],
       image: weatherImage,
-      github: "https://github.com/iamriishav/skyline-weather",
-      live: "https://skyline-weather-demo.vercel.app"
+      github: "https://github.com/iamriishav/skyline",
+      live: "https://skylineweather.vercel.app/"
     }
   ];
 
@@ -63,7 +63,7 @@ export default function ProjectsSection() {
             <motion.div
               key={index}
               {...fadeInUp}
-              className="modern-card project-card rotating-border rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300"
+              className="modern-card project-card rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300"
             >
               <img 
                 src={project.image} 
