@@ -22,7 +22,7 @@ export default function AboutSection() {
         <div className="grid md:grid-cols-2 gap-12 items-center">
           <motion.div {...fadeInUp} className="space-y-6">
             <div className="modern-card rotating-border p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300">
-              <h3 className="text-2xl font-bold text-gray-900 mb-4">Education</h3>
+              <h3 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-4">Education</h3>
               <div className="flex items-start space-x-4">
                 <div className="p-3 bg-gradient-to-br from-sky-500 to-cyan-500 rounded-xl">
                   <GraduationCap className="w-6 h-6 text-white" />

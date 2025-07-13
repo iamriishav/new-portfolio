@@ -33,16 +33,15 @@ export default function Navigation() {
   ];
 
   return (
-    <nav className={`fixed top-0 w-full bg-white/70 dark:bg-gray-900/70 backdrop-blur-[10px] z-50 border-b border-gray-200/50 dark:border-gray-700/50 transition-all duration-300 ${isScrolled ? 'left-1/2 transform -translate-x-1/2 w-auto rounded-full mt-4' : ''}`}>
-      <div className={`${isScrolled ? 'px-8' : 'max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'}`}>
+    <nav className={`fixed top-0 w-full bg-white/70 dark:bg-gray-900/70 backdrop-blur-[10px] z-50 border-b border-gray-200/50 dark:border-gray-700/50 transition-all duration-300 ${isScrolled ? 'left-1/2 transform -translate-x-1/2 w-4/5 lg:w-3/5 rounded-full mt-4' : ''}`}>
+      <div className={`${isScrolled ? 'px-8' : 'w-4/5 lg:w-3/5 mx-auto px-4 sm:px-6 lg:px-8'}`}>
         <div className="flex items-center justify-between h-16">
-          {!isScrolled && (
-            <div className="flex-shrink-0">
-              <span className="text-2xl font-bold text-gradient">Portfolio</span>
-            </div>
-          )}
+          {/* Title - Always visible on desktop/tablet, only when not scrolled on mobile */}
+          <div className={`flex-shrink-0 ${isScrolled ? 'hidden md:block' : 'block'}`}>
+            <span className="text-2xl font-bold text-gradient">Portfolio</span>
+          </div>
           
-          {/* Desktop Navigation */}
+          {/* Desktop/Tablet Navigation - Always visible on md+ screens */}
           <div className="hidden md:block">
             <div className={`${isScrolled ? 'flex items-center space-x-2' : 'ml-10 flex items-baseline space-x-4'}`}>
               {navItems.map((item) => (
@@ -58,7 +57,7 @@ export default function Navigation() {
             </div>
           </div>
 
-          {/* Mobile menu button */}
+          {/* Mobile menu button - Only visible on small screens */}
           <div className="md:hidden">
             <Button
               variant="ghost"

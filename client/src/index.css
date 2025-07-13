@@ -107,15 +107,15 @@
   .rotating-border::before {
     content: '';
     position: absolute;
-    top: -2px;
-    left: -2px;
-    right: -2px;
-    bottom: -2px;
+    top: -3px;
+    left: -3px;
+    right: -3px;
+    bottom: -3px;
     background: linear-gradient(45deg, #38BDF8, #22D3EE, #0EA5E9, #38BDF8);
     border-radius: inherit;
     opacity: 0;
     transition: opacity 0.3s ease;
-    z-index: -2;
+    z-index: -1;
     animation: rotate 3s linear infinite;
   }
   
@@ -123,16 +123,9 @@
     opacity: 1;
   }
   
-  .rotating-border::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: inherit;
-    border-radius: inherit;
-    z-index: -1;
+  .rotating-border > * {
+    position: relative;
+    z-index: 1;
   }
   
   .project-card {

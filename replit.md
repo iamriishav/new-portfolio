@@ -120,3 +120,17 @@ Preferred communication style: Simple, everyday language.
 - **Vite**: Fast hot module replacement and optimized builds
 - **Shared Types**: Common schemas between client and server prevent type mismatches
 - **Path Aliases**: Simplified imports with `@/` for client and `@shared/` for shared code
+
+## Recent Changes: Latest modifications with dates
+
+### July 13, 2025
+- **Fixed rotating border animation**: Now properly displays only on card borders instead of covering entire card content
+- **Fixed dark mode text color**: Education section header now displays white text in dark mode
+- **Enhanced responsive navigation**: 
+  - Desktop/tablet (md+): Shows both title and nav items using 70-80% screen width
+  - Mobile: Shows only title using 70-80% screen width, nav items in hamburger menu
+  - Scrolled state: Navigation centers and becomes rounded on larger screens
+- **Updated with authentic user data**: Replaced placeholder content with real information from Rishav Kumar Rajak's resume
+- **Updated contact form**: Now sends emails to rajakrishav395@gmail.com
+- **Enhanced project information**: Updated with actual project details and GitHub links
+- **Updated skills section**: Reflects real technical skills including Python, Selenium, pyATS, and certifications
