@@ -44,7 +44,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   // Resume download endpoint
   app.get("/api/resume", (req, res) => {
-    /const resumePath = path.resolve(import.meta.dirname, "..", "public", "resume.pdf");
+    const resumePath = path.resolve(import.meta.dirname, "..", "public", "resume.pdf");
     res.setHeader('Content-Type', 'application/pdf');
     res.setHeader('Content-Disposition', 'attachment; filename="resume.pdf"');
     res.sendFile(resumePath, (err) => {
