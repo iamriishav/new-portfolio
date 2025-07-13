@@ -98,11 +98,11 @@ export default function ContactSection() {
   ];
 
   return (
-    <section id="contact" className="py-20 bg-white">
+    <section id="contact" className="py-20 bg-gradient-to-br from-white to-gray-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div {...fadeInUp} className="text-center mb-16">
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Get In Touch</h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+          <h2 className="text-4xl md:text-5xl font-bold text-gradient mb-6">Get In Touch</h2>
+          <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
             Let's connect and discuss opportunities
           </p>
         </motion.div>
@@ -112,19 +112,19 @@ export default function ContactSection() {
           <motion.div {...fadeInUp} className="space-y-8">
             {contactInfo.map((info, index) => (
               <div key={index} className="flex items-start space-x-4">
-                <div className={`${info.color} p-3 rounded-lg`}>
+                <div className="p-4 rounded-xl bg-gradient-to-br from-purple-500 to-blue-500">
                   <info.icon className="w-6 h-6 text-white" />
                 </div>
                 <div>
-                  <h3 className="text-lg font-semibold text-gray-900 mb-1">{info.title}</h3>
-                  <p className="text-gray-600">{info.content}</p>
+                  <h3 className="text-xl font-bold text-gray-900 mb-2">{info.title}</h3>
+                  <p className="text-gray-600 text-lg">{info.content}</p>
                 </div>
               </div>
             ))}
           </motion.div>
 
           {/* Contact Form */}
-          <motion.div {...fadeInUp} className="bg-gray-50 p-8 rounded-lg">
+          <motion.div {...fadeInUp} className="modern-card p-8 rounded-2xl shadow-lg">
             <Form {...form}>
               <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
                 <FormField
@@ -190,7 +190,7 @@ export default function ContactSection() {
                 <Button
                   type="submit"
                   disabled={isSubmitting}
-                  className="w-full bg-blue-600 hover:bg-blue-700"
+                  className="w-full bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white py-3 rounded-xl font-semibold text-lg shadow-lg hover:shadow-xl transition-all duration-300"
                 >
                   {isSubmitting ? (
                     <>

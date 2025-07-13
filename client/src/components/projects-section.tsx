@@ -12,11 +12,11 @@ export default function ProjectsSection() {
   const projectPlaceholders = Array.from({ length: 3 }, (_, i) => i);
 
   return (
-    <section id="projects" className="py-20 bg-gray-50">
+    <section id="projects" className="py-20 bg-gradient-to-br from-gray-50 to-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div {...fadeInUp} className="text-center mb-16">
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Projects</h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+          <h2 className="text-4xl md:text-5xl font-bold text-gradient mb-6">Projects</h2>
+          <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
             Showcase of my work and contributions
           </p>
         </motion.div>
@@ -29,12 +29,14 @@ export default function ProjectsSection() {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
               viewport={{ once: true }}
-              className="bg-white p-6 rounded-lg shadow-md border-2 border-dashed border-gray-300 hover:border-blue-300 transition-colors"
+              className="modern-card p-8 rounded-2xl shadow-lg border-2 border-dashed border-purple-200 hover:border-purple-400 transition-all duration-300 transform hover:scale-105"
             >
               <div className="text-center py-8">
-                <PlusCircle className="w-16 h-16 text-gray-400 mx-auto mb-4" />
-                <h3 className="text-xl font-semibold text-gray-600 mb-2">Project Coming Soon</h3>
-                <p className="text-gray-500">
+                <div className="p-4 bg-gradient-to-br from-purple-100 to-blue-100 rounded-xl w-20 h-20 mx-auto mb-6 flex items-center justify-center">
+                  <PlusCircle className="w-10 h-10 text-purple-600" />
+                </div>
+                <h3 className="text-2xl font-bold text-gray-800 mb-3">Project Coming Soon</h3>
+                <p className="text-gray-600 text-lg">
                   This section will showcase my professional projects and contributions.
                 </p>
               </div>

@@ -49,11 +49,11 @@ export default function SkillsSection() {
   ];
 
   return (
-    <section id="skills" className="py-20 bg-white">
+    <section id="skills" className="py-20 bg-gradient-to-br from-white to-gray-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div {...fadeInUp} className="text-center mb-16">
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Technical Skills</h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+          <h2 className="text-4xl md:text-5xl font-bold text-gradient mb-6">Technical Skills</h2>
+          <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
             My expertise in quality engineering and software development
           </p>
         </motion.div>
@@ -66,17 +66,19 @@ export default function SkillsSection() {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
               viewport={{ once: true }}
-              className="bg-gray-50 p-6 rounded-lg hover:shadow-lg transition-shadow"
+              className="modern-card p-8 rounded-2xl hover:shadow-2xl transition-all duration-300 transform hover:scale-105"
             >
-              <div className="flex items-center mb-4">
-                <category.icon className={`w-8 h-8 ${category.color} mr-3`} />
-                <h3 className="text-xl font-semibold text-gray-900">{category.title}</h3>
+              <div className="flex items-center mb-6">
+                <div className={`p-4 rounded-xl mr-4 bg-gradient-to-br from-purple-500 to-blue-500`}>
+                  <category.icon className="w-8 h-8 text-white" />
+                </div>
+                <h3 className="text-2xl font-bold text-gray-900">{category.title}</h3>
               </div>
-              <ul className="space-y-2 text-gray-700">
+              <ul className="space-y-3 text-gray-700">
                 {category.skills.map((skill, skillIndex) => (
                   <li key={skillIndex} className="flex items-center">
-                    <div className={`w-2 h-2 ${category.color.replace('text-', 'bg-')} rounded-full mr-3`}></div>
-                    {skill}
+                    <div className="w-2 h-2 bg-gradient-to-r from-purple-500 to-blue-500 rounded-full mr-3"></div>
+                    <span className="text-lg">{skill}</span>
                   </li>
                 ))}
               </ul>

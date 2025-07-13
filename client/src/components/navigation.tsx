@@ -23,11 +23,11 @@ export default function Navigation() {
   ];
 
   return (
-    <nav className="fixed top-0 w-full bg-white/90 backdrop-blur-md z-50 shadow-sm">
+    <nav className="fixed top-0 w-full bg-white/80 backdrop-blur-xl z-50 border-b border-gray-200/50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           <div className="flex-shrink-0">
-            <span className="text-2xl font-bold text-gray-900">Portfolio</span>
+            <span className="text-2xl font-bold text-gradient">Portfolio</span>
           </div>
           
           {/* Desktop Navigation */}
@@ -37,7 +37,7 @@ export default function Navigation() {
                 <button
                   key={item.id}
                   onClick={() => scrollToSection(item.id)}
-                  className="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium transition-colors"
+                  className="text-gray-700 hover:text-purple-600 px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200 hover:bg-purple-50"
                 >
                   {item.label}
                 </button>
@@ -51,7 +51,7 @@ export default function Navigation() {
               variant="ghost"
               size="icon"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="text-gray-700 hover:text-blue-600"
+              className="text-gray-700 hover:text-purple-600"
             >
               {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
             </Button>
@@ -67,7 +67,7 @@ export default function Navigation() {
               <button
                 key={item.id}
                 onClick={() => scrollToSection(item.id)}
-                className="block px-3 py-2 text-gray-700 hover:text-blue-600 font-medium w-full text-left"
+                className="block px-3 py-2 text-gray-700 hover:text-purple-600 font-medium w-full text-left"
               >
                 {item.label}
               </button>

@@ -10,45 +10,51 @@ export default function AboutSection() {
   };
 
   return (
-    <section id="about" className="py-20 bg-white">
+    <section id="about" className="py-20 bg-gradient-to-br from-gray-50 to-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div {...fadeInUp} className="text-center mb-16">
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">About Me</h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+          <h2 className="text-4xl md:text-5xl font-bold text-gradient mb-6">About Me</h2>
+          <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
             My journey from B.Tech graduate to Senior Quality Engineer
           </p>
         </motion.div>
 
         <div className="grid md:grid-cols-2 gap-12 items-center">
           <motion.div {...fadeInUp} className="space-y-6">
-            <div className="bg-gray-50 p-6 rounded-lg">
-              <h3 className="text-xl font-semibold text-gray-900 mb-3">Education</h3>
-              <div className="flex items-start space-x-3">
-                <GraduationCap className="w-6 h-6 text-blue-600 mt-1" />
+            <div className="modern-card p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300">
+              <h3 className="text-2xl font-bold text-gray-900 mb-4">Education</h3>
+              <div className="flex items-start space-x-4">
+                <div className="p-3 bg-gradient-to-br from-purple-500 to-blue-500 rounded-xl">
+                  <GraduationCap className="w-6 h-6 text-white" />
+                </div>
                 <div>
-                  <p className="font-medium text-gray-900">B.Tech Graduate (2023)</p>
+                  <p className="font-semibold text-gray-900 text-lg">B.Tech Graduate (2023)</p>
                   <p className="text-gray-600">Birsa Institute of Technology, Sindri</p>
                 </div>
               </div>
             </div>
 
-            <div className="bg-gray-50 p-6 rounded-lg">
-              <h3 className="text-xl font-semibold text-gray-900 mb-3">Current Role</h3>
-              <div className="flex items-start space-x-3">
-                <Briefcase className="w-6 h-6 text-blue-600 mt-1" />
+            <div className="modern-card p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300">
+              <h3 className="text-2xl font-bold text-gray-900 mb-4">Current Role</h3>
+              <div className="flex items-start space-x-4">
+                <div className="p-3 bg-gradient-to-br from-purple-500 to-blue-500 rounded-xl">
+                  <Briefcase className="w-6 h-6 text-white" />
+                </div>
                 <div>
-                  <p className="font-medium text-gray-900">Senior Quality Engineer</p>
+                  <p className="font-semibold text-gray-900 text-lg">Senior Quality Engineer</p>
                   <p className="text-gray-600">Persistent Systems</p>
                 </div>
               </div>
             </div>
 
-            <div className="bg-gray-50 p-6 rounded-lg">
-              <h3 className="text-xl font-semibold text-gray-900 mb-3">Previous Experience</h3>
-              <div className="flex items-start space-x-3">
-                <Building className="w-6 h-6 text-blue-600 mt-1" />
+            <div className="modern-card p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300">
+              <h3 className="text-2xl font-bold text-gray-900 mb-4">Previous Experience</h3>
+              <div className="flex items-start space-x-4">
+                <div className="p-3 bg-gradient-to-br from-purple-500 to-blue-500 rounded-xl">
+                  <Building className="w-6 h-6 text-white" />
+                </div>
                 <div>
-                  <p className="font-medium text-gray-900">Trainee (1 Year)</p>
+                  <p className="font-semibold text-gray-900 text-lg">Trainee (1 Year)</p>
                   <p className="text-gray-600">Cisco Systems</p>
                 </div>
               </div>
