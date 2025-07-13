@@ -5,6 +5,13 @@ import { storage } from "./storage";
 import { insertContactSubmissionSchema } from "@shared/schema";
 import { sendContactNotification } from "./email";
 import { z } from "zod";
+// At the top of server/routes.ts
+import { fileURLToPath } from "url";
+import { dirname } from "path";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
 
 export async function registerRoutes(app: Express): Promise<Server> {
   // Contact form submission
@@ -44,7 +51,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   // Resume download endpoint
   app.get("/api/resume", (req, res) => {
-    const resumePath = path.resolve(import.meta.dirname, "..", "public", "resume.pdf");
+    const resumePath = path.resolve(__dirname, "..", "public", "resume.pdf");
     res.setHeader('Content-Type', 'application/pdf');
     res.setHeader('Content-Disposition', 'attachment; filename="resume.pdf"');
     res.sendFile(resumePath, (err) => {
