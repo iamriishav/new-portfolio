@@ -112,7 +112,7 @@ export default function ContactSection() {
           <motion.div {...fadeInUp} className="space-y-8">
             {contactInfo.map((info, index) => (
               <div key={index} className="flex items-start space-x-4">
-                <div className="p-4 rounded-xl bg-gradient-to-br from-purple-500 to-blue-500">
+                <div className="p-4 rounded-xl bg-gradient-to-br from-sky-500 to-cyan-500">
                   <info.icon className="w-6 h-6 text-white" />
                 </div>
                 <div>
@@ -124,7 +124,7 @@ export default function ContactSection() {
           </motion.div>
 
           {/* Contact Form */}
-          <motion.div {...fadeInUp} className="modern-card p-8 rounded-2xl shadow-lg">
+          <motion.div {...fadeInUp} className="modern-card rotating-border p-8 rounded-2xl shadow-lg">
             <Form {...form}>
               <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
                 <FormField
@@ -178,7 +178,7 @@ export default function ContactSection() {
                       <FormControl>
                         <Textarea
                           placeholder="Your message here..."
-                          rows={4}
+                          className="min-h-[120px] max-h-[200px] resize-none"
                           {...field}
                         />
                       </FormControl>
@@ -190,7 +190,7 @@ export default function ContactSection() {
                 <Button
                   type="submit"
                   disabled={isSubmitting}
-                  className="w-full bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white py-3 rounded-xl font-semibold text-lg shadow-lg hover:shadow-xl transition-all duration-300"
+                  className="w-full bg-gradient-to-r from-sky-600 to-cyan-600 hover:from-sky-700 hover:to-cyan-700 text-white py-3 rounded-xl font-semibold text-lg shadow-lg hover:shadow-xl transition-all duration-300"
                 >
                   {isSubmitting ? (
                     <>

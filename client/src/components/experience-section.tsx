@@ -79,7 +79,7 @@ export default function ExperienceSection() {
                 className="relative mb-12"
               >
                 <div className={`absolute left-6 w-4 h-4 ${getStatusColor(exp.status)} rounded-full border-4 border-white shadow-lg`}></div>
-                <div className="ml-20 modern-card p-8 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300">
+                <div className="ml-20 modern-card rotating-border p-8 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300">
                   <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4">
                     <h3 className="text-2xl font-bold text-gray-900 dark:text-gray-100">{exp.title}</h3>
                     <span className={`text-sm font-bold px-3 py-1 rounded-full ${

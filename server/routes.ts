@@ -2,6 +2,7 @@ import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
 import { insertContactSubmissionSchema } from "@shared/schema";
+import { sendContactNotification } from "./email";
 import { z } from "zod";
 
 export async function registerRoutes(app: Express): Promise<Server> {
@@ -10,11 +11,25 @@ export async function registerRoutes(app: Express): Promise<Server> {
     try {
       const submission = insertContactSubmissionSchema.parse(req.body);
       const result = await storage.createContactSubmission(submission);
-      res.json({ success: true, id: result.id });
+      
+      // Send email notification
+      const emailSent = await sendContactNotification(
+        submission.name,
+        submission.email,
+        submission.subject,
+        submission.message
+      );
+      
+      if (!emailSent) {
+        console.warn("Failed to send email notification for contact submission");
+      }
+      
+      res.json({ success: true, id: result.id, emailSent });
     } catch (error) {
       if (error instanceof z.ZodError) {
         res.status(400).json({ error: "Invalid form data", details: error.errors });
       } else {
+        console.error("Contact form error:", error);
         res.status(500).json({ error: "Internal server error" });
       }
     }

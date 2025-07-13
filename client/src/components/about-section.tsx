@@ -21,10 +21,10 @@ export default function AboutSection() {
 
         <div className="grid md:grid-cols-2 gap-12 items-center">
           <motion.div {...fadeInUp} className="space-y-6">
-            <div className="modern-card p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300">
+            <div className="modern-card rotating-border p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300">
               <h3 className="text-2xl font-bold text-gray-900 mb-4">Education</h3>
               <div className="flex items-start space-x-4">
-                <div className="p-3 bg-gradient-to-br from-purple-500 to-blue-500 rounded-xl">
+                <div className="p-3 bg-gradient-to-br from-sky-500 to-cyan-500 rounded-xl">
                   <GraduationCap className="w-6 h-6 text-white" />
                 </div>
                 <div>
@@ -34,10 +34,10 @@ export default function AboutSection() {
               </div>
             </div>
 
-            <div className="modern-card p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300">
+            <div className="modern-card rotating-border p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300">
               <h3 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-4">Current Role</h3>
               <div className="flex items-start space-x-4">
-                <div className="p-3 bg-gradient-to-br from-purple-500 to-blue-500 rounded-xl">
+                <div className="p-3 bg-gradient-to-br from-sky-500 to-cyan-500 rounded-xl">
                   <Briefcase className="w-6 h-6 text-white" />
                 </div>
                 <div>
@@ -47,10 +47,10 @@ export default function AboutSection() {
               </div>
             </div>
 
-            <div className="modern-card p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300">
+            <div className="modern-card rotating-border p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300">
               <h3 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-4">Previous Experience</h3>
               <div className="flex items-start space-x-4">
-                <div className="p-3 bg-gradient-to-br from-purple-500 to-blue-500 rounded-xl">
+                <div className="p-3 bg-gradient-to-br from-sky-500 to-cyan-500 rounded-xl">
                   <Building className="w-6 h-6 text-white" />
                 </div>
                 <div>
@@ -72,13 +72,13 @@ export default function AboutSection() {
               Currently, I focus on ensuring software quality through comprehensive testing strategies, automation frameworks, and continuous improvement processes. My experience spans across multiple technologies and methodologies, always with a keen eye for detail and commitment to excellence.
             </p>
             <div className="flex space-x-4 mt-8">
-              <a href="#" className="text-purple-600 hover:text-purple-700 dark:text-purple-400 dark:hover:text-purple-300 transition-colors">
+              <a href="#" className="text-sky-600 hover:text-sky-700 dark:text-sky-400 dark:hover:text-sky-300 transition-colors">
                 <Linkedin className="w-8 h-8" />
               </a>
-              <a href="#" className="text-purple-600 hover:text-purple-700 dark:text-purple-400 dark:hover:text-purple-300 transition-colors">
+              <a href="#" className="text-sky-600 hover:text-sky-700 dark:text-sky-400 dark:hover:text-sky-300 transition-colors">
                 <Github className="w-8 h-8" />
               </a>
-              <a href="#" className="text-purple-600 hover:text-purple-700 dark:text-purple-400 dark:hover:text-purple-300 transition-colors">
+              <a href="#" className="text-sky-600 hover:text-sky-700 dark:text-sky-400 dark:hover:text-sky-300 transition-colors">
                 <Twitter className="w-8 h-8" />
               </a>
             </div>
