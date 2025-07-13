@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
-import { Mail, Download, User } from "lucide-react";
+import { Mail, Download } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import profileImage from "@assets/profile_1752401362177.webp";
 
 export default function HeroSection() {
   const scrollToContact = () => {
@@ -24,8 +25,12 @@ export default function HeroSection() {
             transition={{ duration: 0.5 }}
             className="mb-8"
           >
-            <div className="mx-auto w-48 h-48 bg-gray-300 rounded-full flex items-center justify-center mb-8 shadow-xl">
-              <User className="w-24 h-24 text-gray-500" />
+            <div className="mx-auto w-48 h-48 mb-8 shadow-xl">
+              <img 
+                src={profileImage} 
+                alt="Profile" 
+                className="w-full h-full object-cover rounded-full border-4 border-white/20"
+              />
             </div>
           </motion.div>
           
