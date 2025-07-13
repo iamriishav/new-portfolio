@@ -25,11 +25,11 @@ export default function HeroSection() {
             transition={{ duration: 0.5 }}
             className="mb-8"
           >
-            <div className="mx-auto w-48 h-48 mb-8 shadow-xl">
+            <div className="mx-auto w-48 h-48 mb-8">
               <img 
                 src={profileImage} 
                 alt="Profile" 
-                className="w-full h-full object-cover rounded-full border-4 border-white/20"
+                className="w-full h-full object-cover rounded-full border-4 border-white shadow-xl"
               />
             </div>
           </motion.div>
