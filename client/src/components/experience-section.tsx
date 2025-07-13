@@ -55,11 +55,11 @@ export default function ExperienceSection() {
   };
 
   return (
-    <section id="experience" className="py-20 bg-gradient-to-br from-gray-50 to-white">
+    <section id="experience" className="py-20 bg-gradient-to-br from-gray-50 to-white dark:from-gray-800 dark:to-gray-900">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div {...fadeInUp} className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold text-gradient mb-6">Experience</h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+          <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto leading-relaxed">
             My professional journey in software quality engineering
           </p>
         </motion.div>
@@ -81,16 +81,16 @@ export default function ExperienceSection() {
                 <div className={`absolute left-6 w-4 h-4 ${getStatusColor(exp.status)} rounded-full border-4 border-white shadow-lg`}></div>
                 <div className="ml-20 modern-card p-8 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300">
                   <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4">
-                    <h3 className="text-2xl font-bold text-gray-900">{exp.title}</h3>
+                    <h3 className="text-2xl font-bold text-gray-900 dark:text-gray-100">{exp.title}</h3>
                     <span className={`text-sm font-bold px-3 py-1 rounded-full ${
-                      exp.status === 'current' ? 'bg-blue-100 text-blue-700' : 
-                      exp.status === 'education' ? 'bg-green-100 text-green-700' : 'bg-gray-100 text-gray-700'
+                      exp.status === 'current' ? 'bg-blue-100 text-blue-700 dark:bg-blue-900 dark:text-blue-300' : 
+                      exp.status === 'education' ? 'bg-green-100 text-green-700 dark:bg-green-900 dark:text-green-300' : 'bg-gray-100 text-gray-700 dark:bg-gray-700 dark:text-gray-300'
                     }`}>
                       {exp.period}
                     </span>
                   </div>
-                  <p className="text-gray-600 font-semibold mb-4 text-lg">{exp.company}</p>
-                  <p className="text-gray-700 mb-6 leading-relaxed">{exp.description}</p>
+                  <p className="text-gray-600 dark:text-gray-300 font-semibold mb-4 text-lg">{exp.company}</p>
+                  <p className="text-gray-700 dark:text-gray-300 mb-6 leading-relaxed">{exp.description}</p>
                   <div className="flex flex-wrap gap-2">
                     {exp.skills.map((skill, skillIndex) => (
                       <Badge key={skillIndex} variant={getBadgeVariant(exp.status)} className="text-sm px-3 py-1">

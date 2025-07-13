@@ -12,11 +12,11 @@ export default function ProjectsSection() {
   const projectPlaceholders = Array.from({ length: 3 }, (_, i) => i);
 
   return (
-    <section id="projects" className="py-20 bg-gradient-to-br from-gray-50 to-white">
+    <section id="projects" className="py-20 bg-gradient-to-br from-gray-50 to-white dark:from-gray-900 dark:to-gray-800">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div {...fadeInUp} className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold text-gradient mb-6">Projects</h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+          <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto leading-relaxed">
             Showcase of my work and contributions
           </p>
         </motion.div>
@@ -35,8 +35,8 @@ export default function ProjectsSection() {
                 <div className="p-4 bg-gradient-to-br from-purple-100 to-blue-100 rounded-xl w-20 h-20 mx-auto mb-6 flex items-center justify-center">
                   <PlusCircle className="w-10 h-10 text-purple-600" />
                 </div>
-                <h3 className="text-2xl font-bold text-gray-800 mb-3">Project Coming Soon</h3>
-                <p className="text-gray-600 text-lg">
+                <h3 className="text-2xl font-bold text-gray-800 dark:text-gray-200 mb-3">Project Coming Soon</h3>
+                <p className="text-gray-600 dark:text-gray-300 text-lg">
                   This section will showcase my professional projects and contributions.
                 </p>
               </div>

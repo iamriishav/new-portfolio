@@ -98,11 +98,11 @@ export default function ContactSection() {
   ];
 
   return (
-    <section id="contact" className="py-20 bg-gradient-to-br from-white to-gray-50">
+    <section id="contact" className="py-20 bg-gradient-to-br from-white to-gray-50 dark:from-gray-800 dark:to-gray-900">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div {...fadeInUp} className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold text-gradient mb-6">Get In Touch</h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+          <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto leading-relaxed">
             Let's connect and discuss opportunities
           </p>
         </motion.div>
@@ -116,8 +116,8 @@ export default function ContactSection() {
                   <info.icon className="w-6 h-6 text-white" />
                 </div>
                 <div>
-                  <h3 className="text-xl font-bold text-gray-900 mb-2">{info.title}</h3>
-                  <p className="text-gray-600 text-lg">{info.content}</p>
+                  <h3 className="text-xl font-bold text-gray-900 dark:text-gray-100 mb-2">{info.title}</h3>
+                  <p className="text-gray-600 dark:text-gray-300 text-lg">{info.content}</p>
                 </div>
               </div>
             ))}
