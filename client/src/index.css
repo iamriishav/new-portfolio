@@ -101,22 +101,29 @@
   
   .rotating-border {
     position: relative;
-    background: linear-gradient(45deg, #38BDF8, #22D3EE, #0EA5E9, #38BDF8);
-    background-size: 400% 400%;
-    padding: 2px;
+    overflow: hidden;
     border-radius: inherit;
-    animation: rotate 3s linear infinite;
   }
   
-  .rotating-border:not(:hover) {
-    background: transparent;
-    animation: none;
+  .rotating-border::before {
+    content: '';
+    position: absolute;
+    inset: -3px;
+    background: conic-gradient(from 0deg, #38BDF8, #22D3EE, #0EA5E9, #38BDF8);
+    border-radius: inherit;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    animation: rotate 3s linear infinite;
+    z-index: -1;
+  }
+  
+  .rotating-border:hover::before {
+    opacity: 1;
   }
   
   .rotating-border > * {
     position: relative;
     z-index: 1;
-    border-radius: inherit;
   }
   
   .project-card {
