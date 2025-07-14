@@ -1,10 +1,29 @@
-import { useState, useEffect } from "react";
+import { useTheme } from "@/components/theme-provider";
 import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import React, { useState, useEffect } from "react";
+
 
 export default function Navigation() {
+  const { theme } = useTheme();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [systemTheme, setSystemTheme] = useState(() => {
+    if (typeof window !== 'undefined' && window.matchMedia) {
+      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    }
+    return 'light';
+  });
+
+  useEffect(() => {
+    if (typeof window === 'undefined' || !window.matchMedia) return;
+    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+    const handleChange = (e: MediaQueryListEvent) => {
+      setSystemTheme(e.matches ? 'dark' : 'light');
+    };
+    mediaQuery.addEventListener('change', handleChange);
+    return () => mediaQuery.removeEventListener('change', handleChange);
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -32,6 +51,15 @@ export default function Navigation() {
     { id: "contact", label: "Contact" },
   ];
 
+
+  // Determine color for angle brackets based on theme
+  const getBracketColor = () => {
+    if (theme === "dark") return "#fff";
+    if (theme === "light") return "#000";
+    // For 'system', use systemTheme state
+    return systemTheme === 'dark' ? '#fff' : '#000';
+  };
+
   return (
     <nav
       className={`fixed top-0 left-1/2 transform -translate-x-1/2 z-50 bg-white/70 dark:bg-gray-900/70 backdrop-blur-[10px] border-b border-gray-200/50 dark:border-gray-700/50 transition-all duration-500 ease-in-out
@@ -48,18 +76,18 @@ export default function Navigation() {
           {/* Mobile: Only show title centered */}
           <div className="flex w-full items-center justify-center md:hidden">
             <span className="text-2xl font-bold">
-              <span style={{ color: '#fff' }}>&lt;</span>
+              <span style={{ color: getBracketColor() }}>&lt;</span>
               <span className=" text-gradient"> Rishav </span>
-              <span style={{ color: '#fff' }}>/&gt;</span>
+              <span style={{ color: getBracketColor() }}>/&gt;</span>
             </span>
           </div>
           {/* Desktop/Tablet: Show title and nav items */}
           <div className="hidden md:flex w-full items-center justify-between">
             <div className={`flex-shrink-0 transition-all duration-300 ${isScrolled ? 'hidden md:block' : 'block'}`}>
               <span className="text-2xl font-bold">
-                <span style={{ color: '#fff' }}>&lt;</span>
+                <span style={{ color: getBracketColor() }}>&lt;</span>
                 <span className="text-gradient"> Rishav </span>
-                <span style={{ color: '#fff' }}>/&gt;</span>
+                <span style={{ color: getBracketColor() }}>/&gt;</span>
               </span>
             </div>
             <div>

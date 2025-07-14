@@ -66,7 +66,7 @@ export default function SkillsSection() {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
               viewport={{ once: true }}
-              className="modern-card p-8 rounded-2xl hover:shadow-2xl transition-all duration-300 transform hover:scale-105"
+              className="modern-card p-8 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:scale-105"
             >
               <div className="flex items-center mb-6">
                 <div className={`p-4 rounded-xl mr-4 bg-gradient-to-br from-sky-500 to-cyan-500`}>

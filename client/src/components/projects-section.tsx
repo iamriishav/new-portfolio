@@ -32,7 +32,7 @@ export default function ProjectsSection() {
     },
     {
       name: "Daily Quotes",
-      description: "A daily inspiration app that delivers motivational quotes from famous personalities and thinkers to brighten your day.",
+      description: "A daily inspiration app that delivers motivational quotes from famous personalities and thinkers.",
       technologies: ["HTML", "CSS", "JavaScript", "Quote API"],
       image: quoteImage,
       github: "https://github.com/iamriishav/yourdailyquotes",
@@ -40,7 +40,7 @@ export default function ProjectsSection() {
     },
     {
       name: "Skyline Weather App",
-      description: "Real-time weather web app with city-specific search functionality using OpenWeatherMap API, built with React.js and styled with CSS.",
+      description: "Real-time weather web app with city-specific search functionality.",
       technologies: ["React.js", "CSS", "OpenWeatherMap API", "Responsive Design"],
       image: weatherImage,
       github: "https://github.com/iamriishav/skyline",
@@ -63,7 +63,7 @@ export default function ProjectsSection() {
             <motion.div
               key={index}
               {...fadeInUp}
-              className="modern-card project-card rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300"
+              className="modern-card project-card rounded-2xl shadow-lg shadow-xl hover:shadow-2xl transition-all duration-300"
             >
               <img 
                 src={project.image} 
