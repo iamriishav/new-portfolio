@@ -1,66 +1,41 @@
 import { motion } from "framer-motion";
 import { useState } from "react";
-import { useMutation } from "@tanstack/react-query";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
 import { Mail, Phone, MapPin, Linkedin, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
-import { useToast } from "@/hooks/use-toast";
-import { apiRequest } from "@/lib/queryClient";
-
-const contactFormSchema = z.object({
-  name: z.string().min(2, "Name must be at least 2 characters"),
-  email: z.string().email("Please enter a valid email address"),
-  subject: z.string().min(5, "Subject must be at least 5 characters"),
-  message: z.string().min(10, "Message must be at least 10 characters"),
-});
-
-type ContactFormData = z.infer<typeof contactFormSchema>;
 
 export default function ContactSection() {
-  const { toast } = useToast();
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
 
-  const form = useForm<ContactFormData>({
-    resolver: zodResolver(contactFormSchema),
-    defaultValues: {
-      name: "",
-      email: "",
-      subject: "",
-      message: "",
-    },
-  });
-
-  const contactMutation = useMutation({
-    mutationFn: async (data: ContactFormData) => {
-      const response = await apiRequest("POST", "/api/contact", data);
-      return response.json();
-    },
-    onSuccess: () => {
-      toast({
-        title: "Message submitted successfully!",
-        description: "Thank you for your message. Your submission has been recorded.",
-      });
-      form.reset();
-      setIsSubmitting(false);
-    },
-    onError: (error) => {
-      toast({
-        title: "Error submitting message",
-        description: "Please try again later or contact me directly.",
-        variant: "destructive",
-      });
-      setIsSubmitting(false);
-    },
-  });
-
-  const onSubmit = (data: ContactFormData) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
     setIsSubmitting(true);
-    contactMutation.mutate(data);
+    const form = e.currentTarget;
+    const formData = new FormData(form);
+    try {
+      const response = await fetch("https://getform.io/f/b62f13c8-b83c-471f-9e18-40359e5186f2", {
+        method: "POST",
+        body: formData,
+        headers: {
+          Accept: "application/json",
+        },
+      });
+      if (response.ok) {
+        setSubmitted(true);
+        form.reset();
+        setTimeout(() => {
+          setSubmitted(false);
+        }, 2000);
+      } else {
+        alert("There was an error submitting the form. Please try again later.");
+      }
+    } catch (error) {
+      alert("There was an error submitting the form. Please try again later.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const fadeInUp = {
@@ -117,7 +92,33 @@ export default function ContactSection() {
                 </div>
                 <div>
                   <h3 className="text-xl font-bold text-gray-900 dark:text-gray-100 mb-2">{info.title}</h3>
-                  <p className="text-gray-600 dark:text-gray-300 text-lg">{info.content}</p>
+                  {info.title === "Email" ? (
+                    <a
+                      href={`mailto:${info.content}`}
+                      className="text-gray-600 dark:text-gray-300 text-lg hover:text-blue-600"
+                      target="_blank" rel="noopener noreferrer"
+                    >
+                      {info.content}
+                    </a>
+                  ) : info.title === "Phone" ? (
+                    <a
+                      href={`tel:${info.content.replace(/\s+/g, '')}`}
+                      className="text-gray-600 dark:text-gray-300 text-lg hover:text-blue-600"
+                      target="_blank" rel="noopener noreferrer"
+                    >
+                      {info.content}
+                    </a>
+                  ) : info.title === "LinkedIn" ? (
+                    <a
+                      href={`https://${info.content}`.replace('https://https://', 'https://')}
+                      className="text-gray-600 dark:text-gray-300 text-lg hover:text-blue-600"
+                      target="_blank" rel="noopener noreferrer"
+                    >
+                      {info.content}
+                    </a>
+                  ) : (
+                    <p className="text-gray-600 dark:text-gray-300 text-lg">{info.content}</p>
+                  )}
                 </div>
               </div>
             ))}
@@ -125,68 +126,47 @@ export default function ContactSection() {
 
           {/* Contact Form */}
           <motion.div {...fadeInUp} className="modern-card p-8 rounded-2xl shadow-lg">
-            <Form {...form}>
-              <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-                <FormField
-                  control={form.control}
-                  name="name"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Name</FormLabel>
-                      <FormControl>
-                        <Input placeholder="Your name" {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-
-                <FormField
-                  control={form.control}
-                  name="email"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Email</FormLabel>
-                      <FormControl>
-                        <Input type="email" placeholder="your.email@example.com" {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-
-                <FormField
-                  control={form.control}
-                  name="subject"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Subject</FormLabel>
-                      <FormControl>
-                        <Input placeholder="Message subject" {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-
-                <FormField
-                  control={form.control}
-                  name="message"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Message</FormLabel>
-                      <FormControl>
-                        <Textarea
-                          placeholder="Your message here..."
-                          className="min-h-[120px] max-h-[200px] resize-none"
-                          {...field}
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-
+            {submitted ? (
+              <motion.div
+                className="text-center py-8"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
+                transition={{ duration: 0.5 }}
+              >
+                <h3 className="text-2xl font-bold mb-2">Thank you!</h3>
+                <p>Your message has been sent successfully.</p>
+              </motion.div>
+            ) : (
+              <form
+                autoComplete="off"
+                onSubmit={handleSubmit}
+                className="space-y-6"
+              >
+                <input type="hidden" name="_gotcha" id="honeypot" />
+                <div>
+                  <label className="block font-semibold mb-1" htmlFor="name">Name</label>
+                  <Input id="name" name="name" placeholder="Your name" required minLength={2} />
+                </div>
+                <div>
+                  <label className="block font-semibold mb-1" htmlFor="email">Email</label>
+                  <Input id="email" name="email" type="email" placeholder="your.email@example.com" required />
+                </div>
+                <div>
+                  <label className="block font-semibold mb-1" htmlFor="subject">Subject</label>
+                  <Input id="subject" name="subject" placeholder="Message subject" required minLength={5} />
+                </div>
+                <div>
+                  <label className="block font-semibold mb-1" htmlFor="message">Message</label>
+                  <Textarea
+                    id="message"
+                    name="message"
+                    placeholder="Your message here..."
+                    className="min-h-[120px] max-h-[200px] resize-none"
+                    required
+                    minLength={10}
+                  />
+                </div>
                 <Button
                   type="submit"
                   disabled={isSubmitting}
@@ -202,7 +182,7 @@ export default function ContactSection() {
                   )}
                 </Button>
               </form>
-            </Form>
+            )}
           </motion.div>
         </div>
       </div>

@@ -16,7 +16,7 @@ export default function ProjectsSection() {
   const projects = [
     {
       name: "Cab Rental",
-      description: "A car rental website is an online platform that allows users to rent cars for personal or business use. The website provides an interface for searching, comparing, and reserving cars.",
+      description: "A car rental website is an online platform that allows users to rent cars for personal or business use.",
       technologies: ["HTML", "CSS", "JavaScript", "PHP", "MySQL", "Tailwind"],
       image: cabImage,
       github: "https://github.com/iamriishav/RideWithMe-CabService",
@@ -24,7 +24,7 @@ export default function ProjectsSection() {
     },
     {
       name: "Lawyeric",
-      description: "Lawyeric is a web application that provides legal services such as legal document preparation, lawyer consultation, and document delivery.",
+      description: "Lawyeric is a web application that provides legal services such as legal document preparation and document delivery.",
       technologies: ["HTML", "CSS", "JavaScript", "PHP", "MySQL"],
       image: lawyericImage,
       github: "https://github.com/iamriishav/lawyeric",
