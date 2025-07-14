@@ -9,41 +9,41 @@ export default function SkillsSection() {
     viewport: { once: true }
   };
 
+  const cardHover = {
+    scale: 1.02,
+    y: -5,
+    transition: { duration: 0.3, ease: "easeOut" }
+  };
+
   const skillCategories = [
     {
       icon: Code,
       title: "Programming Languages",
-      color: "text-sky-600",
       skills: ["Python", "HTML", "CSS", "PHP", "SQL"]
     },
     {
       icon: Bot,
       title: "Testing & Automation",
-      color: "text-cyan-600",
       skills: ["Selenium", "pyATS", "GUI Automation", "Regression Testing", "Sanity Testing", "API Automation"]
     },
     {
       icon: Wrench,
       title: "Tools & Frameworks",
-      color: "text-blue-600",
       skills: ["Jenkins", "Git", "GitHub", "Postman", "Jupyter Notebook", "Visual Studio Code"]
     },
     {
       icon: GitBranch,
       title: "DevOps & Environment",
-      color: "text-teal-600",
       skills: ["Jenkins", "Git", "GitHub", "Linux", "Windows", "MacOS"]
     },
     {
       icon: Users,
       title: "AI & Productivity",
-      color: "text-purple-600",
       skills: ["ChatGPT", "Github Copilot", "Google Gemini"]
     },
     {
       icon: Award,
       title: "Certifications",
-      color: "text-green-600",
       skills: ["CCNA (Cisco)", "AWS Certified Cloud Practitioner (AWS)", "Python Developer (Persistent University)", "Automation Testing (Simplilearn)"]
     }
   ];
@@ -62,26 +62,49 @@ export default function SkillsSection() {
           {skillCategories.map((category, index) => (
             <motion.div
               key={index}
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
+              whileHover={cardHover}
+              transition={{ duration: 0.6, delay: index * 0.1 }}
               viewport={{ once: true }}
-              className="modern-card p-8 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:scale-105"
+              className="group relative bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 shadow-sm hover:shadow-lg transition-all duration-300"
             >
-              <div className="flex items-center mb-6">
-                <div className={`p-4 rounded-xl mr-4 bg-gradient-to-br from-sky-500 to-cyan-500`}>
-                  <category.icon className="w-8 h-8 text-white" />
+              {/* Card Content */}
+              <div className="p-8">
+                {/* Icon Section */}
+                <div className="flex items-center justify-center mb-6">
+                  <div className="p-3 rounded-xl bg-gray-100 dark:bg-gray-700 group-hover:bg-gray-900 dark:group-hover:bg-gray-600 transition-colors duration-300">
+                    <category.icon className="w-6 h-6 text-gray-700 dark:text-gray-300 group-hover:text-white transition-colors duration-300" />
+                  </div>
                 </div>
-                <h3 className="text-2xl font-bold text-gray-900 dark:text-gray-100">{category.title}</h3>
+
+                {/* Title */}
+                <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 text-center mb-6">
+                  {category.title}
+                </h3>
+
+                {/* Skills List */}
+                <div className="space-y-4">
+                  {category.skills.map((skill, skillIndex) => (
+                    <motion.div
+                      key={skillIndex}
+                      initial={{ opacity: 0, x: -20 }}
+                      whileInView={{ opacity: 1, x: 0 }}
+                      transition={{ duration: 0.4, delay: (index * 0.1) + (skillIndex * 0.05) }}
+                      viewport={{ once: true }}
+                      className="flex items-center"
+                    >
+                      {/* Enhanced Skill Indicator */}
+                      <div className="flex-shrink-0 w-2 h-2 bg-gray-500 dark:bg-gray-400 rounded-full mr-4" />
+                      
+                      {/* Enhanced Skill Text */}
+                      <span className="text-base text-gray-800 dark:text-gray-200 font-medium leading-relaxed">
+                        {skill}
+                      </span>
+                    </motion.div>
+                  ))}
+                </div>
               </div>
-              <ul className="space-y-3 text-gray-700 dark:text-gray-300">
-                {category.skills.map((skill, skillIndex) => (
-                  <li key={skillIndex} className="flex items-center">
-                    <div className="w-2 h-2 bg-gradient-to-r from-sky-500 to-cyan-500 rounded-full mr-3"></div>
-                    <span className="text-lg">{skill}</span>
-                  </li>
-                ))}
-              </ul>
             </motion.div>
           ))}
         </div>

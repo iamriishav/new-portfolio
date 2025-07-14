@@ -1,5 +1,7 @@
 import { motion } from "framer-motion";
-import { GraduationCap, Briefcase, Building, Linkedin, Github, Twitter } from "lucide-react";
+import { GraduationCap, Briefcase, Building, Linkedin, Github, Twitter, MapPin, Calendar, Award, Quote } from "lucide-react";
+import profileImage from "@assets/profile_1752401362177.webp";
+import { useMemo } from "react";
 
 export default function AboutSection() {
   const fadeInUp = {
@@ -9,87 +11,229 @@ export default function AboutSection() {
     viewport: { once: true }
   };
 
+  const cardHover = {
+    scale: 1.02,
+    transition: { duration: 0.3, ease: "easeOut" }
+  };
+
+  // Coding quotes that change on refresh
+  const codingQuotes = [
+    "Code is like humor. When you have to explain it, it's bad.",
+    "First, solve the problem. Then, write the code.",
+    "Experience is the name everyone gives to their mistakes.",
+    "In order to be irreplaceable, one must always be different.",
+    "Java is to JavaScript what car is to Carpet.",
+    "Talk is cheap. Show me the code.",
+    "The best error message is the one that never shows up.",
+    "Code never lies, comments sometimes do.",
+    "Programming isn't about what you know; it's about what you can figure out.",
+    "The only way to learn a new programming language is by writing programs in it.",
+    "Simplicity is the ultimate sophistication.",
+    "Make it work, make it right, make it fast."
+  ];
+
+  // Select a random quote on component mount
+  const randomQuote = useMemo(() => {
+    return codingQuotes[Math.floor(Math.random() * codingQuotes.length)];
+  }, []);
+
+  const achievements = [
+    {
+      icon: Award,
+      title: "200+ Automation Scripts",
+      description: "Reduced manual testing by 40%"
+    },
+    {
+      icon: Calendar,
+      title: "1.5+ Years Experience",
+      description: "In quality engineering"
+    },
+    {
+      icon: MapPin,
+      title: "Test Coverage",
+      description: "Increased by 60%"
+    }
+  ];
+
   return (
-    <section id="about" className="py-20 bg-gradient-to-br from-gray-50 to-white dark:from-gray-800 dark:to-gray-900">
+    <section id="about" className="py-20 bg-gradient-to-br from-white to-gray-50 dark:from-gray-900 dark:to-gray-800">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <motion.div {...fadeInUp} className="text-center mb-16">
+        {/* Section Header */}
+        <motion.div {...fadeInUp} className="text-center mb-20">
           <h2 className="text-4xl md:text-5xl font-bold text-gradient mb-6">About Me</h2>
           <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto leading-relaxed">
-            My journey from B.Tech graduate to Senior Quality Engineer
+            Passionate about software quality and continuous improvement
           </p>
         </motion.div>
 
-        <div className="grid md:grid-cols-2 gap-12 items-center">
-          <motion.div {...fadeInUp} className="space-y-6">
-            <div className="rounded-2xl">
-              <div className="modern-card p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300">
-                <h3 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-4">Education</h3>
-                <div className="flex items-start space-x-4">
-                  <div className="p-3 bg-gradient-to-br from-sky-500 to-cyan-500 rounded-xl">
-                    <GraduationCap className="w-6 h-6 text-white" />
-                  </div>
-                  <div>
-                    <p className="font-semibold text-gray-900 dark:text-gray-100 text-lg">B.Tech Graduate (2023)</p>
-                    <p className="text-gray-600 dark:text-gray-300">Birsa Institute of Technology, Sindri</p>
-                  </div>
+        {/* Main Content Grid */}
+        <div className="grid lg:grid-cols-3 gap-12">
+          {/* Profile Card */}
+          <motion.div 
+            {...fadeInUp}
+            whileHover={cardHover}
+            className="lg:col-span-1 h-full"
+          >
+            <div className="bg-white dark:bg-gray-800 rounded-3xl border border-gray-200 dark:border-gray-700 shadow-sm p-8 text-center h-full flex flex-col">
+              <div className="flex-1 flex flex-col">
+                <div className="relative w-32 h-32 mx-auto mb-6">
+                  <img
+                    src={profileImage}
+                    alt="Rishav Kumar"
+                    className="w-full h-full rounded-full object-cover border-4 border-gray-100 dark:border-gray-700"
+                  />
+                  <div className="absolute bottom-2 right-2 w-6 h-6 bg-green-500 rounded-full border-3 border-white dark:border-gray-800" />
+                </div>
+                
+                <h3 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-2">
+                  Rishav Kumar
+                </h3>
+                <p className="text-lg text-gray-600 dark:text-gray-300 mb-6">
+                  Senior Quality Engineer
+                </p>
+                
+                {/* Dynamic Coding Quote - Expanded */}
+                <div className="bg-gray-50 dark:bg-gray-700/50 rounded-2xl p-6 mb-6 relative flex-1 flex items-center">
+                  <Quote className="w-5 h-5 text-gray-400 dark:text-gray-500 absolute top-4 left-4" />
+                  <p className="text-base text-gray-600 dark:text-gray-400 italic font-medium text-center px-8 leading-relaxed">
+                    "{randomQuote}"
+                  </p>
                 </div>
               </div>
-            </div>
-
-            <div className="rounded-2xl">
-              <div className="modern-card p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300">
-                <h3 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-4">Current Role</h3>
-                <div className="flex items-start space-x-4">
-                  <div className="p-3 bg-gradient-to-br from-sky-500 to-cyan-500 rounded-xl">
-                    <Briefcase className="w-6 h-6 text-white" />
-                  </div>
-                  <div>
-                    <p className="font-semibold text-gray-900 dark:text-gray-100 text-lg">Senior Quality Engineer</p>
-                    <p className="text-gray-600 dark:text-gray-300">Persistent Systems</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="rounded-2xl">
-              <div className="modern-card p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300">
-                <h3 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-4">Previous Experience</h3>
-                <div className="flex items-start space-x-4">
-                  <div className="p-3 bg-gradient-to-br from-sky-500 to-cyan-500 rounded-xl">
-                    <Building className="w-6 h-6 text-white" />
-                  </div>
-                  <div>
-                    <p className="font-semibold text-gray-900 dark:text-gray-100 text-lg">Software Engineer Trainee</p>
-                    <p className="text-gray-600 dark:text-gray-300">Cisco Systems</p>
-                  </div>
-                </div>
+              
+              {/* Social Links */}
+              <div className="flex justify-center space-x-4">
+                <a 
+                  href="https://linkedin.com/in/iamriishav" 
+                  className="p-3 bg-gray-100 dark:bg-gray-700 rounded-xl hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors duration-200"
+                >
+                  <Linkedin className="w-5 h-5 text-gray-700 dark:text-gray-300" />
+                </a>
+                <a 
+                  href="https://github.com/iamriishav" 
+                  className="p-3 bg-gray-100 dark:bg-gray-700 rounded-xl hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors duration-200"
+                >
+                  <Github className="w-5 h-5 text-gray-700 dark:text-gray-300" />
+                </a>
+                <a 
+                  href="https://x.com/iamriishav" 
+                  className="p-3 bg-gray-100 dark:bg-gray-700 rounded-xl hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors duration-200"
+                >
+                  <Twitter className="w-5 h-5 text-gray-700 dark:text-gray-300" />
+                </a>
               </div>
             </div>
           </motion.div>
 
-          <motion.div {...fadeInUp} className="space-y-6">
-            <p className="text-gray-700 dark:text-gray-300 text-lg leading-relaxed">
-              As a dedicated Senior Quality Engineer at Persistent Systems, I bring 1.5+ years of experience specializing in UI automation, build validation, and test environments. I excel in Python and DevOps practices, always seeking to contribute to fast-paced, quality-focused engineering teams.
-            </p>
-            <p className="text-gray-700 dark:text-gray-300 text-lg leading-relaxed">
-              My journey began at Birsa Institute of Technology, where I completed my B.Tech in Information Technology in 2023 with a GPA of 8.06/10. This solid foundation led me to a trainee position at Cisco Systems, where I spent a year developing automation skills and understanding enterprise-level software development.
-            </p>
-            <p className="text-gray-700 dark:text-gray-300 text-lg leading-relaxed">
-              Currently, I focus on GUI test automation, regression testing, and have developed over 200 automation scripts that reduced manual testing time by 40% and increased test coverage by 60%. My experience spans across Python, Selenium, Jenkins, and comprehensive testing methodologies.
-            </p>
-            <div className="flex space-x-4 mt-8">
-              <a href="https://linkedin.com/in/iamriishav" className="text-sky-600 hover:text-sky-700 dark:text-sky-400 dark:hover:text-sky-300 transition-colors">
-                <Linkedin className="w-8 h-8" />
-              </a>
-              <a href="https://github.com/iamriishav" className="text-sky-600 hover:text-sky-700 dark:text-sky-400 dark:hover:text-sky-300 transition-colors">
-                <Github className="w-8 h-8" />
-              </a>
-              <a href="https://x.com/iamriishav" className="text-sky-600 hover:text-sky-700 dark:text-sky-400 dark:hover:text-sky-300 transition-colors">
-                <Twitter className="w-8 h-8" />
-              </a>
+          {/* Content & Story */}
+          <motion.div 
+            {...fadeInUp}
+            className="lg:col-span-2 space-y-8"
+          >
+            {/* Story */}
+            <div className="bg-white dark:bg-gray-800 rounded-3xl border border-gray-200 dark:border-gray-700 shadow-sm p-8">
+              <h3 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-6">My Story</h3>
+              <div className="space-y-4 text-gray-700 dark:text-gray-300 leading-relaxed">
+                <p>
+                  As a dedicated Senior Quality Engineer at Persistent Systems, I bring 1.5+ years of experience 
+                  specializing in UI automation, build validation, and test environments. I excel in Python and 
+                  DevOps practices, always seeking to contribute to fast-paced, quality-focused engineering teams.
+                </p>
+                <p>
+                  My journey began at Birsa Institute of Technology, where I completed my B.Tech in Information 
+                  Technology in 2023 with a GPA of 8.06/10. This solid foundation led me to a trainee position 
+                  at Cisco Systems, where I spent a year developing automation skills and understanding 
+                  enterprise-level software development.
+                </p>
+                <p>
+                  Currently, I focus on GUI test automation, regression testing, and have developed over 200 
+                  automation scripts that reduced manual testing time by 40% and increased test coverage by 60%.
+                </p>
+              </div>
+            </div>
+
+            {/* Achievements */}
+            <div className="grid md:grid-cols-3 gap-4">
+              {achievements.map((achievement, index) => (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                  viewport={{ once: true }}
+                  className="bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 shadow-sm p-6 text-center"
+                >
+                  <div className="w-12 h-12 bg-gray-100 dark:bg-gray-700 rounded-xl flex items-center justify-center mx-auto mb-4">
+                    <achievement.icon className="w-6 h-6 text-gray-700 dark:text-gray-300" />
+                  </div>
+                  <h4 className="font-semibold text-gray-900 dark:text-gray-100 mb-1">
+                    {achievement.title}
+                  </h4>
+                  <p className="text-sm text-gray-600 dark:text-gray-400">
+                    {achievement.description}
+                  </p>
+                </motion.div>
+              ))}
             </div>
           </motion.div>
         </div>
+
+        {/* Experience Timeline */}
+        <motion.div 
+          {...fadeInUp}
+          className="mt-20"
+        >
+          <h3 className="text-2xl font-bold text-gray-900 dark:text-gray-100 text-center mb-12">Career Journey</h3>
+          <div className="grid md:grid-cols-3 gap-8">
+            {/* Education */}
+            <div className="bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 shadow-sm p-6">
+              <div className="flex items-center mb-4">
+                <div className="w-12 h-12 bg-green-100 dark:bg-green-900/20 rounded-xl flex items-center justify-center mr-4">
+                  <GraduationCap className="w-6 h-6 text-green-600 dark:text-green-400" />
+                </div>
+                <div>
+                  <h4 className="font-semibold text-gray-900 dark:text-gray-100">Education</h4>
+                  <p className="text-sm text-gray-600 dark:text-gray-400">2019 - 2023</p>
+                </div>
+              </div>
+              <p className="text-gray-700 dark:text-gray-300 text-sm">
+                B.Tech in Information Technology from Birsa Institute of Technology, Sindri with GPA 8.06/10
+              </p>
+            </div>
+
+            {/* Cisco */}
+            <div className="bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 shadow-sm p-6">
+              <div className="flex items-center mb-4">
+                <div className="w-12 h-12 bg-blue-100 dark:bg-blue-900/20 rounded-xl flex items-center justify-center mr-4">
+                  <Building className="w-6 h-6 text-blue-600 dark:text-blue-400" />
+                </div>
+                <div>
+                  <h4 className="font-semibold text-gray-900 dark:text-gray-100">Cisco Systems</h4>
+                  <p className="text-sm text-gray-600 dark:text-gray-400">2023 - 2024</p>
+                </div>
+              </div>
+              <p className="text-gray-700 dark:text-gray-300 text-sm">
+                Software Engineer Trainee - Developed automation skills and enterprise software understanding
+              </p>
+            </div>
+
+            {/* Current Role */}
+            <div className="bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 shadow-sm p-6">
+              <div className="flex items-center mb-4">
+                <div className="w-12 h-12 bg-purple-100 dark:bg-purple-900/20 rounded-xl flex items-center justify-center mr-4">
+                  <Briefcase className="w-6 h-6 text-purple-600 dark:text-purple-400" />
+                </div>
+                <div>
+                  <h4 className="font-semibold text-gray-900 dark:text-gray-100">Persistent Systems</h4>
+                  <p className="text-sm text-gray-600 dark:text-gray-400">2024 - Present</p>
+                </div>
+              </div>
+              <p className="text-gray-700 dark:text-gray-300 text-sm">
+                Senior Quality Engineer - Leading automation initiatives and quality assurance processes
+              </p>
+            </div>
+          </div>
+        </motion.div>
       </div>
     </section>
   );

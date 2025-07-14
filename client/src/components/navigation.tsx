@@ -1,126 +1,199 @@
 import { useTheme } from "@/components/theme-provider";
-import { Menu, X } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback, useMemo } from "react";
+// Types
+interface IndicatorStyle {
+  left: number;
+  width: number;
+  opacity: number;
+}
 
+// Constants
+const NAV_ITEMS: Readonly<Array<{ id: string; label: string }>> = [
+  { id: "home", label: "Home" },
+  { id: "about", label: "About" },
+  { id: "experience", label: "Experience" },
+  { id: "skills", label: "Skills" },
+  { id: "projects", label: "Projects" },
+  { id: "contact", label: "Contact" },
+] as const;
 
+const SCROLL_THRESHOLD = 100;
+const SCROLL_THROTTLE_DELAY = 16; // ~60fps
+
+// CSS class constants
+const COMMON_CLASSES = {
+  transition: "transition-all duration-300",
+  navButton: "px-3 py-2 rounded-full text-sm font-medium hover:scale-105 hover:shadow-lg relative z-10 transform focus:outline-none",
+  textColors: "text-gray-900 dark:text-gray-100 hover:text-blue-600 dark:hover:text-blue-400",
+} as const;
+// Optimized utility functions
+const throttle = <T extends (...args: unknown[]) => void>(func: T, delay: number): T => {
+  let timeoutId: NodeJS.Timeout | null = null;
+  let lastExecTime = 0;
+  
+  return ((...args: Parameters<T>) => {
+    const currentTime = Date.now();
+    
+    if (currentTime - lastExecTime > delay) {
+      func(...args);
+      lastExecTime = currentTime;
+    } else {
+      if (timeoutId) clearTimeout(timeoutId);
+      timeoutId = setTimeout(() => {
+        func(...args);
+        lastExecTime = Date.now();
+      }, delay - (currentTime - lastExecTime));
+    }
+  }) as T;
+};
+
+const getSystemTheme = (): "dark" | "light" => 
+  typeof window !== "undefined" && window.matchMedia?.("(prefers-color-scheme: dark)").matches 
+    ? "dark" 
+    : "light";
+
+// Optimized theme color calculation
+const getThemeColor = (theme: string, systemTheme: string): string => {
+  if (theme === "dark") return "#fff";
+  if (theme === "light") return "#000";
+  return systemTheme === "dark" ? "#fff" : "#000";
+};
 export default function Navigation() {
   const { theme } = useTheme();
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
-  const [systemTheme, setSystemTheme] = useState(() => {
-    if (typeof window !== 'undefined' && window.matchMedia) {
-      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-    }
-    return 'light';
+  const [systemTheme, setSystemTheme] = useState(getSystemTheme);
+  const [indicatorStyle, setIndicatorStyle] = useState<IndicatorStyle>({ 
+    left: 0, 
+    width: 0, 
+    opacity: 0 
   });
 
-  useEffect(() => {
-    if (typeof window === 'undefined' || !window.matchMedia) return;
-    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
-    const handleChange = (e: MediaQueryListEvent) => {
-      setSystemTheme(e.matches ? 'dark' : 'light');
-    };
-    mediaQuery.addEventListener('change', handleChange);
-    return () => mediaQuery.removeEventListener('change', handleChange);
+  // Memoized scroll handler with throttling
+  const handleScroll = useMemo(
+    () => throttle(() => setIsScrolled(window.scrollY > SCROLL_THRESHOLD), SCROLL_THROTTLE_DELAY),
+    []
+  );
+
+  // Memoized system theme change handler
+  const handleSystemThemeChange = useCallback((e: MediaQueryListEvent) => {
+    setSystemTheme(e.matches ? "dark" : "light");
   }, []);
 
+  // Effects
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 100);
-    };
+    if (typeof window === "undefined" || !window.matchMedia) return;
+    
+    const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
+    mediaQuery.addEventListener("change", handleSystemThemeChange);
+    
+    return () => mediaQuery.removeEventListener("change", handleSystemThemeChange);
+  }, [handleSystemThemeChange]);
 
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [handleScroll]);
+
+  // Optimized scroll function
+  const scrollToSection = useCallback((sectionId: string) => {
+    document.getElementById(sectionId)?.scrollIntoView({ behavior: "smooth" });
   }, []);
 
-  const scrollToSection = (sectionId: string) => {
-    const element = document.getElementById(sectionId);
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
-      setIsMobileMenuOpen(false);
+  // Memoized theme color
+  const bracketColor = useMemo(() => getThemeColor(theme, systemTheme), [theme, systemTheme]);
+
+  // Memoized logo component
+  const Logo = useMemo(() => (
+    <span className="text-2xl font-bold">
+      <span style={{ color: bracketColor }}>&lt;</span>
+      <span className="text-gradient"> Rishav </span>
+      <span style={{ color: bracketColor }}>/&gt;</span>
+    </span>
+  ), [bracketColor]);
+
+  // Optimized nav hover handler
+  const handleNavHover = useCallback((event: React.MouseEvent<HTMLButtonElement>) => {
+    const button = event.currentTarget;
+    const container = button.parentElement;
+    if (!container) return;
+
+    const containerRect = container.getBoundingClientRect();
+    const buttonRect = button.getBoundingClientRect();
+    
+    setIndicatorStyle({
+      left: buttonRect.left - containerRect.left,
+      width: buttonRect.width,
+      opacity: 1,
+    });
+  }, []);
+
+  const handleNavLeave = useCallback(() => {
+    setIndicatorStyle(prev => ({ ...prev, opacity: 0 }));
+  }, []);
+
+  // Optimized navigation styles with better performance
+  const navStyles = useMemo(() => {
+    const baseClasses = "fixed top-0 left-1/2 transform -translate-x-1/2 z-50 bg-white/90 dark:bg-gray-900/80 backdrop-blur-[12px] border-b border-gray-300/60 dark:border-gray-700/50 shadow-lg dark:shadow-gray-900/20 transition-all duration-500 ease-in-out";
+    
+    return {
+      main: `${baseClasses} ${isScrolled ? "w-4/5 lg:w-3/5 rounded-full mt-4" : "w-full rounded-none mt-0"}`,
+      container: `${COMMON_CLASSES.transition} duration-500 ease-in-out ${isScrolled ? "px-8" : "w-4/5 lg:w-3/5 mx-auto px-4 sm:px-6 lg:px-8"}`,
+      desktop: `${COMMON_CLASSES.transition} ${isScrolled ? "flex items-center space-x-2" : "ml-10 flex items-baseline space-x-4"}`,
+    };
+  }, [isScrolled]);
+  // Optimized indicator style object
+  const indicatorProps = useMemo(() => ({
+    className: "absolute bg-gradient-to-r from-blue-500/15 to-blue-600/15 dark:from-blue-400/15 dark:to-blue-500/15 rounded-full transition-all duration-300 ease-out pointer-events-none",
+    style: {
+      left: `${indicatorStyle.left}px`,
+      width: `${indicatorStyle.width}px`,
+      height: '40px',
+      top: '50%',
+      transform: 'translateY(-50%)',
+      opacity: indicatorStyle.opacity,
     }
-  };
-
-  const navItems = [
-    { id: "home", label: "Home" },
-    { id: "about", label: "About" },
-    { id: "experience", label: "Experience" },
-    { id: "skills", label: "Skills" },
-    { id: "projects", label: "Projects" },
-    { id: "contact", label: "Contact" },
-  ];
-
-
-  // Determine color for angle brackets based on theme
-  const getBracketColor = () => {
-    if (theme === "dark") return "#fff";
-    if (theme === "light") return "#000";
-    // For 'system', use systemTheme state
-    return systemTheme === 'dark' ? '#fff' : '#000';
-  };
+  }), [indicatorStyle]);
 
   return (
     <nav
-      className={`fixed top-0 left-1/2 transform -translate-x-1/2 z-50 bg-white/70 dark:bg-gray-900/70 backdrop-blur-[10px] border-b border-gray-200/50 dark:border-gray-700/50 transition-all duration-500 ease-in-out
-        ${isScrolled
-          ? 'w-4/5 lg:w-3/5 rounded-full mt-4'
-          : 'w-full rounded-none mt-0'}
-      `}
-      style={{
-        transitionProperty: 'width, margin, border-radius, background-color, box-shadow',
-      }}
+      className={navStyles.main}
+      style={{ transitionProperty: "width, margin, border-radius, background-color, box-shadow" }}
+      role="navigation"
+      aria-label="Main navigation"
     >
-      <div className={`transition-all duration-500 ease-in-out ${isScrolled ? 'px-8' : 'w-4/5 lg:w-3/5 mx-auto px-4 sm:px-6 lg:px-8'}`}>
+      <div className={navStyles.container}>
         <div className="flex items-center justify-between h-16 transition-all duration-500 ease-in-out">
           {/* Mobile: Only show title centered */}
           <div className="flex w-full items-center justify-center md:hidden">
-            <span className="text-2xl font-bold">
-              <span style={{ color: getBracketColor() }}>&lt;</span>
-              <span className=" text-gradient"> Rishav </span>
-              <span style={{ color: getBracketColor() }}>/&gt;</span>
-            </span>
+            {Logo}
           </div>
+          
           {/* Desktop/Tablet: Show title and nav items */}
           <div className="hidden md:flex w-full items-center justify-between">
-            <div className={`flex-shrink-0 transition-all duration-300 ${isScrolled ? 'hidden md:block' : 'block'}`}>
-              <span className="text-2xl font-bold">
-                <span style={{ color: getBracketColor() }}>&lt;</span>
-                <span className="text-gradient"> Rishav </span>
-                <span style={{ color: getBracketColor() }}>/&gt;</span>
-              </span>
+            <div className={`flex-shrink-0 transition-all duration-300 ${isScrolled ? "hidden md:block" : "block"}`}>
+              {Logo}
             </div>
-            <div>
-              <div className={`transition-all duration-300 ${isScrolled ? 'flex items-center space-x-2' : 'ml-10 flex items-baseline space-x-4'}`}>
-                {navItems.map((item) => (
+            
+            <nav role="navigation" aria-label="Desktop navigation">
+              <div className={`${navStyles.desktop} relative`} onMouseLeave={handleNavLeave}>
+                {/* Sliding background indicator */}
+                <div {...indicatorProps} />
+                
+                {NAV_ITEMS.map((item) => (
                   <button
                     key={item.id}
                     onClick={() => scrollToSection(item.id)}
-                    className="text-gray-700 dark:text-gray-300 hover:text-sky-600 dark:hover:text-sky-400 px-3 py-2 rounded-full text-sm font-medium transition-all duration-300 hover:bg-sky-50 dark:hover:bg-sky-900/30 hover:scale-105 hover:shadow-lg relative overflow-hidden group transform"
+                    onMouseEnter={handleNavHover}
+                    className={`${COMMON_CLASSES.textColors} ${COMMON_CLASSES.navButton} ${COMMON_CLASSES.transition}`}
+                    aria-label={`Navigate to ${item.label} section`}
+                    type="button"
                   >
                     <span className="relative z-10">{item.label}</span>
-                    <div className="absolute inset-0 bg-gradient-to-r from-sky-500 to-cyan-500 opacity-0 group-hover:opacity-10 transition-opacity duration-300 rounded-full"></div>
                   </button>
                 ))}
               </div>
-            </div>
+            </nav>
           </div>
-        </div>
-      </div>
-
-      {/* Mobile Navigation */}
-      <div className={`md:hidden bg-white/90 dark:bg-gray-900/90 backdrop-blur-[10px] shadow-lg border-b border-gray-200/50 dark:border-gray-700/50 transition-all duration-300 overflow-hidden ${isMobileMenuOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'}`}>
-        <div className="px-2 pt-2 pb-3 space-y-1">
-          {navItems.map((item, index) => (
-            <button
-              key={item.id}
-              onClick={() => scrollToSection(item.id)}
-              className="block px-3 py-2 text-gray-700 dark:text-gray-300 hover:text-sky-600 dark:hover:text-sky-400 font-medium w-full text-left transition-all duration-300 hover:bg-sky-50 dark:hover:bg-sky-900/30 rounded-lg transform hover:scale-105"
-              style={{ animationDelay: `${index * 50}ms` }}
-            >
-              {item.label}
-            </button>
-          ))}
         </div>
       </div>
     </nav>
