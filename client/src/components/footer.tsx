@@ -71,7 +71,7 @@ export default function Footer() {
   const socialLinks = [
     {
       icon: Linkedin,
-      href: "https://linkedin.com/in/rishav-kumar-rajak",
+      href: "https://linkedin.com/in/iamriishav",
       label: "LinkedIn",
       color: "hover:bg-blue-600"
     },

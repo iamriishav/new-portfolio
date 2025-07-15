@@ -73,7 +73,7 @@ export default function HeroSection() {
     },
     {
       icon: Linkedin,
-      href: "https://linkedin.com/in/rishav-kumar-rajak",
+      href: "https://linkedin.com/in/iamriishav",
       label: "LinkedIn"
     }
   ];
@@ -161,7 +161,7 @@ export default function HeroSection() {
               </h1>
               <div className="text-xl lg:text-2xl text-gray-300 mb-6 leading-relaxed">
                 <span className="block mb-2">Senior Quality Engineer</span>
-                <span className="text-blue-400 font-semibold">@ Persistent Systems</span>
+                <span className="text-blue-400 font-semibold">@Persistent Systems</span>
               </div>
             </motion.div>
 
@@ -172,7 +172,7 @@ export default function HeroSection() {
               className="text-lg text-gray-400 mb-8 leading-relaxed max-w-xl"
             >
               Passionate automation engineer with 1.5+ years of experience in building robust test frameworks 
-              and ensuring software quality. Specialized in GUI automation and performance testing.
+              and ensuring software quality. Specialized in GUI automation and regression testing.
             </motion.p>
 
             {/* Action buttons */}

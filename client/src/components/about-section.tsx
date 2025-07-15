@@ -40,8 +40,8 @@ export default function AboutSection() {
   const achievements = [
     {
       icon: Award,
-      title: "200+ Automation Scripts",
-      description: "Reduced manual testing by 40%"
+      title: "350+ Automation Scripts",
+      description: "Reduced manual testing by 20%"
     },
     {
       icon: Calendar,
@@ -51,7 +51,7 @@ export default function AboutSection() {
     {
       icon: MapPin,
       title: "Test Coverage",
-      description: "Increased by 60%"
+      description: "Increased by 30%"
     }
   ];
 
@@ -136,8 +136,7 @@ export default function AboutSection() {
               <div className="space-y-4 text-gray-700 dark:text-gray-300 leading-relaxed">
                 <p>
                   As a dedicated Senior Quality Engineer at Persistent Systems, I bring 1.5+ years of experience 
-                  specializing in UI automation, build validation, and test environments. I excel in Python and 
-                  DevOps practices, always seeking to contribute to fast-paced, quality-focused engineering teams.
+                  specializing in UI automation, build validation, and test environments. I excel in Python best practices, always seeking to contribute to fast-paced, quality-focused engineering teams.
                 </p>
                 <p>
                   My journey began at Birsa Institute of Technology, where I completed my B.Tech in Information 
@@ -146,8 +145,8 @@ export default function AboutSection() {
                   enterprise-level software development.
                 </p>
                 <p>
-                  Currently, I focus on GUI test automation, regression testing, and have developed over 200 
-                  automation scripts that reduced manual testing time by 40% and increased test coverage by 60%.
+                  Currently, I focus on GUI test automation, regression testing, and have developed over 350 
+                  automation scripts that reduced manual testing time by 20% and increased test coverage by 30%.
                 </p>
               </div>
             </div>
