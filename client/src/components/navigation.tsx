@@ -24,7 +24,7 @@ const SCROLL_THROTTLE_DELAY = 16; // ~60fps
 // CSS class constants
 const COMMON_CLASSES = {
   transition: "transition-all duration-300",
-  navButton: "px-3 py-2 rounded-full text-sm font-medium hover:scale-105 hover:shadow-lg relative z-10 transform focus:outline-none",
+  navButton: "px-3 py-2 rounded-full text-sm font-medium relative z-10 transform focus:outline-none",
   textColors: "text-gray-900 dark:text-gray-100 hover:text-blue-600 dark:hover:text-blue-400",
 } as const;
 // Optimized utility functions
@@ -102,11 +102,22 @@ export default function Navigation() {
 
   // Theme toggle function
   const toggleTheme = useCallback(() => {
-    setTheme(theme === "dark" ? "light" : "dark");
-  }, [theme, setTheme]);
+    if (theme === "system") {
+      // If currently on system theme, switch to the opposite of system preference
+      setTheme(systemTheme === "dark" ? "light" : "dark");
+    } else {
+      // If already on explicit theme, toggle between light and dark
+      setTheme(theme === "dark" ? "light" : "dark");
+    }
+  }, [theme, setTheme, systemTheme]);
+
+  // Get effective theme (resolves "system" to actual theme)
+  const effectiveTheme = useMemo(() => {
+    return theme === "system" ? systemTheme : theme;
+  }, [theme, systemTheme]);
 
   // Memoized theme color
-  const bracketColor = useMemo(() => getThemeColor(theme, systemTheme), [theme, systemTheme]);
+  const bracketColor = useMemo(() => getThemeColor(effectiveTheme, systemTheme), [effectiveTheme, systemTheme]);
 
   // Memoized logo component
   const Logo = useMemo(() => (
@@ -205,10 +216,10 @@ export default function Navigation() {
               <button
                 onClick={toggleTheme}
                 className="p-2 rounded-full bg-gray-100/80 dark:bg-gray-800/80 hover:bg-gray-200/80 dark:hover:bg-gray-700/80 text-gray-800 dark:text-gray-200 transition-all duration-300 hover:scale-110 hover:shadow-lg border border-gray-300/50 dark:border-gray-600/50"
-                aria-label={`Switch to ${theme === "dark" ? "light" : "dark"} mode`}
+                aria-label={`Switch to ${effectiveTheme === "dark" ? "light" : "dark"} mode`}
                 type="button"
               >
-                {theme === "dark" ? (
+                {effectiveTheme === "dark" ? (
                   <Sun className="h-4 w-4" />
                 ) : (
                   <Moon className="h-4 w-4" />
