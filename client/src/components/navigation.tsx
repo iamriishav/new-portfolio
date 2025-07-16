@@ -1,5 +1,6 @@
 import { useTheme } from "@/components/theme-provider";
 import React, { useState, useEffect, useCallback, useMemo } from "react";
+import { Moon, Sun } from "lucide-react";
 // Types
 interface IndicatorStyle {
   left: number;
@@ -59,7 +60,7 @@ const getThemeColor = (theme: string, systemTheme: string): string => {
   return systemTheme === "dark" ? "#fff" : "#000";
 };
 export default function Navigation() {
-  const { theme } = useTheme();
+  const { theme, setTheme } = useTheme();
   const [isScrolled, setIsScrolled] = useState(false);
   const [systemTheme, setSystemTheme] = useState(getSystemTheme);
   const [indicatorStyle, setIndicatorStyle] = useState<IndicatorStyle>({ 
@@ -98,6 +99,11 @@ export default function Navigation() {
   const scrollToSection = useCallback((sectionId: string) => {
     document.getElementById(sectionId)?.scrollIntoView({ behavior: "smooth" });
   }, []);
+
+  // Theme toggle function
+  const toggleTheme = useCallback(() => {
+    setTheme(theme === "dark" ? "light" : "dark");
+  }, [theme, setTheme]);
 
   // Memoized theme color
   const bracketColor = useMemo(() => getThemeColor(theme, systemTheme), [theme, systemTheme]);
@@ -174,25 +180,41 @@ export default function Navigation() {
               {Logo}
             </div>
             
-            <nav role="navigation" aria-label="Desktop navigation">
-              <div className={`${navStyles.desktop} relative`} onMouseLeave={handleNavLeave}>
-                {/* Sliding background indicator */}
-                <div {...indicatorProps} />
-                
-                {NAV_ITEMS.map((item) => (
-                  <button
-                    key={item.id}
-                    onClick={() => scrollToSection(item.id)}
-                    onMouseEnter={handleNavHover}
-                    className={`${COMMON_CLASSES.textColors} ${COMMON_CLASSES.navButton} ${COMMON_CLASSES.transition}`}
-                    aria-label={`Navigate to ${item.label} section`}
-                    type="button"
-                  >
-                    <span className="relative z-10">{item.label}</span>
-                  </button>
-                ))}
-              </div>
-            </nav>
+            <div className="flex items-center space-x-6">
+              <nav role="navigation" aria-label="Desktop navigation">
+                <div className={`${navStyles.desktop} relative`} onMouseLeave={handleNavLeave}>
+                  {/* Sliding background indicator */}
+                  <div {...indicatorProps} />
+                  
+                  {NAV_ITEMS.map((item) => (
+                    <button
+                      key={item.id}
+                      onClick={() => scrollToSection(item.id)}
+                      onMouseEnter={handleNavHover}
+                      className={`${COMMON_CLASSES.textColors} ${COMMON_CLASSES.navButton} ${COMMON_CLASSES.transition}`}
+                      aria-label={`Navigate to ${item.label} section`}
+                      type="button"
+                    >
+                      <span className="relative z-10">{item.label}</span>
+                    </button>
+                  ))}
+                </div>
+              </nav>
+              
+              {/* Theme Toggle Button - Desktop Only */}
+              <button
+                onClick={toggleTheme}
+                className="p-2 rounded-full bg-gray-100/80 dark:bg-gray-800/80 hover:bg-gray-200/80 dark:hover:bg-gray-700/80 text-gray-800 dark:text-gray-200 transition-all duration-300 hover:scale-110 hover:shadow-lg border border-gray-300/50 dark:border-gray-600/50"
+                aria-label={`Switch to ${theme === "dark" ? "light" : "dark"} mode`}
+                type="button"
+              >
+                {theme === "dark" ? (
+                  <Sun className="h-4 w-4" />
+                ) : (
+                  <Moon className="h-4 w-4" />
+                )}
+              </button>
+            </div>
           </div>
         </div>
       </div>
