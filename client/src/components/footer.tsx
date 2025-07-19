@@ -1,5 +1,13 @@
 import { motion } from "framer-motion";
-import { Linkedin, Github, Mail, MapPin, Phone, Heart, ArrowUp } from "lucide-react";
+import {
+  Linkedin,
+  Github,
+  Mail,
+  MapPin,
+  Phone,
+  Heart,
+  ArrowUp,
+} from "lucide-react";
 import { useState, useEffect } from "react";
 
 export default function Footer() {
@@ -10,28 +18,28 @@ export default function Footer() {
       setShowScrollTop(window.scrollY > 500);
     };
 
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   const fadeInUp = {
     initial: { opacity: 0, y: 30 },
     whileInView: { opacity: 1, y: 0 },
     transition: { duration: 0.6 },
-    viewport: { once: true, margin: "-50px" }
+    viewport: { once: true, margin: "-50px" },
   };
 
   const staggerContainer = {
     initial: {},
     whileInView: {
       transition: {
-        staggerChildren: 0.1
-      }
-    }
+        staggerChildren: 0.1,
+      },
+    },
   };
 
   const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   const scrollToSection = (sectionId: string) => {
@@ -54,18 +62,18 @@ export default function Footer() {
     {
       icon: Mail,
       label: "rajakrishav395@gmail.com",
-      href: "mailto:rajakrishav395@gmail.com"
+      href: "mailto:rajakrishav395@gmail.com",
     },
     {
       icon: Phone,
       label: "+91 94727 42873",
-      href: "tel:+919472742873"
+      href: "tel:+919472742873",
     },
     {
       icon: MapPin,
       label: "Bangalore, India",
-      href: null
-    }
+      href: null,
+    },
   ];
 
   const socialLinks = [
@@ -73,20 +81,20 @@ export default function Footer() {
       icon: Linkedin,
       href: "https://linkedin.com/in/iamriishav",
       label: "LinkedIn",
-      color: "hover:bg-blue-600"
+      color: "hover:bg-blue-600",
     },
     {
       icon: Github,
       href: "https://github.com/iamriishav",
-      label: "GitHub", 
-      color: "hover:bg-gray-800"
+      label: "GitHub",
+      color: "hover:bg-gray-800",
     },
     {
       icon: Mail,
       href: "mailto:rajakrishav395@gmail.com",
       label: "Email",
-      color: "hover:bg-red-500"
-    }
+      color: "hover:bg-red-500",
+    },
   ];
 
   return (
@@ -99,7 +107,7 @@ export default function Footer() {
       </div>
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        <motion.div 
+        <motion.div
           variants={staggerContainer}
           initial="initial"
           whileInView="whileInView"
@@ -111,12 +119,16 @@ export default function Footer() {
             <div className="mb-6">
               <h3 className="text-3xl font-bold mb-4">
                 <span className="text-white">&lt;</span>
-                <span className="bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent"> Rishav </span>
+                <span className="bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
+                  {" "}
+                  Rishav{" "}
+                </span>
                 <span className="text-white">/&gt;</span>
               </h3>
               <p className="text-gray-300 leading-relaxed mb-6">
-                Senior Quality Engineer passionate about building robust test frameworks and ensuring software excellence. 
-                Let's create amazing digital experiences together.
+                Senior Quality Engineer passionate about building robust test
+                frameworks and ensuring software excellence. Let's create
+                amazing digital experiences together.
               </p>
             </div>
 
@@ -141,7 +153,9 @@ export default function Footer() {
 
           {/* Quick Links */}
           <motion.div variants={fadeInUp} className="lg:col-span-1">
-            <h4 className="text-xl font-semibold mb-6 text-white">Quick Links</h4>
+            <h4 className="text-xl font-semibold mb-6 text-white">
+              Quick Links
+            </h4>
             <ul className="space-y-3">
               {quickLinks.map((link) => (
                 <motion.li key={link.id} whileHover={{ x: 5 }}>
@@ -159,7 +173,9 @@ export default function Footer() {
 
           {/* Contact Info */}
           <motion.div variants={fadeInUp} className="lg:col-span-1">
-            <h4 className="text-xl font-semibold mb-6 text-white">Contact Info</h4>
+            <h4 className="text-xl font-semibold mb-6 text-white">
+              Contact Info
+            </h4>
             <ul className="space-y-4">
               {contactInfo.map((info, index) => (
                 <li key={index} className="flex items-center space-x-3">
@@ -185,12 +201,15 @@ export default function Footer() {
 
           {/* Newsletter/CTA */}
           <motion.div variants={fadeInUp} className="lg:col-span-1">
-            <h4 className="text-xl font-semibold mb-6 text-white">Let's Connect</h4>
+            <h4 className="text-xl font-semibold mb-6 text-white">
+              Let's Connect
+            </h4>
             <p className="text-gray-300 mb-6 leading-relaxed">
-              Ready to work together? Let's discuss your next project and bring your ideas to life.
+              Ready to work together? Let's discuss your next project and bring
+              your ideas to life.
             </p>
             <motion.button
-              onClick={() => scrollToSection('contact')}
+              onClick={() => scrollToSection("contact")}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-6 py-3 rounded-xl font-semibold transition-all duration-300 shadow-lg hover:shadow-xl"

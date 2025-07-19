@@ -1,5 +1,12 @@
 import { motion } from "framer-motion";
-import { Mail, Download, ArrowDown, Github, Linkedin, MapPin } from "lucide-react";
+import {
+  Mail,
+  Download,
+  ArrowDown,
+  Github,
+  Linkedin,
+  MapPin,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import profileImage from "@assets/profile_1752401362177.webp";
 import profileResume from "@assets/resume_1752404153091.pdf";
@@ -14,8 +21,8 @@ export default function HeroSection() {
       setMousePosition({ x: e.clientX, y: e.clientY });
     };
 
-    window.addEventListener('mousemove', handleMouseMove);
-    return () => window.removeEventListener('mousemove', handleMouseMove);
+    window.addEventListener("mousemove", handleMouseMove);
+    return () => window.removeEventListener("mousemove", handleMouseMove);
   }, []);
 
   // Intersection Observer to detect if home section is in view
@@ -26,11 +33,11 @@ export default function HeroSection() {
       },
       {
         threshold: 0.3, // Trigger when 30% of the section is visible
-        rootMargin: '-100px 0px' // Account for navbar height
+        rootMargin: "-100px 0px", // Account for navbar height
       }
     );
 
-    const homeSection = document.getElementById('home');
+    const homeSection = document.getElementById("home");
     if (homeSection) {
       observer.observe(homeSection);
     }
@@ -57,9 +64,9 @@ export default function HeroSection() {
   };
 
   const handleDownloadResume = () => {
-    const link = document.createElement('a');
+    const link = document.createElement("a");
     link.href = profileResume;
-    link.download = 'Rishav_Kumar_Rajak_Resume.pdf';
+    link.download = "Rishav_Kumar_Rajak_Resume.pdf";
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
@@ -69,22 +76,25 @@ export default function HeroSection() {
     {
       icon: Github,
       href: "https://github.com/iamriishav",
-      label: "GitHub"
+      label: "GitHub",
     },
     {
       icon: Linkedin,
       href: "https://linkedin.com/in/iamriishav",
-      label: "LinkedIn"
-    }
+      label: "LinkedIn",
+    },
   ];
 
   return (
-    <section id="home" className="min-h-screen flex items-center relative overflow-hidden bg-gradient-to-br from-slate-950 via-blue-950 to-slate-900">
+    <section
+      id="home"
+      className="min-h-screen flex items-center relative overflow-hidden bg-gradient-to-br from-slate-950 via-blue-950 to-slate-900"
+    >
       {/* Animated background elements */}
       <div className="absolute inset-0">
         {/* Main gradient overlay */}
         <div className="absolute inset-0 bg-gradient-to-br from-blue-600/20 via-purple-600/10 to-cyan-600/20"></div>
-        
+
         {/* Floating orbs */}
         <motion.div
           animate={{
@@ -94,7 +104,7 @@ export default function HeroSection() {
           transition={{
             duration: 20,
             repeat: Infinity,
-            ease: "linear"
+            ease: "linear",
           }}
           className="absolute top-1/4 left-1/4 w-96 h-96 bg-blue-500/20 rounded-full blur-3xl"
         />
@@ -106,7 +116,7 @@ export default function HeroSection() {
           transition={{
             duration: 25,
             repeat: Infinity,
-            ease: "linear"
+            ease: "linear",
           }}
           className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-purple-500/20 rounded-full blur-3xl"
         />
@@ -118,23 +128,24 @@ export default function HeroSection() {
           transition={{
             duration: 30,
             repeat: Infinity,
-            ease: "linear"
+            ease: "linear",
           }}
           className="absolute top-1/2 right-1/3 w-64 h-64 bg-cyan-500/15 rounded-full blur-3xl"
         />
-        
+
         {/* Cursor-following glow */}
         <div
           className="absolute pointer-events-none opacity-30"
           style={{
             left: mousePosition.x - 200,
             top: mousePosition.y - 200,
-            width: '400px',
-            height: '400px',
-            background: 'radial-gradient(circle, rgba(59, 130, 246, 0.15) 0%, rgba(147, 51, 234, 0.1) 30%, transparent 70%)',
-            borderRadius: '50%',
-            filter: 'blur(40px)',
-            transform: 'translate3d(0, 0, 0)',
+            width: "400px",
+            height: "400px",
+            background:
+              "radial-gradient(circle, rgba(59, 130, 246, 0.15) 0%, rgba(147, 51, 234, 0.1) 30%, transparent 70%)",
+            borderRadius: "50%",
+            filter: "blur(40px)",
+            transform: "translate3d(0, 0, 0)",
           }}
         />
       </div>
@@ -161,7 +172,9 @@ export default function HeroSection() {
               </h1>
               <div className="text-xl lg:text-2xl text-gray-300 mb-6 leading-relaxed">
                 <span className="block mb-2">Senior Quality Engineer</span>
-                <span className="text-blue-400 font-semibold">@Persistent Systems</span>
+                <span className="text-blue-400 font-semibold">
+                  @Persistent Systems
+                </span>
               </div>
             </motion.div>
 
@@ -171,8 +184,9 @@ export default function HeroSection() {
               transition={{ duration: 0.8, delay: 0.4 }}
               className="text-lg text-gray-400 mb-8 leading-relaxed max-w-xl"
             >
-              Passionate automation engineer with 1.5+ years of experience in building robust test frameworks 
-              and ensuring software quality. Specialized in GUI automation and regression testing.
+              Passionate automation engineer with 1.5+ years of experience in
+              building robust test frameworks and ensuring software quality.
+              Specialized in GUI automation and regression testing.
             </motion.p>
 
             {/* Action buttons */}
@@ -233,16 +247,25 @@ export default function HeroSection() {
               {/* Profile image container */}
               <div className="relative w-80 h-80 lg:w-96 lg:h-96">
                 {/* Animated rings */}
-                <div className="absolute inset-0 rounded-full border-2 border-blue-500/30 animate-spin" style={{ animationDuration: '10s' }}></div>
-                <div className="absolute inset-4 rounded-full border border-purple-500/20 animate-spin" style={{ animationDuration: '15s', animationDirection: 'reverse' }}></div>
-                
+                <div
+                  className="absolute inset-0 rounded-full border-2 border-blue-500/30 animate-spin"
+                  style={{ animationDuration: "10s" }}
+                ></div>
+                <div
+                  className="absolute inset-4 rounded-full border border-purple-500/20 animate-spin"
+                  style={{
+                    animationDuration: "15s",
+                    animationDirection: "reverse",
+                  }}
+                ></div>
+
                 {/* Glow effect */}
                 <div className="absolute inset-0 bg-gradient-to-br from-blue-500/20 to-purple-500/20 rounded-full blur-xl"></div>
-                
+
                 {/* Profile image */}
-                <img 
-                  src={profileImage} 
-                  alt="Rishav Kumar Rajak" 
+                <img
+                  src={profileImage}
+                  alt="Rishav Kumar Rajak"
                   className="relative z-10 w-full h-full object-cover rounded-full border-4 border-gray-700 shadow-2xl"
                 />
               </div>
@@ -256,18 +279,20 @@ export default function HeroSection() {
               className="grid grid-cols-2 gap-4 w-full max-w-sm"
             >
               <div className="bg-gray-800/50 backdrop-blur-sm border border-gray-700 rounded-2xl p-4 text-center">
-                <div className="text-2xl font-bold text-blue-400 mb-1">1.5+</div>
+                <div className="text-2xl font-bold text-blue-400 mb-1">
+                  1.5+
+                </div>
                 <div className="text-sm text-gray-400">Years Experience</div>
               </div>
               <div className="bg-gray-800/50 backdrop-blur-sm border border-gray-700 rounded-2xl p-4 text-center">
-                <div className="text-2xl font-bold text-purple-400 mb-1">350+</div>
+                <div className="text-2xl font-bold text-purple-400 mb-1">
+                  350+
+                </div>
                 <div className="text-sm text-gray-400">Test Scripts</div>
               </div>
             </motion.div>
           </div>
         </div>
-
-        
       </div>
 
       {/* Scroll indicator - positioned at bottom center of viewport, hidden on mobile and when not in home section */}

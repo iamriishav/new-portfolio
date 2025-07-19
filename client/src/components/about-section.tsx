@@ -1,5 +1,16 @@
 import { motion } from "framer-motion";
-import { GraduationCap, Briefcase, Building, Linkedin, Github, Twitter, MapPin, Calendar, Award, Quote } from "lucide-react";
+import {
+  GraduationCap,
+  Briefcase,
+  Building,
+  Linkedin,
+  Github,
+  Twitter,
+  MapPin,
+  Calendar,
+  Award,
+  Quote,
+} from "lucide-react";
 import profileImage from "@assets/profile_1752401362177.webp";
 import { useMemo } from "react";
 
@@ -8,12 +19,12 @@ export default function AboutSection() {
     initial: { opacity: 0, y: 20 },
     whileInView: { opacity: 1, y: 0 },
     transition: { duration: 0.5 },
-    viewport: { once: true }
+    viewport: { once: true },
   };
 
   const cardHover = {
     scale: 1.02,
-    transition: { duration: 0.3, ease: "easeOut" }
+    transition: { duration: 0.3, ease: "easeOut" },
   };
 
   // Coding quotes that change on refresh
@@ -29,7 +40,7 @@ export default function AboutSection() {
     "Programming isn't about what you know; it's about what you can figure out.",
     "The only way to learn a new programming language is by writing programs in it.",
     "Simplicity is the ultimate sophistication.",
-    "Make it work, make it right, make it fast."
+    "Make it work, make it right, make it fast.",
   ];
 
   // Select a random quote on component mount
@@ -41,26 +52,31 @@ export default function AboutSection() {
     {
       icon: Award,
       title: "350+ Automation Scripts",
-      description: "Reduced manual testing by 20%"
+      description: "Reduced manual testing by 20%",
     },
     {
       icon: Calendar,
       title: "1.5+ Years Experience",
-      description: "In quality engineering"
+      description: "In quality engineering",
     },
     {
       icon: MapPin,
       title: "Test Coverage",
-      description: "Increased by 30%"
-    }
+      description: "Increased by 30%",
+    },
   ];
 
   return (
-    <section id="about" className="py-20 bg-gradient-to-br from-white to-gray-50 dark:from-gray-900 dark:to-gray-800">
+    <section
+      id="about"
+      className="py-20 bg-gradient-to-br from-white to-gray-50 dark:from-gray-900 dark:to-gray-800"
+    >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <motion.div {...fadeInUp} className="text-center mb-20">
-          <h2 className="text-4xl md:text-5xl font-bold text-gradient mb-6">About Me</h2>
+          <h2 className="text-4xl md:text-5xl font-bold text-gradient mb-6">
+            About Me
+          </h2>
           <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto leading-relaxed">
             Passionate about software quality and continuous improvement
           </p>
@@ -69,7 +85,7 @@ export default function AboutSection() {
         {/* Main Content Grid */}
         <div className="grid lg:grid-cols-3 gap-12">
           {/* Profile Card */}
-          <motion.div 
+          <motion.div
             {...fadeInUp}
             whileHover={cardHover}
             className="lg:col-span-1 h-full"
@@ -84,14 +100,14 @@ export default function AboutSection() {
                   />
                   <div className="absolute bottom-2 right-2 w-6 h-6 bg-green-500 rounded-full border-3 border-white dark:border-gray-800" />
                 </div>
-                
+
                 <h3 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-2">
                   Rishav Kumar
                 </h3>
                 <p className="text-lg text-gray-600 dark:text-gray-300 mb-6">
                   Senior Quality Engineer
                 </p>
-                
+
                 {/* Dynamic Coding Quote - Expanded */}
                 <div className="bg-gray-50 dark:bg-gray-700/50 rounded-2xl p-6 mb-6 relative flex-1 flex items-center">
                   <Quote className="w-5 h-5 text-gray-400 dark:text-gray-500 absolute top-4 left-4" />
@@ -100,23 +116,23 @@ export default function AboutSection() {
                   </p>
                 </div>
               </div>
-              
+
               {/* Social Links */}
               <div className="flex justify-center space-x-4">
-                <a 
-                  href="https://linkedin.com/in/iamriishav" 
+                <a
+                  href="https://linkedin.com/in/iamriishav"
                   className="p-3 bg-gray-100 dark:bg-gray-700 rounded-xl hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors duration-200"
                 >
                   <Linkedin className="w-5 h-5 text-gray-700 dark:text-gray-300" />
                 </a>
-                <a 
-                  href="https://github.com/iamriishav" 
+                <a
+                  href="https://github.com/iamriishav"
                   className="p-3 bg-gray-100 dark:bg-gray-700 rounded-xl hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors duration-200"
                 >
                   <Github className="w-5 h-5 text-gray-700 dark:text-gray-300" />
                 </a>
-                <a 
-                  href="https://x.com/iamriishav" 
+                <a
+                  href="https://x.com/iamriishav"
                   className="p-3 bg-gray-100 dark:bg-gray-700 rounded-xl hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors duration-200"
                 >
                   <Twitter className="w-5 h-5 text-gray-700 dark:text-gray-300" />
@@ -126,27 +142,32 @@ export default function AboutSection() {
           </motion.div>
 
           {/* Content & Story */}
-          <motion.div 
-            {...fadeInUp}
-            className="lg:col-span-2 space-y-8"
-          >
+          <motion.div {...fadeInUp} className="lg:col-span-2 space-y-8">
             {/* Story */}
             <div className="bg-white dark:bg-gray-800 rounded-3xl border border-gray-200 dark:border-gray-700 shadow-sm p-8">
-              <h3 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-6">My Story</h3>
+              <h3 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-6">
+                My Story
+              </h3>
               <div className="space-y-4 text-gray-700 dark:text-gray-300 leading-relaxed">
                 <p>
-                  As a dedicated Senior Quality Engineer at Persistent Systems, I bring 1.5+ years of experience 
-                  specializing in UI automation, build validation, and test environments. I excel in Python best practices, always seeking to contribute to fast-paced, quality-focused engineering teams.
+                  As a dedicated Senior Quality Engineer at Persistent Systems,
+                  I bring 1.5+ years of experience specializing in UI
+                  automation, build validation, and test environments. I excel
+                  in Python best practices, always seeking to contribute to
+                  fast-paced, quality-focused engineering teams.
                 </p>
                 <p>
-                  My journey began at Birsa Institute of Technology, where I completed my B.Tech in Information 
-                  Technology in 2023 with a GPA of 8.06/10. This solid foundation led me to a trainee position 
-                  at Cisco Systems, where I spent a year developing automation skills and understanding 
-                  enterprise-level software development.
+                  My journey began at Birsa Institute of Technology, where I
+                  completed my B.Tech in Information Technology in 2023 with a
+                  GPA of 8.06/10. This solid foundation led me to a trainee
+                  position at Cisco Systems, where I spent a year developing
+                  automation skills and understanding enterprise-level software
+                  development.
                 </p>
                 <p>
-                  Currently, I focus on GUI test automation, regression testing, and have developed over 350 
-                  automation scripts that reduced manual testing time by 20% and increased test coverage by 30%.
+                  Currently, I focus on GUI test automation, regression testing,
+                  and have developed over 350 automation scripts that reduced
+                  manual testing time by 20% and increased test coverage by 30%.
                 </p>
               </div>
             </div>
@@ -178,11 +199,10 @@ export default function AboutSection() {
         </div>
 
         {/* Experience Timeline */}
-        <motion.div 
-          {...fadeInUp}
-          className="mt-20"
-        >
-          <h3 className="text-2xl font-bold text-gray-900 dark:text-gray-100 text-center mb-12">Career Journey</h3>
+        <motion.div {...fadeInUp} className="mt-20">
+          <h3 className="text-2xl font-bold text-gray-900 dark:text-gray-100 text-center mb-12">
+            Career Journey
+          </h3>
           <div className="grid md:grid-cols-3 gap-8">
             {/* Education */}
             <div className="bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 shadow-sm p-6">
@@ -191,12 +211,17 @@ export default function AboutSection() {
                   <GraduationCap className="w-6 h-6 text-green-600 dark:text-green-400" />
                 </div>
                 <div>
-                  <h4 className="font-semibold text-gray-900 dark:text-gray-100">Education</h4>
-                  <p className="text-sm text-gray-600 dark:text-gray-400">2019 - 2023</p>
+                  <h4 className="font-semibold text-gray-900 dark:text-gray-100">
+                    Education
+                  </h4>
+                  <p className="text-sm text-gray-600 dark:text-gray-400">
+                    2019 - 2023
+                  </p>
                 </div>
               </div>
               <p className="text-gray-700 dark:text-gray-300 text-sm">
-                B.Tech in Information Technology from Birsa Institute of Technology, Sindri with GPA 8.06/10
+                B.Tech in Information Technology from Birsa Institute of
+                Technology, Sindri with GPA 8.06/10
               </p>
             </div>
 
@@ -207,12 +232,17 @@ export default function AboutSection() {
                   <Building className="w-6 h-6 text-blue-600 dark:text-blue-400" />
                 </div>
                 <div>
-                  <h4 className="font-semibold text-gray-900 dark:text-gray-100">Cisco Systems</h4>
-                  <p className="text-sm text-gray-600 dark:text-gray-400">2023 - 2024</p>
+                  <h4 className="font-semibold text-gray-900 dark:text-gray-100">
+                    Cisco Systems
+                  </h4>
+                  <p className="text-sm text-gray-600 dark:text-gray-400">
+                    2023 - 2024
+                  </p>
                 </div>
               </div>
               <p className="text-gray-700 dark:text-gray-300 text-sm">
-                Software Engineer Trainee - Developed automation skills and enterprise software understanding
+                Software Engineer Trainee - Developed automation skills and
+                enterprise software understanding
               </p>
             </div>
 
@@ -223,12 +253,17 @@ export default function AboutSection() {
                   <Briefcase className="w-6 h-6 text-purple-600 dark:text-purple-400" />
                 </div>
                 <div>
-                  <h4 className="font-semibold text-gray-900 dark:text-gray-100">Persistent Systems</h4>
-                  <p className="text-sm text-gray-600 dark:text-gray-400">2024 - Present</p>
+                  <h4 className="font-semibold text-gray-900 dark:text-gray-100">
+                    Persistent Systems
+                  </h4>
+                  <p className="text-sm text-gray-600 dark:text-gray-400">
+                    2024 - Present
+                  </p>
                 </div>
               </div>
               <p className="text-gray-700 dark:text-gray-300 text-sm">
-                Senior Quality Engineer - Leading automation initiatives and quality assurance processes
+                Senior Quality Engineer - Leading automation initiatives and
+                quality assurance processes
               </p>
             </div>
           </div>
