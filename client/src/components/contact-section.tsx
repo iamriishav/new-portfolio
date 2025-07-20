@@ -272,6 +272,7 @@ export default function ContactSection() {
                 <form
                   ref={formRef}
                   onSubmit={handleSubmit}
+                  autoComplete="off"
                   className="space-y-6 flex-1 flex flex-col justify-center"
                 >
                   <input type="hidden" name="_gotcha" />

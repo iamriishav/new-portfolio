@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 import {
   Mail,
   Download,
-  ArrowDown,
+  Mouse,
   Github,
   Linkedin,
   MapPin,
@@ -218,7 +218,7 @@ export default function HeroSection() {
               initial={{ opacity: 0, x: -50 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8, delay: 0.8 }}
-              className="flex gap-4"
+              className="flex gap-4 justify-center md:justify-start"
             >
               {socialLinks.map((social, index) => (
                 <motion.a
@@ -311,7 +311,7 @@ export default function HeroSection() {
             className="flex flex-col items-center gap-2 text-gray-400 hover:text-white transition-colors duration-300"
           >
             <span className="text-sm font-medium">Scroll to explore</span>
-            <ArrowDown className="w-5 h-5" />
+            <Mouse className="w-5 h-5" />
           </motion.button>
         </motion.div>
       )}

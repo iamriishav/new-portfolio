@@ -200,13 +200,6 @@ const ExperienceCard = ({
               <h3 className="text-2xl font-bold text-gray-900 dark:text-gray-100">
                 {exp.title}
               </h3>
-              {isMobile && (
-                <div
-                  className={`w-2.5 h-2.5 ${
-                    STATUS_COLORS[exp.status]
-                  } rounded-full`}
-                />
-              )}
             </div>
             <p className="text-lg font-semibold text-gray-600 dark:text-gray-300 mb-3">
               {exp.company}
