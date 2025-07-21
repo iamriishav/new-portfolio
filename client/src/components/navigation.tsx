@@ -74,6 +74,7 @@ export default function Navigation() {
     width: 0,
     opacity: 0,
   });
+  const [activeSection, setActiveSection] = useState<string>("home");
 
   // Memoized scroll handler with throttling
   const handleScroll = useMemo(
@@ -136,64 +137,106 @@ export default function Navigation() {
   // Memoized logo component
   const Logo = useMemo(
     () => (
-      <span className="text-2xl font-bold">
+      <a href="/" className="text-2xl font-bold" aria-label="Go to home">
         <span style={{ color: bracketColor }}>&lt;</span>
         <span className="text-gradient"> Rishav </span>
         <span style={{ color: bracketColor }}>/&gt;</span>
-      </span>
+      </a>
     ),
     [bracketColor]
   );
 
-  // Optimized nav hover handler
-  const handleNavHover = useCallback(
-    (event: React.MouseEvent<HTMLButtonElement>) => {
-      const button = event.currentTarget;
-      const container = button.parentElement;
-      if (!container) return;
-
+  // Helper to move indicator to nav item by id
+  const moveIndicatorToNavItem = useCallback(
+    (itemId: string, show: boolean = true) => {
+      const navButton = document.querySelector(
+        `button[data-nav-id='${itemId}']`
+      );
+      const container = navButton?.parentElement;
+      if (!navButton || !container) return;
       const containerRect = container.getBoundingClientRect();
-      const buttonRect = button.getBoundingClientRect();
-
+      const buttonRect = navButton.getBoundingClientRect();
       setIndicatorStyle({
         left: buttonRect.left - containerRect.left,
         width: buttonRect.width,
-        opacity: 1,
+        opacity: show ? 1 : 0,
       });
     },
     []
   );
 
+  // Nav hover handler
+  const handleNavHover = useCallback(
+    (event: React.MouseEvent<HTMLButtonElement>) => {
+      const button = event.currentTarget;
+      moveIndicatorToNavItem(
+        button.getAttribute("data-nav-id") || "home",
+        true
+      );
+    },
+    [moveIndicatorToNavItem]
+  );
+
   const handleNavLeave = useCallback(() => {
-    setIndicatorStyle((prev) => ({ ...prev, opacity: 0 }));
+    // Only hide indicator if on home, else keep it on active section
+    if (activeSection === "home") {
+      setIndicatorStyle((prev) => ({ ...prev, opacity: 0 }));
+    } else {
+      moveIndicatorToNavItem(activeSection, true);
+    }
+  }, [activeSection, moveIndicatorToNavItem]);
+  // Track section in view
+  useEffect(() => {
+    const handleSectionScroll = () => {
+      let found = "home";
+      for (const item of NAV_ITEMS) {
+        const el = document.getElementById(item.id);
+        if (el) {
+          const rect = el.getBoundingClientRect();
+          if (rect.top <= 80 && rect.bottom > 80) {
+            found = item.id;
+            break;
+          }
+        }
+      }
+      setActiveSection(found);
+    };
+    window.addEventListener("scroll", handleSectionScroll, { passive: true });
+    handleSectionScroll();
+    return () => window.removeEventListener("scroll", handleSectionScroll);
   }, []);
+
+  // Move indicator to active section when it changes (except home)
+  useEffect(() => {
+    if (activeSection !== "home") {
+      moveIndicatorToNavItem(activeSection, true);
+    } else {
+      setIndicatorStyle((prev) => ({ ...prev, opacity: 0 }));
+    }
+  }, [activeSection, moveIndicatorToNavItem]);
 
   // Optimized navigation styles with better performance
   const navStyles = useMemo(() => {
     const baseClasses =
       "fixed top-0 left-1/2 transform -translate-x-1/2 z-50 bg-white/90 dark:bg-gray-900/80 backdrop-blur-[4px] border-b border-gray-300/60 dark:border-gray-700/50 shadow-lg dark:shadow-gray-900/20 transition-all duration-500 ease-in-out";
 
+    // Expand to 90% width on home tab, shrink to current width otherwise
+    const isHome = activeSection === "home";
     return {
       main: `${baseClasses} ${
-        isScrolled
-          ? "w-4/5 lg:w-3/5 rounded-full mt-4"
-          : "w-full rounded-none mt-0"
+        isHome ? "w-4/5 rounded-full mt-4" : "w-4/5 lg:w-3/5 rounded-full mt-4"
       }`,
       container: `${COMMON_CLASSES.transition} duration-500 ease-in-out ${
-        isScrolled ? "px-8" : "w-4/5 lg:w-3/5 mx-auto px-4 sm:px-6 lg:px-8"
+        isHome ? "w-5/5 mx-auto px-8" : "px-8"
       }`,
-      desktop: `${COMMON_CLASSES.transition} ${
-        isScrolled
-          ? "flex items-center space-x-2"
-          : "ml-10 flex items-baseline space-x-4"
-      }`,
+      desktop: `${COMMON_CLASSES.transition} flex items-center space-x-2`,
     };
-  }, [isScrolled]);
+  }, [activeSection]);
   // Optimized indicator style object
   const indicatorProps = useMemo(
     () => ({
       className:
-        "absolute bg-gradient-to-r from-blue-500/15 to-blue-600/15 dark:from-blue-400/15 dark:to-blue-500/15 rounded-full transition-all duration-300 ease-out pointer-events-none",
+        "absolute bg-gradient-to-r from-blue-500/30 to-blue-600/30 dark:from-blue-400/30 dark:to-blue-500/30 rounded-full transition-all duration-300 ease-out pointer-events-none",
       style: {
         left: `${indicatorStyle.left}px`,
         width: `${indicatorStyle.width}px`,
@@ -225,53 +268,49 @@ export default function Navigation() {
 
           {/* Desktop/Tablet: Show title and nav items */}
           <div className="hidden md:flex w-full items-center justify-between">
-            <div
-              className={`flex-shrink-0 transition-all duration-300 ${
-                isScrolled ? "hidden md:block" : "block"
-              }`}
-            >
-              {Logo}
-            </div>
-
-            <div className="flex items-center space-x-6">
-              <nav role="navigation" aria-label="Desktop navigation">
-                <div
-                  className={`${navStyles.desktop} relative`}
-                  onMouseLeave={handleNavLeave}
+            <div className="flex w-full items-center justify-between px-8">
+              {/* Title aligned left */}
+              <div className="flex-shrink-0">{Logo}</div>
+              {/* Nav items and theme toggle aligned right */}
+              <div className="flex items-center space-x-6">
+                <nav role="navigation" aria-label="Desktop navigation">
+                  <div
+                    className={`${navStyles.desktop} relative`}
+                    onMouseLeave={handleNavLeave}
+                  >
+                    {/* Sliding background indicator */}
+                    <div {...indicatorProps} />
+                    {NAV_ITEMS.map((item) => (
+                      <button
+                        key={item.id}
+                        data-nav-id={item.id}
+                        onClick={() => scrollToSection(item.id)}
+                        onMouseEnter={handleNavHover}
+                        className={`${COMMON_CLASSES.textColors} ${COMMON_CLASSES.navButton} ${COMMON_CLASSES.transition}`}
+                        aria-label={`Navigate to ${item.label} section`}
+                        type="button"
+                      >
+                        <span className="relative z-10">{item.label}</span>
+                      </button>
+                    ))}
+                  </div>
+                </nav>
+                {/* Theme Toggle Button - Desktop Only */}
+                <button
+                  onClick={toggleTheme}
+                  className="p-2 rounded-full bg-gray-100/80 dark:bg-gray-800/80 hover:bg-gray-200/80 dark:hover:bg-gray-700/80 text-gray-800 dark:text-gray-200 transition-all duration-300 hover:scale-110 hover:shadow-lg border border-gray-300/50 dark:border-gray-600/50"
+                  aria-label={`Switch to ${
+                    effectiveTheme === "dark" ? "light" : "dark"
+                  } mode`}
+                  type="button"
                 >
-                  {/* Sliding background indicator */}
-                  <div {...indicatorProps} />
-
-                  {NAV_ITEMS.map((item) => (
-                    <button
-                      key={item.id}
-                      onClick={() => scrollToSection(item.id)}
-                      onMouseEnter={handleNavHover}
-                      className={`${COMMON_CLASSES.textColors} ${COMMON_CLASSES.navButton} ${COMMON_CLASSES.transition}`}
-                      aria-label={`Navigate to ${item.label} section`}
-                      type="button"
-                    >
-                      <span className="relative z-10">{item.label}</span>
-                    </button>
-                  ))}
-                </div>
-              </nav>
-
-              {/* Theme Toggle Button - Desktop Only */}
-              <button
-                onClick={toggleTheme}
-                className="p-2 rounded-full bg-gray-100/80 dark:bg-gray-800/80 hover:bg-gray-200/80 dark:hover:bg-gray-700/80 text-gray-800 dark:text-gray-200 transition-all duration-300 hover:scale-110 hover:shadow-lg border border-gray-300/50 dark:border-gray-600/50"
-                aria-label={`Switch to ${
-                  effectiveTheme === "dark" ? "light" : "dark"
-                } mode`}
-                type="button"
-              >
-                {effectiveTheme === "dark" ? (
-                  <Sun className="h-4 w-4" />
-                ) : (
-                  <Moon className="h-4 w-4" />
-                )}
-              </button>
+                  {effectiveTheme === "dark" ? (
+                    <Sun className="h-4 w-4" />
+                  ) : (
+                    <Moon className="h-4 w-4" />
+                  )}
+                </button>
+              </div>
             </div>
           </div>
         </div>

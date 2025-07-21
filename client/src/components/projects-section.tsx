@@ -101,8 +101,8 @@ export default function ProjectsSection() {
                 />
 
                 {/* Optimized Overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 ease-out">
-                  <div className="absolute bottom-0 left-0 right-0 p-6 text-white transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300 ease-out">
+                <div className="absolute inset-0 bg-black/70 flex flex-col justify-end opacity-0 group-hover:opacity-100 transition-opacity duration-300 ease-out will-change-opacity pointer-events-none">
+                  <div className="p-6 text-white pointer-events-auto">
                     <h3 className="text-2xl font-bold mb-2">{project.name}</h3>
                     <p className="text-gray-200 mb-4 text-sm leading-relaxed line-clamp-3">
                       {project.description}
@@ -114,7 +114,7 @@ export default function ProjectsSection() {
                         href={project.github}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="flex items-center gap-2 px-4 py-2 bg-white/20 backdrop-blur-sm border border-white/30 text-white rounded-lg hover:bg-white/30 transition-colors duration-200"
+                        className="flex items-center gap-2 px-4 py-2 bg-white/20 border border-white/30 text-white rounded-lg hover:bg-white/30 transition-colors duration-200"
                         onClick={(e) => e.stopPropagation()}
                       >
                         <Github className="w-4 h-4" />
@@ -124,7 +124,7 @@ export default function ProjectsSection() {
                         href={project.live}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="flex items-center gap-2 px-4 py-2 bg-blue-500/80 backdrop-blur-sm border border-blue-400/50 text-white rounded-lg hover:bg-blue-500/90 transition-colors duration-200"
+                        className="flex items-center gap-2 px-4 py-2 bg-blue-500/80 border border-blue-400/50 text-white rounded-lg hover:bg-blue-500/90 transition-colors duration-200"
                         onClick={(e) => e.stopPropagation()}
                       >
                         <ExternalLink className="w-4 h-4" />

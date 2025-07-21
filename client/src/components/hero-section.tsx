@@ -88,7 +88,7 @@ export default function HeroSection() {
   return (
     <section
       id="home"
-      className="min-h-screen flex items-center relative overflow-hidden bg-gradient-to-br from-slate-950 via-blue-950 to-slate-900"
+      className="min-h-screen flex items-center relative overflow-hidden bg-gradient-to-br from-slate-950 via-blue-950 to-slate-900 pt-4 sm:pt-0"
     >
       {/* Animated background elements */}
       <div className="absolute inset-0">
