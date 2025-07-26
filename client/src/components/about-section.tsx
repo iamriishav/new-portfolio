@@ -97,6 +97,9 @@ export default function AboutSection() {
                     src={profileImage}
                     alt="Rishav Kumar"
                     className="w-full h-full rounded-full object-cover border-4 border-gray-100 dark:border-gray-700"
+                    draggable={false}
+                    onContextMenu={e => e.preventDefault()}
+                    onDragStart={e => e.preventDefault()}
                   />
                   <div className="absolute bottom-2 right-2 w-6 h-6 bg-green-500 rounded-full border-3 border-white dark:border-gray-800" />
                 </div>

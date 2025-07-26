@@ -246,27 +246,48 @@ export default function HeroSection() {
             >
               {/* Profile image container */}
               <div className="relative w-80 h-80 lg:w-96 lg:h-96">
-                {/* Animated rings */}
+                {/* Morphing blob profile image */}
+                <style>{`
+                  @keyframes morph {
+                    0% {
+                      border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+                    }
+                    50% {
+                      border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%;
+                    }
+                    100% {
+                      border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+                    }
+                  }
+                  @media (max-width: 640px) {
+                    .morph-blob-img {
+                      height: 20rem !important;
+                      width: 20rem !important;
+                    }
+                  }
+                `}</style>
                 <div
-                  className="absolute inset-0 rounded-full border-2 border-blue-500/30 animate-spin"
-                  style={{ animationDuration: "10s" }}
-                ></div>
-                <div
-                  className="absolute inset-4 rounded-full border border-purple-500/20 animate-spin"
+                  className="relative z-10 morph-blob-img"
                   style={{
-                    animationDuration: "15s",
-                    animationDirection: "reverse",
+                    WebkitAnimation: 'morph 8s ease-in-out infinite',
+                    animation: 'morph 8s ease-in-out infinite',
+                    backgroundImage: `url(${profileImage})`,
+                    backgroundPosition: '50%',
+                    backgroundRepeat: 'no-repeat',
+                    backgroundSize: 'cover',
+                    border: '3px solid #3b82f6',
+                    borderRadius: '60% 40% 30% 70% / 60% 30% 70% 40%',
+                    height: '23rem',
+                    width: '23rem',
+                    position: 'relative',
+                    transition: 'all 1s ease-in-out',
+                    boxShadow: '0 8px 32px 0 rgba(31, 38, 135, 0.37)',
+                    userSelect: 'none',
                   }}
-                ></div>
-
-                {/* Glow effect */}
-                <div className="absolute inset-0 bg-gradient-to-br from-blue-500/20 to-purple-500/20 rounded-full blur-xl"></div>
-
-                {/* Profile image */}
-                <img
-                  src={profileImage}
-                  alt="Rishav Kumar Rajak"
-                  className="relative z-10 w-full h-full object-cover rounded-full border-4 border-gray-700 shadow-2xl"
+                  draggable={false}
+                  onContextMenu={e => e.preventDefault()}
+                  onDragStart={e => e.preventDefault()}
+                  aria-label="Profile image"
                 />
               </div>
             </motion.div>
