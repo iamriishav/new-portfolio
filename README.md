@@ -29,17 +29,18 @@ This is the portfolio website for **Rishav Kumar Rajak**.
 ## 📁 Folder Structure
 
 ```
+attached_assets/     # Images, PDF resume, etc.
 client/
   src/
     components/      # All React components (hero, about, navigation, etc.)
     hooks/           # Custom React hooks
     lib/             # Utility functions and query client
     pages/           # Page-level components (home, not-found)
+    App.tsx          # Main React app component (providers, routing)
     index.css        # Tailwind and global styles
     main.tsx         # App entry point
   index.html         # Main HTML file
 shared/              # Shared types/schema
-attached_assets/     # Images, PDF resume, etc.
 ```
 
 ## 🚀 Getting Started
