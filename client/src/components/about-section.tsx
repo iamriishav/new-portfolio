@@ -41,6 +41,27 @@ export default function AboutSection() {
     "The only way to learn a new programming language is by writing programs in it.",
     "Simplicity is the ultimate sophistication.",
     "Make it work, make it right, make it fast.",
+    "Programs must be written for people to read, and only incidentally for machines to execute.",
+    "Any fool can write code that a computer can understand. Good programmers write code that humans can understand.",
+    "Before software can be reusable it first has to be usable.",
+    "Sometimes it pays to stay in bed on Monday, rather than spending the rest of the week debugging Monday's code.",
+    "Testing leads to failure, and failure leads to understanding.",
+    "Deleted code is debugged code.",
+    "If debugging is the process of removing software bugs, then programming must be the process of putting them in.",
+    "Walking on water and developing software from a specification are easy if both are frozen.",
+    "It's not a bug - it's an undocumented feature.",
+    "The most disastrous thing that you can ever learn is your first programming language.",
+    "A good programmer is someone who always looks both ways before crossing a one-way street.",
+    "Software undergoes beta testing shortly before it's released. Beta is Latin for 'still doesn't work.'",
+    "If at first you don't succeed, call it version 1.0.",
+    "Weeks of programming can save you hours of planning.",
+    "There are only two kinds of programming languages: those people always bitch about and those nobody uses.",
+    "Computers are fast; programmers keep it slow.",
+    "To iterate is human, to recurse divine.",
+    "Real programmers count from 0.",
+    "A user interface is like a joke. If you have to explain it, it's not that good.",
+    "If you think your users are idiots, only idiots will use it.",
+    "The best thing about a boolean is even if you are wrong, you are only off by a bit."
   ];
 
   // Select a random quote on component mount

@@ -252,8 +252,14 @@ export default function HeroSection() {
                     0% {
                       border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
                     }
+                    25% {
+                      border-radius: 40% 60% 60% 40% / 50% 60% 40% 50%;
+                    }
                     50% {
                       border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%;
+                    }
+                    75% {
+                      border-radius: 70% 30% 40% 60% / 60% 40% 60% 40%;
                     }
                     100% {
                       border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
