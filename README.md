@@ -1,4 +1,4 @@
-# New Portfolio
+# Portfolio
 
 This is the portfolio website for **Rishav Kumar Rajak**.
 
