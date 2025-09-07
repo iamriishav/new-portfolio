@@ -55,7 +55,7 @@ const throttle = <T extends (...args: unknown[]) => void>(
 
 const getSystemTheme = (): "dark" | "light" =>
   typeof window !== "undefined" &&
-  window.matchMedia?.("(prefers-color-scheme: dark)").matches
+    window.matchMedia?.("(prefers-color-scheme: dark)").matches
     ? "dark"
     : "light";
 
@@ -178,13 +178,9 @@ export default function Navigation() {
   );
 
   const handleNavLeave = useCallback(() => {
-    // Only hide indicator if on home, else keep it on active section
-    if (activeSection === "home") {
-      setIndicatorStyle((prev) => ({ ...prev, opacity: 0 }));
-    } else {
-      moveIndicatorToNavItem(activeSection, true);
-    }
-  }, [activeSection, moveIndicatorToNavItem]);
+    // Always hide indicator when leaving nav (no active background)
+    setIndicatorStyle((prev) => ({ ...prev, opacity: 0 }));
+  }, []);
   // Track section in view
   useEffect(() => {
     const handleSectionScroll = () => {
@@ -208,12 +204,9 @@ export default function Navigation() {
 
   // Move indicator to active section when it changes (except home)
   useEffect(() => {
-    if (activeSection !== "home") {
-      moveIndicatorToNavItem(activeSection, true);
-    } else {
-      setIndicatorStyle((prev) => ({ ...prev, opacity: 0 }));
-    }
-  }, [activeSection, moveIndicatorToNavItem]);
+    // Do not show indicator for active section; keep it hover-only
+    setIndicatorStyle((prev) => ({ ...prev, opacity: 0 }));
+  }, [activeSection]);
 
   // Optimized navigation styles with better performance
   const navStyles = useMemo(() => {
@@ -223,12 +216,10 @@ export default function Navigation() {
     // Expand to 90% width on home tab, shrink to current width otherwise
     const isHome = activeSection === "home";
     return {
-      main: `${baseClasses} ${
-        isHome ? "w-4/5 rounded-full mt-4" : "w-4/5 lg:w-3/5 rounded-full mt-4"
-      }`,
-      container: `${COMMON_CLASSES.transition} duration-500 ease-in-out ${
-        isHome ? "w-5/5 mx-auto px-8" : "px-8"
-      }`,
+      main: `${baseClasses} ${isHome ? "w-4/5 rounded-full mt-4" : "w-4/5 lg:w-3/5 rounded-full mt-4"
+        }`,
+      container: `${COMMON_CLASSES.transition} duration-500 ease-in-out ${isHome ? "w-5/5 mx-auto px-8" : "px-8"
+        }`,
       desktop: `${COMMON_CLASSES.transition} flex items-center space-x-2`,
     };
   }, [activeSection]);
@@ -299,9 +290,8 @@ export default function Navigation() {
                 <button
                   onClick={toggleTheme}
                   className="p-2 rounded-full bg-gray-100/80 dark:bg-gray-800/80 hover:bg-gray-200/80 dark:hover:bg-gray-700/80 text-gray-800 dark:text-gray-200 transition-all duration-300 hover:scale-110 hover:shadow-lg border border-gray-300/50 dark:border-gray-600/50"
-                  aria-label={`Switch to ${
-                    effectiveTheme === "dark" ? "light" : "dark"
-                  } mode`}
+                  aria-label={`Switch to ${effectiveTheme === "dark" ? "light" : "dark"
+                    } mode`}
                   type="button"
                 >
                   {effectiveTheme === "dark" ? (
