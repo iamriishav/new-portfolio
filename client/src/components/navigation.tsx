@@ -75,6 +75,7 @@ export default function Navigation() {
     opacity: 0,
   });
   const [activeSection, setActiveSection] = useState<string>("home");
+  const [hoveredNav, setHoveredNav] = useState<string | null>(null);
 
   // Memoized scroll handler with throttling
   const handleScroll = useMemo(
@@ -169,16 +170,15 @@ export default function Navigation() {
   const handleNavHover = useCallback(
     (event: React.MouseEvent<HTMLButtonElement>) => {
       const button = event.currentTarget;
-      moveIndicatorToNavItem(
-        button.getAttribute("data-nav-id") || "home",
-        true
-      );
+      const id = button.getAttribute("data-nav-id") || "home";
+      setHoveredNav(id);
+      moveIndicatorToNavItem(id, true);
     },
     [moveIndicatorToNavItem]
   );
 
   const handleNavLeave = useCallback(() => {
-    // Always hide indicator when leaving nav (no active background)
+    setHoveredNav(null);
     setIndicatorStyle((prev) => ({ ...prev, opacity: 0 }));
   }, []);
   // Track section in view
@@ -204,9 +204,11 @@ export default function Navigation() {
 
   // Move indicator to active section when it changes (except home)
   useEffect(() => {
-    // Do not show indicator for active section; keep it hover-only
-    setIndicatorStyle((prev) => ({ ...prev, opacity: 0 }));
-  }, [activeSection]);
+    // Hide indicator when active section changes only if not hovering
+    if (!hoveredNav) {
+      setIndicatorStyle((prev) => ({ ...prev, opacity: 0 }));
+    }
+  }, [activeSection, hoveredNav]);
 
   // Optimized navigation styles with better performance
   const navStyles = useMemo(() => {
@@ -227,14 +229,16 @@ export default function Navigation() {
   const indicatorProps = useMemo(
     () => ({
       className:
-        "absolute bg-gradient-to-r from-blue-500/30 to-blue-600/30 dark:from-blue-400/30 dark:to-blue-500/30 rounded-full transition-all duration-300 ease-out pointer-events-none",
+        "absolute bg-gradient-to-r from-blue-500/25 via-blue-500/30 to-blue-600/35 dark:from-blue-400/25 dark:via-blue-400/30 dark:to-blue-500/35 rounded-full pointer-events-none shadow-sm backdrop-blur-[1px]",
       style: {
         left: `${indicatorStyle.left}px`,
         width: `${indicatorStyle.width}px`,
         height: "40px",
         top: "50%",
-        transform: "translateY(-50%)",
+        transform: `translateY(-50%) translateZ(0)`,
         opacity: indicatorStyle.opacity,
+        transition: "left 260ms cubic-bezier(0.22,0.61,0.36,1), width 260ms cubic-bezier(0.22,0.61,0.36,1), opacity 200ms ease, background 400ms ease",
+        willChange: "left, width, opacity",
       },
     }),
     [indicatorStyle]
@@ -271,19 +275,22 @@ export default function Navigation() {
                   >
                     {/* Sliding background indicator */}
                     <div {...indicatorProps} />
-                    {NAV_ITEMS.map((item) => (
-                      <button
-                        key={item.id}
-                        data-nav-id={item.id}
-                        onClick={() => scrollToSection(item.id)}
-                        onMouseEnter={handleNavHover}
-                        className={`${COMMON_CLASSES.textColors} ${COMMON_CLASSES.navButton} ${COMMON_CLASSES.transition}`}
-                        aria-label={`Navigate to ${item.label} section`}
-                        type="button"
-                      >
-                        <span className="relative z-10">{item.label}</span>
-                      </button>
-                    ))}
+                    {NAV_ITEMS.map((item) => {
+                      const isHovered = hoveredNav === item.id;
+                      return (
+                        <button
+                          key={item.id}
+                          data-nav-id={item.id}
+                          onClick={() => scrollToSection(item.id)}
+                          onMouseEnter={handleNavHover}
+                          className={`${COMMON_CLASSES.textColors} ${COMMON_CLASSES.navButton} ${COMMON_CLASSES.transition} ${isHovered ? "text-blue-700 dark:text-blue-300" : ""}`}
+                          aria-label={`Navigate to ${item.label} section`}
+                          type="button"
+                        >
+                          <span className="relative z-10">{item.label}</span>
+                        </button>
+                      );
+                    })}
                   </div>
                 </nav>
                 {/* Theme Toggle Button - Desktop Only */}

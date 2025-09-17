@@ -1,12 +1,5 @@
 import { motion } from "framer-motion";
-import {
-  Mail,
-  Download,
-  Mouse,
-  Github,
-  Linkedin,
-  MapPin,
-} from "lucide-react";
+import { Mail, Download, Github, Linkedin, MapPin } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import profileImage from "@assets/profile_1752401362177.webp";
 import profileResume from "@assets/resume_1752404153091.pdf";
@@ -14,7 +7,6 @@ import { useState, useEffect } from "react";
 
 export default function HeroSection() {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
-  const [isInView, setIsInView] = useState(true);
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
@@ -25,39 +17,8 @@ export default function HeroSection() {
     return () => window.removeEventListener("mousemove", handleMouseMove);
   }, []);
 
-  // Intersection Observer to detect if home section is in view
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        setIsInView(entry.isIntersecting);
-      },
-      {
-        threshold: 0.3, // Trigger when 30% of the section is visible
-        rootMargin: "-100px 0px", // Account for navbar height
-      }
-    );
-
-    const homeSection = document.getElementById("home");
-    if (homeSection) {
-      observer.observe(homeSection);
-    }
-
-    return () => {
-      if (homeSection) {
-        observer.unobserve(homeSection);
-      }
-    };
-  }, []);
-
   const scrollToContact = () => {
     const element = document.getElementById("contact");
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
-    }
-  };
-
-  const scrollToAbout = () => {
-    const element = document.getElementById("about");
     if (element) {
       element.scrollIntoView({ behavior: "smooth" });
     }
@@ -321,27 +282,6 @@ export default function HeroSection() {
           </div>
         </div>
       </div>
-
-      {/* Scroll indicator - positioned at bottom center of viewport, hidden on mobile and when not in home section */}
-      {isInView && (
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: 20 }}
-          transition={{ duration: 0.8, delay: 1.2 }}
-          className="hidden md:block fixed bottom-8 left-1/2 transform -translate-x-1/2 -translate-x-4 z-20"
-        >
-          <motion.button
-            onClick={scrollToAbout}
-            animate={{ y: [0, 10, 0] }}
-            transition={{ duration: 2, repeat: Infinity }}
-            className="flex flex-col items-center gap-2 text-gray-400 hover:text-white transition-colors duration-300"
-          >
-            <span className="text-sm font-medium">Scroll to explore</span>
-            <Mouse className="w-5 h-5" />
-          </motion.button>
-        </motion.div>
-      )}
     </section>
   );
 }
