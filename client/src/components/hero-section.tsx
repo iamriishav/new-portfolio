@@ -145,9 +145,9 @@ export default function HeroSection() {
               transition={{ duration: 0.8, delay: 0.4 }}
               className="text-lg text-gray-400 mb-8 leading-relaxed max-w-xl"
             >
-              Passionate automation engineer with 1.5+ years of experience in
+              Passionate automation engineer with 2+ years of experience in
               building robust test frameworks and ensuring software quality.
-              Specialized in GUI automation and regression testing.
+              Specialized in GUI and API automation and regression testing.
             </motion.p>
 
             {/* Action buttons */}
@@ -268,13 +268,13 @@ export default function HeroSection() {
             >
               <div className="bg-gray-800/50 backdrop-blur-sm border border-gray-700 rounded-2xl p-4 text-center">
                 <div className="text-2xl font-bold text-blue-400 mb-1">
-                  1.5+
+                  2+
                 </div>
                 <div className="text-sm text-gray-400">Years Experience</div>
               </div>
               <div className="bg-gray-800/50 backdrop-blur-sm border border-gray-700 rounded-2xl p-4 text-center">
                 <div className="text-2xl font-bold text-purple-400 mb-1">
-                  350+
+                  400+
                 </div>
                 <div className="text-sm text-gray-400">Test Scripts</div>
               </div>

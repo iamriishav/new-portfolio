@@ -28,7 +28,7 @@ const EXPERIENCES: readonly Experience[] = [
     period: "Nov 2024 - Present",
     status: "current",
     description:
-      "Automated GUI test cases for Configuration Template and Configuration Backup & Restore features. Performed regression testing on daily builds, identified 40+ defects including critical bugs. Developed 200+ automation scripts reducing manual testing time by 40% and increasing coverage by 60%.",
+      "Automated GUI test cases for Configuration Template and Configuration Backup & Restore features. Performed regression testing on daily builds, identified 60+ defects including critical bugs. Developed 300+ automation scripts reducing manual testing time by 20% and increasing coverage by 40%.",
     skills: [
       "GUI Automation",
       "Regression Testing",

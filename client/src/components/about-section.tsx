@@ -72,18 +72,18 @@ export default function AboutSection() {
   const achievements = [
     {
       icon: Award,
-      title: "350+ Automation Scripts",
+      title: "400+ Automation Scripts",
       description: "Reduced manual testing by 20%",
     },
     {
       icon: Calendar,
-      title: "1.5+ Years Experience",
+      title: "2+ Years Experience",
       description: "In quality engineering",
     },
     {
       icon: MapPin,
       title: "Test Coverage",
-      description: "Increased by 30%",
+      description: "Increased by 40%",
     },
   ];
 
@@ -175,7 +175,7 @@ export default function AboutSection() {
               <div className="space-y-4 text-gray-700 dark:text-gray-300 leading-relaxed">
                 <p>
                   As a dedicated Senior Quality Engineer at Persistent Systems,
-                  I bring 1.5+ years of experience specializing in UI
+                  I bring 2+ years of experience specializing in GUI and API
                   automation, build validation, and test environments. I excel
                   in Python best practices, always seeking to contribute to
                   fast-paced, quality-focused engineering teams.
@@ -189,9 +189,9 @@ export default function AboutSection() {
                   development.
                 </p>
                 <p>
-                  Currently, I focus on GUI test automation, regression testing,
-                  and have developed over 350 automation scripts that reduced
-                  manual testing time by 20% and increased test coverage by 30%.
+                  Currently, I focus on GUI and API test automation, regression testing,
+                  and have developed over 400 automation scripts that reduced
+                  manual testing time by 20% and increased test coverage by 40%.
                 </p>
               </div>
             </div>
