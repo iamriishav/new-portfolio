@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 import { Mail, Download, Github, Linkedin, MapPin } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import profileImage from "@assets/profile_1752401362177.webp";
-import profileResume from "@assets/resume_1752404153091.pdf";
+import profileResume from "@assets/resume.pdf";
 import { useState, useEffect } from "react";
 
 export default function HeroSection() {
