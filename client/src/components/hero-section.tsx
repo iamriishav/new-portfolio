@@ -2,11 +2,13 @@ import { motion } from "framer-motion";
 import { Mail, Download, Github, Linkedin, MapPin } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import profileImage from "@assets/profile_1752401362177.webp";
-import profileResume from "@assets/resume.pdf";
 import { useState, useEffect } from "react";
 
 export default function HeroSection() {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+
+  const RESUME_FILENAME = "Rishav_Kumar_Rajak_Resume.pdf";
+  const RESUME_URL = `/${RESUME_FILENAME}`;
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
@@ -26,8 +28,8 @@ export default function HeroSection() {
 
   const handleDownloadResume = () => {
     const link = document.createElement("a");
-    link.href = profileResume;
-    link.download = "Rishav_Kumar_Rajak_Resume.pdf";
+    link.href = RESUME_URL;
+    link.download = RESUME_FILENAME;
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
