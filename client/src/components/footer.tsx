@@ -9,18 +9,67 @@ import {
   ArrowUp,
 } from "lucide-react";
 import { useState, useEffect } from "react";
+import { useTheme } from "./theme-provider";
 
 export default function Footer() {
   const [showScrollTop, setShowScrollTop] = useState(false);
+  const [scrollProgress, setScrollProgress] = useState(0);
+  const { theme } = useTheme();
+  const [isDarkMode, setIsDarkMode] = useState(true);
 
   useEffect(() => {
+    let animationFrameId: number | null = null;
+
+    const updateScrollState = () => {
+      const scrollTop = window.scrollY || window.pageYOffset;
+      const scrollHeight =
+        document.documentElement.scrollHeight - window.innerHeight;
+
+      setShowScrollTop(scrollTop > 500);
+
+      if (scrollHeight <= 0) {
+        setScrollProgress(0);
+      } else {
+        const rawProgress = Math.min(
+          1,
+          Math.max(0, scrollTop / scrollHeight)
+        );
+
+        // Smoothly interpolate toward the target progress value
+        setScrollProgress((prev) => {
+          const smoothing = 0.25; // lower = smoother/slower
+          return prev + (rawProgress - prev) * smoothing;
+        });
+      }
+
+      animationFrameId = null;
+    };
+
     const handleScroll = () => {
-      setShowScrollTop(window.scrollY > 500);
+      if (animationFrameId !== null) return;
+      animationFrameId = window.requestAnimationFrame(updateScrollState);
     };
 
     window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    updateScrollState();
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      if (animationFrameId !== null) {
+        window.cancelAnimationFrame(animationFrameId);
+      }
+    };
   }, []);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
+    const systemPrefersDark = mediaQuery.matches;
+
+    setIsDarkMode(
+      theme === "dark" || (theme === "system" && systemPrefersDark),
+    );
+  }, [theme]);
 
   const fadeInUp = {
     initial: { opacity: 0, y: 30 },
@@ -96,6 +145,10 @@ export default function Footer() {
       color: "hover:bg-red-500",
     },
   ];
+
+  const radius = 28;
+  const circumference = 2 * Math.PI * radius;
+  const strokeDashoffset = circumference * (1 - scrollProgress);
 
   return (
     <footer className="relative bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white overflow-hidden">
@@ -243,10 +296,78 @@ export default function Footer() {
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.9 }}
           onClick={scrollToTop}
-          className="fixed bottom-8 right-8 z-50 w-12 h-12 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-full shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center"
+          className="fixed bottom-8 right-8 z-50 w-14 h-14 bg-transparent text-white rounded-full shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center"
           aria-label="Scroll to top"
         >
-          <ArrowUp className="w-6 h-6" />
+          <svg
+            className="absolute w-full h-full"
+            viewBox="0 0 64 64"
+            aria-hidden="true"
+          >
+            <defs>
+              <linearGradient
+                id="scrollProgressGradient"
+                x1="0%"
+                y1="0%"
+                x2="100%"
+                y2="0%"
+              >
+                <stop offset="0%" stopColor="#2563eb" stopOpacity="0.7" />
+                <stop offset="100%" stopColor="#7c3aed" stopOpacity="0.7" />
+              </linearGradient>
+              <mask id="maskSingleCap" mask-type="alpha">
+                <rect width="100%" height="100%" fill="white"></rect>
+                <circle
+                  cx="32"
+                  cy="32"
+                  r={radius}
+                  stroke="black"
+                  strokeWidth="8"
+                  strokeLinecap="round"
+                  strokeDasharray={`${circumference} 999`}
+                  transform="rotate(90 32 32)"
+                ></circle>
+              </mask>
+            </defs>
+
+            {/* Background ring */}
+            <circle
+              cx="32"
+              cy="32"
+              r={radius}
+              stroke={isDarkMode ? "#ffffff" : "#000000"}
+              strokeWidth="7"
+              fill="none"
+            ></circle>
+
+            {/* Progress ring */}
+            <circle
+              cx="32"
+              cy="32"
+              r={radius}
+              // stroke={"url(#scrollProgressGradient)"}
+              stroke={isDarkMode ? "url(#scrollProgressGradient)" : "#fff"}
+              strokeWidth="8"
+              fill="none"
+              strokeLinecap="round"
+              transform="rotate(-90 32 32)"
+              style={{
+                strokeDasharray: `${circumference} ${circumference}`,
+                strokeDashoffset,
+              }}
+              mask="url(#maskSingleCap)"
+            ></circle>
+          </svg>
+          <span className="relative z-10 flex items-center justify-center w-10 h-10">
+            <span
+              className="absolute inset-0 rounded-full bg-black"
+              style={{ filter: "blur(6px)" }}
+              aria-hidden="true"
+            ></span>
+            <span className="relative flex items-center justify-center w-8 h-8 rounded-full bg-black border border-white/20">
+              <ArrowUp className="w-5 h-5 text-white" />
+            </span>
+          </span>
         </motion.button>
       )}
     </footer>
