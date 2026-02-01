@@ -15,7 +15,7 @@ This is the portfolio website for **Rishav Kumar Rajak**.
 - Smooth navigation with section highlighting and theme toggle
 - About, Experience, Projects, Skills, and Contact sections
 - Dynamic coding quotes and achievements
-- Downloadable resume
+- Downloadable resume (served from public/
 - Social links and contact form
 
 ## 🛠️ Tech Stack
@@ -29,7 +29,8 @@ This is the portfolio website for **Rishav Kumar Rajak**.
 ## 📁 Folder Structure
 
 ```
-attached_assets/     # Images, PDF resume, etc.
+attached_assets/     # Images, icons, and other static assets
+client/public/       # Public assets served at the root (e.g. Rishav_Kumar_Rajak_Resume.pdf)
 client/
   src/
     components/      # All React components (hero, about, navigation, etc.)

@@ -1,5 +1,5 @@
 {
   "rewrites": [
-    { "source": "/(.*)", "destination": "/index.html" }
+    { "source": "/((?!Rishav_Kumar_Rajak_Resume\\.pdf).*)", "destination": "/index.html" }
   ]
 }
