@@ -7,8 +7,10 @@ import { useState, useEffect } from "react";
 export default function HeroSection() {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
 
-  const RESUME_FILENAME = "Rishav_Kumar_Rajak_Resume.pdf";
-  const RESUME_URL = `/${RESUME_FILENAME}`;
+  // Public path of the PDF in client/public
+  const RESUME_URL = "/resume.pdf";
+  // Filename that the user sees when downloading
+  const RESUME_DOWNLOAD_NAME = "Rishav_Kumar_Rajak_Resume.pdf";
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
@@ -29,7 +31,7 @@ export default function HeroSection() {
   const handleDownloadResume = () => {
     const link = document.createElement("a");
     link.href = RESUME_URL;
-    link.download = RESUME_FILENAME;
+    link.download = RESUME_DOWNLOAD_NAME;
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
