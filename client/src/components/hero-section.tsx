@@ -8,7 +8,7 @@ export default function HeroSection() {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
 
   // Public path of the PDF in client/public
-  const RESUME_URL = "/resume.pdf";
+  const RESUME_URL = "/Rishav_Kumar_Rajak_Resume.pdf";
   // Filename that the user sees when downloading
   const RESUME_DOWNLOAD_NAME = "Rishav_Kumar_Rajak_Resume.pdf";
 
