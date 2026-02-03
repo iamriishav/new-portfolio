@@ -345,8 +345,8 @@ export default function Footer() {
               cx="32"
               cy="32"
               r={radius}
-              // stroke={"url(#scrollProgressGradient)"}
-              stroke={isDarkMode ? "url(#scrollProgressGradient)" : "#fff"}
+              stroke={"url(#scrollProgressGradient)"}
+              // stroke={isDarkMode ? "url(#scrollProgressGradient)" : "#fff"}
               strokeWidth="8"
               fill="none"
               strokeLinecap="round"
