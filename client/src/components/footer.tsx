@@ -1,375 +1,170 @@
-import { motion } from "framer-motion";
-import {
-  Linkedin,
-  Github,
-  Mail,
-  MapPin,
-  Phone,
-  Heart,
-  ArrowUp,
-} from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Linkedin, Github, Mail, ArrowUp } from "lucide-react";
 import { useState, useEffect } from "react";
-import { useTheme } from "./theme-provider";
+
+const SOCIAL = [
+  {
+    icon: Linkedin,
+    href: "https://linkedin.com/in/iamriishav",
+    label: "LinkedIn",
+  },
+  {
+    icon: Github,
+    href: "https://github.com/iamriishav",
+    label: "GitHub",
+  },
+  {
+    icon: Mail,
+    href: "mailto:rajakrishav395@gmail.com",
+    label: "Email",
+  },
+] as const;
+
+const QUICK_LINKS = [
+  { id: "home", label: "Home" },
+  { id: "about", label: "About" },
+  { id: "experience", label: "Experience" },
+  { id: "projects", label: "Projects" },
+  { id: "contact", label: "Contact" },
+] as const;
 
 export default function Footer() {
   const [showScrollTop, setShowScrollTop] = useState(false);
-  const [scrollProgress, setScrollProgress] = useState(0);
-  const { theme } = useTheme();
-  const [isDarkMode, setIsDarkMode] = useState(true);
+  const [progress, setProgress] = useState(0);
 
   useEffect(() => {
-    let animationFrameId: number | null = null;
-
-    const updateScrollState = () => {
-      const scrollTop = window.scrollY || window.pageYOffset;
-      const scrollHeight =
-        document.documentElement.scrollHeight - window.innerHeight;
-
-      setShowScrollTop(scrollTop > 500);
-
-      if (scrollHeight <= 0) {
-        setScrollProgress(0);
-      } else {
-        const rawProgress = Math.min(
-          1,
-          Math.max(0, scrollTop / scrollHeight)
-        );
-
-        // Smoothly interpolate toward the target progress value
-        setScrollProgress((prev) => {
-          const smoothing = 0.25; // lower = smoother/slower
-          return prev + (rawProgress - prev) * smoothing;
-        });
-      }
-
-      animationFrameId = null;
+    let raf = 0;
+    const onScroll = () => {
+      if (raf) return;
+      raf = window.requestAnimationFrame(() => {
+        const top = window.scrollY;
+        const max =
+          document.documentElement.scrollHeight - window.innerHeight;
+        setShowScrollTop(top > 500);
+        setProgress(max > 0 ? Math.min(1, Math.max(0, top / max)) : 0);
+        raf = 0;
+      });
     };
-
-    const handleScroll = () => {
-      if (animationFrameId !== null) return;
-      animationFrameId = window.requestAnimationFrame(updateScrollState);
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    updateScrollState();
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-      if (animationFrameId !== null) {
-        window.cancelAnimationFrame(animationFrameId);
-      }
-    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    onScroll();
+    return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  useEffect(() => {
-    if (typeof window === "undefined") return;
-    const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
-    const systemPrefersDark = mediaQuery.matches;
-
-    setIsDarkMode(
-      theme === "dark" || (theme === "system" && systemPrefersDark),
-    );
-  }, [theme]);
-
-  const fadeInUp = {
-    initial: { opacity: 0, y: 30 },
-    whileInView: { opacity: 1, y: 0 },
-    transition: { duration: 0.6 },
-    viewport: { once: true, margin: "-50px" },
+  const scrollTo = (id: string) => {
+    document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
   };
 
-  const staggerContainer = {
-    initial: {},
-    whileInView: {
-      transition: {
-        staggerChildren: 0.1,
-      },
-    },
-  };
-
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  };
-
-  const scrollToSection = (sectionId: string) => {
-    const element = document.getElementById(sectionId);
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
-    }
-  };
-
-  const quickLinks = [
-    { id: "home", label: "Home" },
-    { id: "about", label: "About" },
-    { id: "experience", label: "Experience" },
-    { id: "skills", label: "Skills" },
-    { id: "projects", label: "Projects" },
-    { id: "contact", label: "Contact" },
-  ];
-
-  const contactInfo = [
-    {
-      icon: Mail,
-      label: "rajakrishav395@gmail.com",
-      href: "mailto:rajakrishav395@gmail.com",
-    },
-    {
-      icon: Phone,
-      label: "+91 94727 42873",
-      href: "tel:+919472742873",
-    },
-    {
-      icon: MapPin,
-      label: "Bangalore, India",
-      href: null,
-    },
-  ];
-
-  const socialLinks = [
-    {
-      icon: Linkedin,
-      href: "https://linkedin.com/in/iamriishav",
-      label: "LinkedIn",
-      color: "hover:bg-blue-600",
-    },
-    {
-      icon: Github,
-      href: "https://github.com/iamriishav",
-      label: "GitHub",
-      color: "hover:bg-gray-800",
-    },
-    {
-      icon: Mail,
-      href: "mailto:rajakrishav395@gmail.com",
-      label: "Email",
-      color: "hover:bg-red-500",
-    },
-  ];
-
-  const radius = 28;
+  const radius = 18;
   const circumference = 2 * Math.PI * radius;
-  const strokeDashoffset = circumference * (1 - scrollProgress);
+  const dashoffset = circumference * (1 - progress);
 
   return (
-    <footer className="relative bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white overflow-hidden">
-      {/* Background decorative elements */}
-      <div className="absolute inset-0 opacity-20">
-        <div className="absolute top-10 left-10 w-64 h-64 bg-blue-500/20 rounded-full blur-3xl"></div>
-        <div className="absolute bottom-10 right-10 w-80 h-80 bg-purple-500/20 rounded-full blur-3xl"></div>
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl"></div>
-      </div>
+    <footer className="relative border-t border-border bg-background">
+      <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-1 gap-10 md:grid-cols-3">
+          <div>
+            <p className="text-xl font-semibold tracking-tight">
+              <span className="text-foreground">rishav</span>
+              <span className="text-gradient">.dev</span>
+            </p>
+            <p className="mt-3 max-w-sm text-sm text-muted-foreground">
+              Senior Quality Engineer building automation, test frameworks, and
+              tooling that keeps shipping software easy.
+            </p>
+          </div>
 
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        <motion.div
-          variants={staggerContainer}
-          initial="initial"
-          whileInView="whileInView"
-          viewport={{ once: true }}
-          className="grid lg:grid-cols-4 md:grid-cols-2 gap-12"
-        >
-          {/* Brand Section */}
-          <motion.div variants={fadeInUp} className="lg:col-span-1">
-            <div className="mb-6">
-              <h3 className="text-3xl font-bold mb-4">
-                <span className="text-white">&lt;</span>
-                <span className="bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
-                  {" "}
-                  Rishav{" "}
-                </span>
-                <span className="text-white">/&gt;</span>
-              </h3>
-              <p className="text-gray-300 leading-relaxed mb-6">
-                Senior Quality Engineer passionate about building robust test
-                frameworks and ensuring software excellence. Let's create
-                amazing digital experiences together.
-              </p>
-            </div>
-
-            {/* Social Links */}
-            <div className="flex gap-4">
-              {socialLinks.map((social, index) => (
-                <motion.a
-                  key={index}
-                  href={social.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  whileHover={{ scale: 1.1, y: -2 }}
-                  whileTap={{ scale: 0.95 }}
-                  className={`w-12 h-12 bg-gray-700/50 border border-gray-600 rounded-xl flex items-center justify-center text-gray-300 hover:text-white transition-all duration-300 ${social.color}`}
-                  aria-label={social.label}
-                >
-                  <social.icon className="w-5 h-5" />
-                </motion.a>
-              ))}
-            </div>
-          </motion.div>
-
-          {/* Quick Links */}
-          <motion.div variants={fadeInUp} className="lg:col-span-1">
-            <h4 className="text-xl font-semibold mb-6 text-white">
-              Quick Links
-            </h4>
-            <ul className="space-y-3">
-              {quickLinks.map((link) => (
-                <motion.li key={link.id} whileHover={{ x: 5 }}>
+          <div>
+            <p className="text-xs font-semibold uppercase tracking-[0.25em] text-muted-foreground">
+              Quick links
+            </p>
+            <ul className="mt-4 grid grid-cols-2 gap-2 text-sm">
+              {QUICK_LINKS.map((link) => (
+                <li key={link.id}>
                   <button
-                    onClick={() => scrollToSection(link.id)}
-                    className="text-gray-300 hover:text-blue-400 transition-all duration-300 flex items-center group"
+                    type="button"
+                    onClick={() => scrollTo(link.id)}
+                    className="text-muted-foreground transition hover:text-foreground"
                   >
-                    <span className="w-0 group-hover:w-2 h-0.5 bg-blue-400 transition-all duration-300 mr-0 group-hover:mr-2"></span>
                     {link.label}
                   </button>
-                </motion.li>
-              ))}
-            </ul>
-          </motion.div>
-
-          {/* Contact Info */}
-          <motion.div variants={fadeInUp} className="lg:col-span-1">
-            <h4 className="text-xl font-semibold mb-6 text-white">
-              Contact Info
-            </h4>
-            <ul className="space-y-4">
-              {contactInfo.map((info, index) => (
-                <li key={index} className="flex items-center space-x-3">
-                  <div className="w-10 h-10 bg-gradient-to-r from-blue-500 to-purple-500 rounded-lg flex items-center justify-center flex-shrink-0">
-                    <info.icon className="w-5 h-5 text-white" />
-                  </div>
-                  {info.href ? (
-                    <a
-                      href={info.href}
-                      className="text-gray-300 hover:text-blue-400 transition-colors duration-300"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      {info.label}
-                    </a>
-                  ) : (
-                    <span className="text-gray-300">{info.label}</span>
-                  )}
                 </li>
               ))}
             </ul>
-          </motion.div>
-
-          {/* Newsletter/CTA */}
-          <motion.div variants={fadeInUp} className="lg:col-span-1">
-            <h4 className="text-xl font-semibold mb-6 text-white">
-              Let's Connect
-            </h4>
-            <p className="text-gray-300 mb-6 leading-relaxed">
-              Ready to work together? Let's discuss your next project and bring
-              your ideas to life.
-            </p>
-            <motion.button
-              onClick={() => scrollToSection("contact")}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-6 py-3 rounded-xl font-semibold transition-all duration-300 shadow-lg hover:shadow-xl"
-            >
-              Get In Touch
-            </motion.button>
-          </motion.div>
-        </motion.div>
-
-        {/* Bottom Section */}
-        <motion.div
-          variants={fadeInUp}
-          className="border-t border-gray-700/50 mt-12 pt-8"
-        >
-          <div className="flex justify-center items-center">
-            <div className="flex items-center space-x-2 text-gray-300">
-              <span>Made with</span>
-              <Heart className="w-4 h-4 text-red-500 fill-current animate-pulse" />
-              <span>and lots of coffee ☕</span>
-            </div>
           </div>
-        </motion.div>
+
+          <div>
+            <p className="text-xs font-semibold uppercase tracking-[0.25em] text-muted-foreground">
+              Online
+            </p>
+            <div className="mt-4 flex gap-2">
+              {SOCIAL.map((s) => (
+                <a
+                  key={s.label}
+                  href={s.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={s.label}
+                  className="flex h-10 w-10 items-center justify-center rounded-full border border-border bg-secondary text-foreground transition hover:-translate-y-0.5 hover:border-foreground/40"
+                >
+                  <s.icon className="h-4 w-4" />
+                </a>
+              ))}
+            </div>
+            <p className="mt-6 text-xs text-muted-foreground">
+              Bengaluru, IN · Open to new opportunities
+            </p>
+          </div>
+        </div>
+
+        <div className="mt-12 flex flex-col items-center justify-between gap-3 border-t border-border pt-6 text-xs text-muted-foreground sm:flex-row">
+          <p>© {new Date().getFullYear()} Rishav Kumar Rajak. All rights reserved.</p>
+          <p>Crafted with React, Tailwind & a bit of obsession.</p>
+        </div>
       </div>
 
-      {/* Scroll to Top Button */}
-      {showScrollTop && (
-        <motion.button
-          initial={{ opacity: 0, scale: 0.8 }}
-          animate={{ opacity: 1, scale: 1 }}
-          exit={{ opacity: 0, scale: 0.8 }}
-          whileHover={{ scale: 1.1 }}
-          whileTap={{ scale: 0.9 }}
-          onClick={scrollToTop}
-          className="fixed bottom-8 right-8 z-50 w-14 h-14 bg-transparent text-white rounded-full shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center"
-          aria-label="Scroll to top"
-        >
-          <svg
-            className="absolute w-full h-full"
-            viewBox="0 0 64 64"
-            aria-hidden="true"
+      <AnimatePresence>
+        {showScrollTop && (
+          <motion.button
+            initial={{ opacity: 0, scale: 0.85 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.85 }}
+            whileHover={{ y: -2 }}
+            onClick={() =>
+              window.scrollTo({ top: 0, behavior: "smooth" })
+            }
+            aria-label="Scroll to top"
+            className="fixed bottom-6 right-6 z-50 flex h-12 w-12 items-center justify-center rounded-full border border-border bg-background shadow-xl backdrop-blur"
           >
-            <defs>
-              <linearGradient
-                id="scrollProgressGradient"
-                x1="0%"
-                y1="0%"
-                x2="100%"
-                y2="0%"
-              >
-                <stop offset="0%" stopColor="#2563eb" stopOpacity="0.7" />
-                <stop offset="100%" stopColor="#7c3aed" stopOpacity="0.7" />
-              </linearGradient>
-              <mask id="maskSingleCap" mask-type="alpha">
-                <rect width="100%" height="100%" fill="white"></rect>
-                <circle
-                  cx="32"
-                  cy="32"
-                  r={radius}
-                  stroke="black"
-                  strokeWidth="8"
-                  strokeLinecap="round"
-                  strokeDasharray={`${circumference} 999`}
-                  transform="rotate(90 32 32)"
-                ></circle>
-              </mask>
-            </defs>
-
-            {/* Background ring */}
-            <circle
-              cx="32"
-              cy="32"
-              r={radius}
-              stroke={isDarkMode ? "#ffffff" : "#000000"}
-              strokeWidth="7"
-              fill="none"
-            ></circle>
-
-            {/* Progress ring */}
-            <circle
-              cx="32"
-              cy="32"
-              r={radius}
-              stroke={"url(#scrollProgressGradient)"}
-              // stroke={isDarkMode ? "url(#scrollProgressGradient)" : "#fff"}
-              strokeWidth="8"
-              fill="none"
-              strokeLinecap="round"
-              transform="rotate(-90 32 32)"
-              style={{
-                strokeDasharray: `${circumference} ${circumference}`,
-                strokeDashoffset,
-              }}
-              mask="url(#maskSingleCap)"
-            ></circle>
-          </svg>
-          <span className="relative z-10 flex items-center justify-center w-10 h-10">
-            <span
-              className="absolute inset-0 rounded-full bg-black"
-              style={{ filter: "blur(6px)" }}
-              aria-hidden="true"
-            ></span>
-            <span className="relative flex items-center justify-center w-8 h-8 rounded-full bg-black border border-white/20">
-              <ArrowUp className="w-5 h-5 text-white" />
-            </span>
-          </span>
-        </motion.button>
-      )}
+            <svg
+              viewBox="0 0 48 48"
+              className="absolute inset-0 h-full w-full -rotate-90"
+              aria-hidden
+            >
+              <circle
+                cx="24"
+                cy="24"
+                r={radius}
+                fill="none"
+                className="stroke-border"
+                strokeWidth="3"
+              />
+              <circle
+                cx="24"
+                cy="24"
+                r={radius}
+                fill="none"
+                className="stroke-foreground"
+                strokeWidth="3"
+                strokeLinecap="round"
+                strokeDasharray={circumference}
+                strokeDashoffset={dashoffset}
+                style={{ transition: "stroke-dashoffset 0.2s linear" }}
+              />
+            </svg>
+            <ArrowUp className="relative h-4 w-4 text-foreground" />
+          </motion.button>
+        )}
+      </AnimatePresence>
     </footer>
   );
 }

@@ -1,37 +1,38 @@
 import { motion } from "framer-motion";
-import { Badge } from "@/components/ui/badge";
-import { useMemo, useState, useRef } from "react";
+import { Briefcase, GraduationCap, Sparkles, ArrowUpRight } from "lucide-react";
 
-// Types
+type Status = "current" | "previous" | "education";
+
 interface Experience {
   title: string;
   company: string;
+  location?: string;
   period: string;
-  status: "current" | "previous" | "education";
+  duration?: string;
+  status: Status;
   description: string;
-  skills: string[];
+  highlights?: string[];
+  skills: readonly string[];
 }
 
-type StatusColors = {
-  [K in Experience["status"]]: string;
-};
-
-type BadgeVariants = {
-  [K in Experience["status"]]: "default" | "secondary" | "outline";
-};
-
-// Constants
 const EXPERIENCES: readonly Experience[] = [
   {
     title: "Senior Quality Engineer",
-    company: "Persistent Systems - (Client - Cisco)",
-    period: "Nov 2024 - Present",
+    company: "Persistent Systems",
+    location: "Client: Cisco · Bengaluru",
+    period: "Nov 2024 — Present",
+    duration: "Current role",
     status: "current",
     description:
-      "Automated GUI test cases for Configuration Template and Configuration Backup & Restore features. Performed regression testing on daily builds, identified 60+ defects including critical bugs. Developed 300+ automation scripts reducing manual testing time by 20% and increasing coverage by 40%.",
+      "Owning automation for Configuration Template and Configuration Backup & Restore. Run regression on daily builds, triage critical defects, and ship internal tooling that keeps the team unblocked.",
+    highlights: [
+      "300+ automation scripts shipped, cutting manual effort by 20%",
+      "60+ defects caught — including several P1 blockers",
+      "Test coverage lifted by 40% across owned modules",
+    ],
     skills: [
       "GUI Automation",
-      "Regression Testing",
+      "Regression",
       "Python",
       "API Testing",
       "Defect Management",
@@ -40,264 +41,249 @@ const EXPERIENCES: readonly Experience[] = [
   {
     title: "Software Engineer Trainee",
     company: "Cisco",
-    period: "Nov 2023 - Nov 2024",
+    location: "Bengaluru",
+    period: "Nov 2023 — Nov 2024",
+    duration: "1 year",
     status: "previous",
     description:
-      "Worked on Performance Monitoring, Faults, Grouping, and Inventory features. Developed 150+ automation scripts, setup and maintained CelVM regression environment. Managed backups of golden configurations and upgraded device build images.",
+      "Worked across Performance Monitoring, Faults, Grouping, and Inventory. Built and maintained the CelVM regression environment, automated 150+ flows, and managed golden-config backups & build image upgrades.",
     skills: ["GUI Automation", "Git", "Python", "Linux"],
   },
   {
-    title: "B.Tech Graduate",
+    title: "B.Tech, Information Technology",
     company: "Birsa Institute of Technology, Sindri",
-    period: "Aug 2019 - May 2023",
+    location: "Dhanbad, Jharkhand",
+    period: "Aug 2019 — May 2023",
+    duration: "GPA 8.06 / 10",
     status: "education",
     description:
-      "Completed Bachelor of Technology in Information Technology with GPA 8.06/10. Developed strong foundation in computer science principles and programming concepts.",
-    skills: [
-      "Information Technology",
-      "Software Engineering",
-      "Data Structures",
-      "Algorithms",
-    ],
+      "Built a strong CS foundation across data structures, algorithms, databases, and software engineering — the toolkit I rely on for systems thinking and test design today.",
+    skills: ["IT", "Software Engineering", "DSA", "Databases"],
   },
-] as const;
+];
 
-const STATUS_COLORS: StatusColors = {
-  current: "bg-blue-600",
-  previous: "bg-gray-400",
-  education: "bg-green-600",
-} as const;
+const STATUS_META: Record<
+  Status,
+  {
+    label: string;
+    chip: string;
+    stripe: string;
+    icon: typeof Briefcase;
+    iconBg: string;
+  }
+> = {
+  current: {
+    label: "Current",
+    chip: "bg-sky-500/10 text-sky-700 ring-sky-500/30 dark:text-sky-300",
+    stripe: "bg-sky-500",
+    icon: Sparkles,
+    iconBg: "bg-sky-500/15 text-sky-600 dark:text-sky-300",
+  },
+  previous: {
+    label: "Previous",
+    chip:
+      "bg-violet-500/10 text-violet-700 ring-violet-500/30 dark:text-violet-300",
+    stripe: "bg-violet-500",
+    icon: Briefcase,
+    iconBg: "bg-violet-500/15 text-violet-600 dark:text-violet-300",
+  },
+  education: {
+    label: "Education",
+    chip:
+      "bg-emerald-500/10 text-emerald-700 ring-emerald-500/30 dark:text-emerald-300",
+    stripe: "bg-emerald-500",
+    icon: GraduationCap,
+    iconBg: "bg-emerald-500/15 text-emerald-600 dark:text-emerald-300",
+  },
+};
 
-const FLARE_COLORS = {
-  current:
-    "rgba(37, 99, 235, 0.8) 0%, rgba(37, 99, 235, 0.4) 30%, rgba(37, 99, 235, 0.1) 60%, transparent 100%", // Blue
-  previous:
-    "rgba(156, 163, 175, 0.8) 0%, rgba(156, 163, 175, 0.4) 30%, rgba(156, 163, 175, 0.1) 60%, transparent 100%", // Gray
-  education:
-    "rgba(34, 197, 94, 0.8) 0%, rgba(34, 197, 94, 0.4) 30%, rgba(34, 197, 94, 0.1) 60%, transparent 100%", // Green
-} as const;
-
-const BADGE_VARIANTS: BadgeVariants = {
-  current: "default",
-  previous: "secondary",
-  education: "outline",
-} as const;
-
-const PERIOD_STYLES = {
-  current: "bg-blue-100 text-blue-700 dark:bg-blue-900 dark:text-blue-300",
-  education:
-    "bg-green-100 text-green-700 dark:bg-green-900 dark:text-green-300",
-  previous: "bg-gray-100 text-gray-700 dark:bg-gray-700 dark:text-gray-300",
-} as const;
-
-// Animation variants
-const FADE_IN_UP = {
-  initial: { opacity: 0, y: 20 },
+const fadeUp = (delay = 0) =>
+({
+  initial: { opacity: 0, y: 18 },
   whileInView: { opacity: 1, y: 0 },
-  transition: { duration: 0.5 },
-  viewport: { once: true },
-} as const;
+  viewport: { once: true, margin: "-10%" },
+  transition: { duration: 0.5, delay, ease: "easeOut" as const },
+} as const);
 
-const MOBILE_CARD_ANIMATION = {
-  initial: { opacity: 0, y: 50 },
-  whileInView: { opacity: 1, y: 0 },
-  transition: { duration: 0.6, delay: 0.1 },
-  viewport: { once: true, margin: "-20%" },
-} as const;
-
-const DESKTOP_CARD_ANIMATION = (index: number) =>
-  ({
-    initial: { opacity: 0, x: -20 },
-    whileInView: { opacity: 1, x: 0 },
-    transition: { duration: 0.5, delay: index * 0.2 },
-    viewport: { once: true },
-  } as const);
-
-// Optimized components
-const ExperienceCard = ({
-  exp,
-  index,
-  isMobile,
-}: {
-  exp: Experience;
-  index: number;
-  isMobile: boolean;
-}) => {
-  const cardAnimation = isMobile
-    ? MOBILE_CARD_ANIMATION
-    : DESKTOP_CARD_ANIMATION(index);
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
-  const [isHovered, setIsHovered] = useState(false);
-  const cardRef = useRef<HTMLDivElement>(null);
-
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!cardRef.current) return;
-
-    const rect = cardRef.current.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-
-    setMousePosition({ x, y });
-  };
-
-  const handleMouseEnter = () => {
-    setIsHovered(true);
-  };
-
-  const handleMouseLeave = () => {
-    setIsHovered(false);
-  };
+const FeaturedTile = ({ exp, delay }: { exp: Experience; delay: number }) => {
+  const meta = STATUS_META[exp.status];
+  const Icon = meta.icon;
 
   return (
-    <motion.div
-      {...cardAnimation}
-      className={isMobile ? "w-full" : "relative mb-16"}
+    <motion.article
+      {...fadeUp(delay)}
+      className="tile tile-glow relative col-span-1 row-span-2 flex flex-col gap-6 overflow-hidden p-7 md:p-9 sm:col-span-2 lg:col-span-4"
     >
-      {!isMobile && (
-        <div
-          className={`absolute left-6 w-3 h-3 ${
-            STATUS_COLORS[exp.status]
-          } rounded-full border-2 border-white shadow-md z-10`}
-        />
-      )}
-
       <div
-        ref={cardRef}
-        onMouseMove={handleMouseMove}
-        onMouseEnter={handleMouseEnter}
-        onMouseLeave={handleMouseLeave}
-        className={`group relative bg-white dark:bg-gray-800 rounded-3xl border border-gray-200 dark:border-gray-700 shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden ${
-          isMobile ? "p-8" : "ml-16 p-10"
-        }`}
-      >
-        {/* Status indicator line */}
-        <div
-          className={`absolute top-0 left-0 w-1 h-full ${
-            STATUS_COLORS[exp.status]
-          }`}
-        />
+        className={`absolute left-0 top-0 h-full w-1 ${meta.stripe}`}
+        aria-hidden
+      />
 
-        {/* Cursor-following background flare */}
-        <div
-          className="absolute pointer-events-none transition-opacity duration-300"
-          style={{
-            left: mousePosition.x - 150,
-            top: mousePosition.y - 150,
-            width: "300px",
-            height: "300px",
-            opacity: isHovered ? 0.4 : 0,
-            background: `radial-gradient(circle, ${FLARE_COLORS[exp.status]})`,
-            borderRadius: "50%",
-            filter: "blur(15px)",
-            transform: "translate3d(0, 0, 0)", // Hardware acceleration
-          }}
-        />
-
-        {/* Header Section */}
-        <div className="relative z-10 flex flex-col lg:flex-row lg:items-start lg:justify-between mb-6">
-          <div className="flex-1">
-            <div className="flex items-center gap-3 mb-2">
-              <h3 className="text-2xl font-bold text-gray-900 dark:text-gray-100">
-                {exp.title}
-              </h3>
-            </div>
-            <p className="text-lg font-semibold text-gray-600 dark:text-gray-300 mb-3">
-              {exp.company}
+      <div className="flex items-start justify-between gap-4">
+        <div className="flex items-center gap-3">
+          <span
+            className={`flex h-11 w-11 items-center justify-center rounded-xl ${meta.iconBg} ring-1 ring-inset ring-border`}
+          >
+            <Icon className="h-5 w-5" />
+          </span>
+          <div>
+            <span
+              className={`inline-flex items-center gap-1.5 rounded-full px-2.5 py-0.5 text-[11px] font-semibold uppercase tracking-wider ring-1 ring-inset ${meta.chip}`}
+            >
+              <span className="relative flex h-1.5 w-1.5">
+                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-current opacity-60" />
+                <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-current" />
+              </span>
+              {meta.label}
+            </span>
+            <p className="mt-1 text-xs text-muted-foreground">
+              {exp.duration}
             </p>
           </div>
-
-          <div className="lg:ml-6 flex-shrink-0">
-            <span
-              className={`inline-flex items-center px-4 py-2 rounded-full text-sm font-semibold ${
-                PERIOD_STYLES[exp.status]
-              }`}
-            >
-              {exp.period}
-            </span>
-          </div>
         </div>
+        <span className="text-xs font-medium text-muted-foreground">
+          {exp.period}
+        </span>
+      </div>
 
-        {/* Description */}
-        <div className="relative z-10 mb-8">
-          <p className="text-gray-700 dark:text-gray-300 leading-relaxed text-base">
-            {exp.description}
+      <div>
+        <h3 className="text-2xl font-bold leading-tight text-foreground md:text-3xl">
+          {exp.title}
+        </h3>
+        <p className="mt-1.5 text-base font-semibold text-foreground/80">
+          {exp.company}
+        </p>
+        {exp.location && (
+          <p className="mt-0.5 text-sm text-muted-foreground">
+            {exp.location}
           </p>
-        </div>
+        )}
+      </div>
 
-        {/* Skills Section */}
-        <div className="relative z-10">
-          <h4 className="text-sm font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide mb-4">
-            Key Skills
-          </h4>
-          <div className="flex flex-wrap gap-2">
-            {exp.skills.map((skill) => (
-              <span
-                key={skill}
-                className="inline-flex items-center px-3 py-1.5 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 text-sm font-medium rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors duration-200"
-              >
-                {skill}
+      <p className="text-[15px] leading-relaxed text-muted-foreground">
+        {exp.description}
+      </p>
+
+      {exp.highlights && (
+        <ul className="grid grid-cols-1 gap-2.5 sm:grid-cols-2">
+          {exp.highlights.map((h) => (
+            <li
+              key={h}
+              className="flex items-start gap-2.5 rounded-2xl border border-border bg-secondary/40 p-3.5"
+            >
+              <ArrowUpRight className="mt-0.5 h-4 w-4 flex-shrink-0 text-foreground/70" />
+              <span className="text-sm leading-snug text-foreground/90">
+                {h}
               </span>
-            ))}
-          </div>
+            </li>
+          ))}
+        </ul>
+      )}
+
+      <div className="mt-auto">
+        <p className="mb-2 text-[11px] font-semibold uppercase tracking-[0.2em] text-muted-foreground">
+          Stack
+        </p>
+        <div className="flex flex-wrap gap-1.5">
+          {exp.skills.map((s) => (
+            <span key={s} className="chip text-xs">
+              {s}
+            </span>
+          ))}
         </div>
       </div>
-    </motion.div>
+    </motion.article>
+  );
+};
+
+const CompactTile = ({ exp, delay }: { exp: Experience; delay: number }) => {
+  const meta = STATUS_META[exp.status];
+  const Icon = meta.icon;
+
+  return (
+    <motion.article
+      {...fadeUp(delay)}
+      className="tile tile-glow relative col-span-1 flex flex-col gap-4 overflow-hidden p-6 sm:col-span-2 lg:col-span-2"
+    >
+      <div
+        className={`absolute left-0 top-0 h-full w-1 ${meta.stripe}`}
+        aria-hidden
+      />
+
+      <div className="flex items-start justify-between gap-3">
+        <div className="flex items-center gap-3">
+          <span
+            className={`flex h-10 w-10 items-center justify-center rounded-xl ${meta.iconBg} ring-1 ring-inset ring-border`}
+          >
+            <Icon className="h-4 w-4" />
+          </span>
+          <span
+            className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-[10px] font-semibold uppercase tracking-wider ring-1 ring-inset ${meta.chip}`}
+          >
+            {meta.label}
+          </span>
+        </div>
+        <span className="text-[11px] font-medium text-muted-foreground">
+          {exp.duration}
+        </span>
+      </div>
+
+      <div>
+        <h3 className="text-lg font-bold leading-tight text-foreground">
+          {exp.title}
+        </h3>
+        <p className="mt-1 text-sm font-semibold text-foreground/80">
+          {exp.company}
+        </p>
+        <p className="mt-0.5 text-xs text-muted-foreground">
+          {exp.period}
+          {exp.location ? ` · ${exp.location}` : ""}
+        </p>
+      </div>
+
+      <p className="line-clamp-4 text-sm leading-relaxed text-muted-foreground">
+        {exp.description}
+      </p>
+
+      <div className="mt-auto flex flex-wrap gap-1.5">
+        {exp.skills.map((s) => (
+          <span key={s} className="chip text-[11px]">
+            {s}
+          </span>
+        ))}
+      </div>
+    </motion.article>
   );
 };
 
 export default function ExperienceSection() {
-  // Memoized section header
-  const sectionHeader = useMemo(
-    () => (
-      <motion.div {...FADE_IN_UP} className="text-center mb-16">
-        <h2 className="text-4xl md:text-5xl font-bold text-gradient mb-6">
-          Experience
-        </h2>
-        <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto leading-relaxed">
-          My professional journey in software quality engineering
-        </p>
-      </motion.div>
-    ),
-    []
-  );
+  const [featured, ...rest] = EXPERIENCES;
 
   return (
-    <section
-      id="experience"
-      className="py-20 bg-gradient-to-br from-gray-50 to-white dark:from-gray-800 dark:to-gray-900"
-    >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {sectionHeader}
+    <section id="experience" className="relative py-24 sm:py-32">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <motion.div {...fadeUp()} className="mb-12 max-w-2xl">
+          <p className="text-xs font-semibold uppercase tracking-[0.25em] text-muted-foreground">
+            Experience
+          </p>
+          <h2 className="mt-3 text-4xl font-bold tracking-tight text-foreground md:text-5xl">
+            Where I&apos;ve been so far.
+          </h2>
+          <p className="mt-4 text-base text-muted-foreground">
+            A short timeline of the roles and learnings that shaped how I
+            approach quality engineering today.
+          </p>
+        </motion.div>
 
-        <div className="max-w-4xl mx-auto">
-          <div className="relative">
-            {/* Timeline line - hidden on mobile */}
-            <div className="absolute left-8 top-0 bottom-0 w-0.5 bg-blue-600 hidden md:block" />
-
-            {/* Mobile: Stack cards vertically */}
-            <div className="md:hidden space-y-8">
-              {EXPERIENCES.map((exp, index) => (
-                <ExperienceCard
-                  key={exp.title}
-                  exp={exp}
-                  index={index}
-                  isMobile={true}
-                />
-              ))}
-            </div>
-
-            {/* Desktop: Timeline layout */}
-            <div className="hidden md:block">
-              {EXPERIENCES.map((exp, index) => (
-                <ExperienceCard
-                  key={exp.title}
-                  exp={exp}
-                  index={index}
-                  isMobile={false}
-                />
-              ))}
-            </div>
-          </div>
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-6">
+          <FeaturedTile exp={featured} delay={0.05} />
+          {rest.map((exp, i) => (
+            <CompactTile
+              key={exp.title}
+              exp={exp}
+              delay={0.1 + i * 0.05}
+            />
+          ))}
         </div>
       </div>
     </section>
