@@ -257,6 +257,12 @@ export default function BentoSection() {
           <motion.a
             {...motionWrap(0.3)}
             href="#projects"
+            onClick={(e) => {
+              e.preventDefault();
+              document
+                .getElementById("projects")
+                ?.scrollIntoView({ behavior: "smooth" });
+            }}
             className="tile tile-glow group relative col-span-1 flex flex-col gap-5 overflow-hidden p-6 sm:col-span-2 sm:p-7 lg:col-span-3"
           >
             <div className="flex items-start justify-between gap-4">
@@ -299,6 +305,12 @@ export default function BentoSection() {
           <motion.a
             {...motionWrap(0.35)}
             href="#contact"
+            onClick={(e) => {
+              e.preventDefault();
+              document
+                .getElementById("contact")
+                ?.scrollIntoView({ behavior: "smooth" });
+            }}
             className="tile tile-glow group col-span-1 flex flex-col justify-between p-7"
           >
             <div>

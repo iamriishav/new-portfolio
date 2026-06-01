@@ -1,5 +1,5 @@
 import { motion, AnimatePresence } from "framer-motion";
-import { Linkedin, Github, Mail, ArrowUp } from "lucide-react";
+import { Linkedin, Github, Mail, ArrowUp, Heart } from "lucide-react";
 import { useState, useEffect } from "react";
 
 const SOCIAL = [
@@ -118,7 +118,14 @@ export default function Footer() {
 
         <div className="mt-12 flex flex-col items-center justify-between gap-3 border-t border-border pt-6 text-xs text-muted-foreground sm:flex-row">
           <p>© {new Date().getFullYear()} Rishav Kumar Rajak. All rights reserved.</p>
-          <p>Crafted with React, Tailwind & a bit of obsession.</p>
+          <p className="inline-flex items-center gap-1.5">
+            <span>Made with</span>
+            <Heart
+              className="h-3.5 w-3.5 fill-current text-red-500 animate-pulse"
+              aria-hidden
+            />
+            <span>and lots of coffee &#9749;</span>
+          </p>
         </div>
       </div>
 
