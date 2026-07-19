@@ -1,5 +1,6 @@
 import { useTheme } from "@/components/theme-provider";
-import { useState, useEffect, useCallback, useMemo } from "react";
+import { useState, useEffect, useCallback, useMemo, useRef } from "react";
+import { motion } from "framer-motion";
 import { Moon, Sun } from "lucide-react";
 
 const NAV_ITEMS = [
@@ -21,6 +22,8 @@ export default function Navigation() {
   const [systemTheme, setSystemTheme] = useState(getSystemTheme);
   const [activeSection, setActiveSection] = useState<string>("home");
   const [scrolled, setScrolled] = useState(false);
+  const navigationTargetRef = useRef<string | null>(null);
+  const scrollEndTimerRef = useRef<number | null>(null);
 
   useEffect(() => {
     if (typeof window === "undefined" || !window.matchMedia) return;
@@ -33,31 +36,69 @@ export default function Navigation() {
 
   useEffect(() => {
     let raf = 0;
+
+    const getVisibleSection = () => {
+      let found: string = "home";
+      for (const item of NAV_ITEMS) {
+        const el = document.getElementById(item.id);
+        if (!el) continue;
+        const rect = el.getBoundingClientRect();
+        if (rect.top <= 120 && rect.bottom > 120) {
+          found = item.id;
+          break;
+        }
+      }
+      return found;
+    };
+
     const onScroll = () => {
       if (raf) return;
       raf = window.requestAnimationFrame(() => {
         setScrolled(window.scrollY > 24);
-        let found: string = "home";
-        for (const item of NAV_ITEMS) {
-          const el = document.getElementById(item.id);
-          if (!el) continue;
-          const rect = el.getBoundingClientRect();
-          if (rect.top <= 120 && rect.bottom > 120) {
-            found = item.id;
-            break;
+
+        if (navigationTargetRef.current) {
+          if (scrollEndTimerRef.current !== null) {
+            window.clearTimeout(scrollEndTimerRef.current);
           }
+          scrollEndTimerRef.current = window.setTimeout(() => {
+            navigationTargetRef.current = null;
+            scrollEndTimerRef.current = null;
+            setActiveSection(getVisibleSection());
+          }, 150);
+        } else {
+          setActiveSection(getVisibleSection());
         }
-        setActiveSection(found);
+
         raf = 0;
       });
     };
     window.addEventListener("scroll", onScroll, { passive: true });
     onScroll();
-    return () => window.removeEventListener("scroll", onScroll);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      if (raf) window.cancelAnimationFrame(raf);
+      if (scrollEndTimerRef.current !== null) {
+        window.clearTimeout(scrollEndTimerRef.current);
+      }
+    };
   }, []);
 
   const scrollToSection = useCallback((id: string) => {
-    document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+    const section = document.getElementById(id);
+    if (!section) return;
+
+    navigationTargetRef.current = id;
+    setActiveSection(id);
+
+    if (scrollEndTimerRef.current !== null) {
+      window.clearTimeout(scrollEndTimerRef.current);
+    }
+    scrollEndTimerRef.current = window.setTimeout(() => {
+      navigationTargetRef.current = null;
+      scrollEndTimerRef.current = null;
+    }, 1200);
+
+    section.scrollIntoView({ behavior: "smooth" });
   }, []);
 
   const effectiveTheme = useMemo(
@@ -77,8 +118,8 @@ export default function Navigation() {
       <nav
         aria-label="Primary"
         className={`flex items-center gap-2 rounded-full border px-2 py-2 backdrop-blur-xl transition-all duration-300 ${scrolled
-            ? "border-border bg-background/80 shadow-lg shadow-black/5 dark:shadow-black/40"
-            : "border-transparent bg-background/40"
+          ? "border-border bg-background/80 shadow-lg shadow-black/5 dark:shadow-black/40"
+          : "border-transparent bg-background/40"
           }`}
       >
         <a
@@ -106,14 +147,20 @@ export default function Navigation() {
                   onClick={() => scrollToSection(item.id)}
                   aria-current={active ? "page" : undefined}
                   className={`relative rounded-full px-3.5 py-1.5 text-sm font-medium transition-colors ${active
-                      ? "text-foreground"
-                      : "text-muted-foreground hover:text-foreground"
+                    ? "text-foreground"
+                    : "text-muted-foreground hover:text-foreground"
                     }`}
                 >
                   {active && (
-                    <span
+                    <motion.span
+                      layoutId="active-nav-item"
                       aria-hidden
                       className="absolute inset-0 rounded-full bg-foreground/5 ring-1 ring-inset ring-foreground/10 dark:bg-foreground/10"
+                      transition={{
+                        type: "spring",
+                        stiffness: 500,
+                        damping: 38,
+                      }}
                     />
                   )}
                   <span className="relative z-10">{item.label}</span>

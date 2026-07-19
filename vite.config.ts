@@ -29,6 +29,15 @@ export default defineConfig({
     emptyOutDir: true,
   },
   server: {
+    port: 5173,
+    strictPort: true,
+    hmr: {
+      overlay: true,
+    },
+    watch: {
+      usePolling: true,
+      interval: 100,
+    },
     fs: {
       strict: true,
       deny: ["**/.*"],
