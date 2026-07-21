@@ -14,6 +14,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import { Reveal } from "@/components/reveal";
 
 const CONTACT_ENDPOINT =
   "https://getform.io/f/b62f13c8-b83c-471f-9e18-40359e5186f2";
@@ -40,25 +41,9 @@ const DIRECT_CONTACTS = [
 ] as const;
 
 const SOCIAL = [
-  {
-    icon: Linkedin,
-    label: "LinkedIn",
-    href: "https://linkedin.com/in/iamriishav",
-  },
-  {
-    icon: Github,
-    label: "GitHub",
-    href: "https://github.com/iamriishav",
-  },
+  { icon: Linkedin, label: "LinkedIn", href: "https://linkedin.com/in/iamriishav" },
+  { icon: Github, label: "GitHub", href: "https://github.com/iamriishav" },
 ] as const;
-
-const fadeUp = (delay = 0) =>
-({
-  initial: { opacity: 0, y: 18 },
-  whileInView: { opacity: 1, y: 0 },
-  viewport: { once: true, margin: "-10%" },
-  transition: { duration: 0.5, delay, ease: "easeOut" as const },
-} as const);
 
 export default function ContactSection() {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -74,10 +59,7 @@ export default function ContactSection() {
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
-    setFormData((prev) => ({
-      ...prev,
-      [e.target.name]: e.target.value,
-    }));
+    setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -106,26 +88,31 @@ export default function ContactSection() {
   };
 
   return (
-    <section id="contact" className="relative py-24 sm:py-32">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <motion.div {...fadeUp()} className="mb-12 max-w-2xl">
-          <p className="text-xs font-semibold uppercase tracking-[0.25em] text-muted-foreground">
+    <section id="contact" className="relative overflow-hidden bg-background py-24 sm:py-32">
+      <div className="pointer-events-none absolute inset-x-0 top-0 h-[420px] spotlight opacity-70" aria-hidden />
+
+      <div className="mx-auto max-w-7xl px-5 sm:px-6 lg:px-8">
+        <Reveal className="mx-auto flex max-w-3xl flex-col items-center text-center">
+          <span className="text-xs font-semibold uppercase tracking-[0.35em] text-primary/80">
             Contact
-          </p>
-          <h2 className="mt-3 text-4xl font-bold tracking-tight text-foreground md:text-5xl">
+          </span>
+          <h2 className="mt-4 text-balance text-4xl font-semibold leading-[1.05] tracking-tight text-foreground sm:text-5xl md:text-6xl">
             Let&apos;s build something solid together.
           </h2>
-          <p className="mt-4 text-base text-muted-foreground">
-            I&apos;m always up for a chat about test automation, quality
-            engineering, or interesting product opportunities.
+          <p className="mt-5 max-w-xl text-lg leading-relaxed text-muted-foreground">
+            Whether it&apos;s test automation, quality engineering, or an
+            interesting product opportunity — my inbox is always open.
           </p>
-        </motion.div>
+        </Reveal>
 
-        <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
-          {/* Direct contact tile */}
+        <div className="mt-16 grid grid-cols-1 gap-4 lg:grid-cols-5">
+          {/* Direct contact */}
           <motion.aside
-            {...fadeUp(0.05)}
-            className="tile tile-glow flex flex-col gap-6 p-7 lg:col-span-1"
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-12%" }}
+            transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+            className="tile tile-glow flex flex-col gap-6 p-7 lg:col-span-2"
           >
             <div>
               <p className="text-xs font-semibold uppercase tracking-[0.2em] text-muted-foreground">
@@ -199,17 +186,20 @@ export default function ContactSection() {
             </div>
           </motion.aside>
 
-          {/* Form tile */}
+          {/* Form */}
           <motion.div
-            {...fadeUp(0.1)}
-            className="tile tile-glow relative overflow-hidden p-7 lg:col-span-2 lg:p-10"
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-12%" }}
+            transition={{ duration: 0.7, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
+            className="tile tile-glow relative overflow-hidden p-7 lg:col-span-3 lg:p-10"
           >
             {submitted ? (
               <div className="flex min-h-[460px] flex-col items-center justify-center text-center">
                 <div className="mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-emerald-500/15 ring-1 ring-emerald-500/30">
-                  <CheckCircle2 className="h-8 w-8 text-emerald-500" />
+                  <CheckCircle2 className="h-8 w-8 text-emerald-400" />
                 </div>
-                <h3 className="text-2xl font-bold text-foreground">
+                <h3 className="text-2xl font-semibold text-foreground">
                   Message sent.
                 </h3>
                 <p className="mt-2 max-w-md text-sm text-muted-foreground">
@@ -230,7 +220,7 @@ export default function ContactSection() {
                   <p className="text-xs font-semibold uppercase tracking-[0.2em] text-muted-foreground">
                     Drop a message
                   </p>
-                  <h3 className="mt-2 text-2xl font-bold text-foreground">
+                  <h3 className="mt-2 text-2xl font-semibold text-foreground">
                     Tell me what you&apos;re working on.
                   </h3>
                 </div>

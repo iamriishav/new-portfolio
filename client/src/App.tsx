@@ -20,7 +20,7 @@ function Router() {
 
 function App() {
   return (
-    <ThemeProvider defaultTheme="system" storageKey="portfolio-theme">
+    <ThemeProvider defaultTheme="dark" storageKey="portfolio-theme-cinematic">
       <QueryClientProvider client={queryClient}>
         <TooltipProvider>
           <Toaster />

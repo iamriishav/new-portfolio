@@ -2,50 +2,33 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --background: 40 20% 98%;
-  --foreground: 220 25% 10%;
-  --muted: 40 10% 94%;
-  --muted-foreground: 220 8% 45%;
-  --popover: 0 0% 100%;
-  --popover-foreground: 220 25% 10%;
-  --card: 0 0% 100%;
-  --card-foreground: 220 25% 10%;
-  --border: 220 14% 90%;
-  --input: 220 14% 90%;
-  --primary: 217 91% 60%;
-  --primary-foreground: 0 0% 100%;
-  --secondary: 220 14% 96%;
-  --secondary-foreground: 220 25% 10%;
-  --accent: 220 14% 96%;
-  --accent-foreground: 220 25% 10%;
-  --destructive: 0 84.2% 60.2%;
-  --destructive-foreground: 60 9.1% 97.8%;
-  --ring: 217 91% 60%;
-  --radius: 1rem;
-}
-
+/*
+ * Dark, cinematic palette (Apple product-page inspired).
+ * Both :root and .dark carry the same values so the site renders dark
+ * regardless of the stored theme class — this is intentionally dark-only.
+ */
+:root,
 .dark {
-  --background: 225 22% 6%;
-  --foreground: 220 14% 96%;
-  --muted: 225 18% 12%;
-  --muted-foreground: 220 10% 65%;
-  --popover: 225 22% 8%;
-  --popover-foreground: 220 14% 96%;
-  --card: 225 20% 9%;
-  --card-foreground: 220 14% 96%;
-  --border: 225 16% 18%;
-  --input: 225 16% 18%;
-  --primary: 213 94% 68%;
-  --primary-foreground: 225 22% 6%;
-  --secondary: 225 16% 14%;
-  --secondary-foreground: 220 14% 96%;
-  --accent: 225 16% 14%;
-  --accent-foreground: 220 14% 96%;
-  --destructive: 0 62.8% 50%;
+  --background: 220 16% 4%;
+  --foreground: 210 20% 98%;
+  --muted: 220 12% 10%;
+  --muted-foreground: 220 9% 62%;
+  --popover: 220 16% 6%;
+  --popover-foreground: 210 20% 98%;
+  --card: 220 14% 7%;
+  --card-foreground: 210 20% 98%;
+  --border: 220 10% 16%;
+  --input: 220 10% 16%;
+  --primary: 211 100% 62%;
+  --primary-foreground: 0 0% 100%;
+  --secondary: 220 12% 10%;
+  --secondary-foreground: 210 20% 98%;
+  --accent: 220 12% 12%;
+  --accent-foreground: 210 20% 98%;
+  --destructive: 0 72% 51%;
   --destructive-foreground: 0 0% 98%;
-  --ring: 213 94% 68%;
-  --radius: 1rem;
+  --ring: 211 100% 62%;
+  --radius: 1.25rem;
 }
 
 @layer base {
@@ -53,45 +36,71 @@
     @apply border-border;
   }
 
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+
   body {
     @apply font-sans antialiased bg-background text-foreground;
-    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
+  }
+
+  /* Cinematic selection */
+  ::selection {
+    background: hsl(var(--primary) / 0.28);
+    color: hsl(var(--foreground));
+  }
+
+  /* Slim, dark scrollbar */
+  ::-webkit-scrollbar {
+    width: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    background: hsl(var(--background));
+  }
+  ::-webkit-scrollbar-thumb {
+    background: hsl(220 10% 20%);
+    border-radius: 9999px;
+    border: 2px solid hsl(var(--background));
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: hsl(220 10% 28%);
   }
 }
 
 @layer utilities {
-  /* Bento tile base: rounded card with adaptive borders and subtle inner highlight */
+  /* Frosted-glass surface (nav, floating cards) */
+  .glass {
+    background: hsl(var(--card) / 0.6);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border: 1px solid hsl(var(--border) / 0.7);
+  }
+
+  /* Elevated card surface used for the richer tiles */
   .tile {
     position: relative;
     background: hsl(var(--card));
     border: 1px solid hsl(var(--border));
-    border-radius: 1.5rem;
+    border-radius: var(--radius);
     overflow: hidden;
-    transition: transform 0.3s ease, border-color 0.3s ease,
-      box-shadow 0.3s ease;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04),
-      0 4px 16px -8px rgba(15, 23, 42, 0.06);
-  }
-
-  .dark .tile {
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.4),
-      0 8px 32px -12px rgba(0, 0, 0, 0.6);
+    transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1),
+      border-color 0.4s ease, box-shadow 0.4s ease;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.5),
+      0 12px 40px -16px rgba(0, 0, 0, 0.8);
   }
 
   .tile:hover {
-    transform: translateY(-2px);
+    transform: translateY(-3px);
     border-color: hsl(var(--primary) / 0.4);
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06),
-      0 12px 28px -10px rgba(59, 130, 246, 0.18);
-  }
-
-  .dark .tile:hover {
-    border-color: hsl(var(--primary) / 0.45);
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.5),
-      0 16px 40px -10px rgba(56, 189, 248, 0.22);
+      0 24px 60px -20px hsl(var(--primary) / 0.22);
   }
 
-  /* Subtle inner highlight on top edge of tiles in dark mode */
+  /* Hairline top highlight, like light catching a bezel */
   .tile-glow::before {
     content: "";
     position: absolute;
@@ -100,8 +109,8 @@
     padding: 1px;
     background: linear-gradient(
       to bottom,
-      hsl(220 14% 100% / 0.08) 0%,
-      transparent 30%
+      hsl(0 0% 100% / 0.1) 0%,
+      transparent 32%
     );
     -webkit-mask: linear-gradient(#000 0 0) content-box,
       linear-gradient(#000 0 0);
@@ -110,50 +119,56 @@
     pointer-events: none;
   }
 
-  /* Page-level dotted grid background */
+  /* Dotted grid backdrop */
   .grid-pattern {
     background-image: radial-gradient(
       circle at 1px 1px,
-      hsl(220 14% 70% / 0.35) 1px,
+      hsl(210 20% 98% / 0.06) 1px,
       transparent 0
     );
-    background-size: 24px 24px;
+    background-size: 26px 26px;
   }
 
-  .dark .grid-pattern {
-    background-image: radial-gradient(
-      circle at 1px 1px,
-      hsl(220 14% 96% / 0.06) 1px,
-      transparent 0
-    );
-  }
-
-  /* Soft conic glow used behind hero / featured tiles */
+  /* Soft conic aurora glow behind hero focal points */
   .aurora {
     background: conic-gradient(
-      from 200deg at 60% 40%,
-      hsl(213 94% 68% / 0.18),
-      hsl(280 89% 68% / 0.12),
-      hsl(196 94% 68% / 0.16),
-      hsl(213 94% 68% / 0.18)
+      from 210deg at 55% 45%,
+      hsl(211 100% 62% / 0.25),
+      hsl(268 90% 66% / 0.16),
+      hsl(190 95% 60% / 0.2),
+      hsl(211 100% 62% / 0.25)
     );
-    filter: blur(60px);
+    filter: blur(90px);
   }
 
-  /* Accent gradient text (used sparingly for the name / hero highlight) */
+  /* Radial spotlight used to lift text off pure black */
+  .spotlight {
+    background: radial-gradient(
+      60% 60% at 50% 40%,
+      hsl(211 100% 62% / 0.16) 0%,
+      transparent 70%
+    );
+  }
+
+  /* Accent gradient text, used sparingly */
   .text-gradient {
     background: linear-gradient(
-      135deg,
-      hsl(213, 94%, 68%) 0%,
-      hsl(196, 94%, 60%) 50%,
-      hsl(173, 80%, 50%) 100%
+      120deg,
+      hsl(211 100% 72%) 0%,
+      hsl(190 95% 62%) 50%,
+      hsl(160 84% 55%) 100%
     );
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
   }
 
-  /* Pill chip for skills / quick-fact tags */
+  /* Muted-to-bright text sweep for large headlines */
+  .text-dim {
+    color: hsl(var(--muted-foreground));
+  }
+
+  /* Pill chip for tags */
   .chip {
     display: inline-flex;
     align-items: center;
@@ -161,6 +176,7 @@
     padding: 0.375rem 0.75rem;
     font-size: 0.8125rem;
     font-weight: 500;
+    line-height: 1;
     border-radius: 9999px;
     background: hsl(var(--secondary));
     color: hsl(var(--secondary-foreground));
@@ -169,54 +185,68 @@
   }
 
   .chip:hover {
-    background: hsl(var(--primary) / 0.1);
+    background: hsl(var(--primary) / 0.12);
     color: hsl(var(--primary));
     border-color: hsl(var(--primary) / 0.4);
   }
 
-  /* Textarea polish */
+  /* Fine top vignette for cinematic depth on media */
+  .media-vignette::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to top,
+      hsl(var(--background)) 0%,
+      transparent 45%
+    );
+    pointer-events: none;
+  }
+
   textarea {
     resize: vertical;
-    min-height: 120px;
-    transition: height 0.2s ease;
+    min-height: 140px;
   }
 
-  textarea:focus {
-    outline: none;
-    box-shadow: 0 0 0 2px hsl(217 91% 60% / 0.3);
+  .pause-on-hover:hover {
+    animation-play-state: paused;
   }
 }
 
-/* Animation keyframes */
-@keyframes fadeIn {
+/* Infinite marquee for the tools strip */
+@keyframes marquee {
   from {
-    opacity: 0;
+    transform: translateX(0);
   }
   to {
-    opacity: 1;
+    transform: translateX(-50%);
   }
 }
 
-@keyframes shimmer {
-  0% {
-    background-position: -200% 0;
-  }
+.animate-marquee {
+  animation: marquee 32s linear infinite;
+}
+
+@keyframes floaty {
+  0%,
   100% {
-    background-position: 200% 0;
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
   }
 }
 
-.animate-fade-in {
-  animation: fadeIn 0.5s ease-in;
+.animate-floaty {
+  animation: floaty 6s ease-in-out infinite;
 }
 
-.animate-shimmer {
-  background: linear-gradient(
-    90deg,
-    transparent 0%,
-    hsl(217 91% 60% / 0.15) 50%,
-    transparent 100%
-  );
-  background-size: 200% 100%;
-  animation: shimmer 3s ease-in-out infinite;
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .animate-marquee,
+  .animate-floaty {
+    animation: none;
+  }
 }

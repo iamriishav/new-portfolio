@@ -24,7 +24,7 @@ const QUICK_LINKS = [
   { id: "home", label: "Home" },
   { id: "about", label: "About" },
   { id: "experience", label: "Experience" },
-  { id: "projects", label: "Projects" },
+  { id: "projects", label: "Work" },
   { id: "contact", label: "Contact" },
 ] as const;
 
@@ -140,7 +140,7 @@ export default function Footer() {
               window.scrollTo({ top: 0, behavior: "smooth" })
             }
             aria-label="Scroll to top"
-            className="fixed bottom-6 right-6 z-50 flex h-12 w-12 items-center justify-center rounded-full border border-border bg-background shadow-xl backdrop-blur"
+            className="glass fixed bottom-6 right-6 z-50 flex h-12 w-12 items-center justify-center rounded-full shadow-xl"
           >
             <svg
               viewBox="0 0 48 48"
